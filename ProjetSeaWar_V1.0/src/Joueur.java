@@ -5,16 +5,26 @@ import java.util.*;
  * 
  */
 public class Joueur {
-
+	public static void main(String [] args){
+		Joueur j = new Joueur("Albert");
+		System.out.println(j.toString());
+	}
 	
 	private String nom;
-	private Set<Navire> navires;
+	private List<Navire> navires;
 	
     /**
      * Default constructor
      */
     public Joueur(String s) {
     	this.nom=s;
+    	navires = new ArrayList<Navire>();
+    	ajoutNavire();
+    }
+    
+    private void ajoutNavire(){
+    	navires.add(new Navire("Fregate", 50, 7, this.nom, Orientation.N, new Position(0, 0)));
+    	navires.add(new Navire("Amiral", 100, 3, this.nom, Orientation.N, new Position(0, 1)));
     }
 
     
@@ -32,9 +42,10 @@ public class Joueur {
     public String toString() {
     	String navs="";
     	for(Navire nav : navires) {
-    		navs = navs+nav.getNom()+" ";
+    		navs = navs+nav.toString();
+    		navs = navs+ "\t ";
     	}
-    	return "Objet Joueur\tnom = "+this.nom+"\tNavires :"+navs+"\n";
+    	return "Joueur\tnom = "+this.nom+"\tNavires :"+navs+"\n";
     }
 
 
