@@ -6,81 +6,120 @@ import java.util.*;
  */
 public class Navire {
 
+	 private String nom;
+	 private int pv;
+	 private  int depMax;
+	 private String nomJ;
+	 private Orientation dir;
+	 private Position pos;
+	 private Set<Canons> canons;
+	 
+	 private int dep;
+	 private int nb_coup_reçu;
+	
     /**
      * Default constructor
      */
-    public Navire() {
+    public Navire(String n, int vie, int d, String j, Orientation ori, Position p) {
+    	this.nom = n;
+    	this.pv = vie;
+    	this.depMax = d;
+    	this.nomJ = j;
+    	this.dir = ori;
+    	this.pos = p;
+    	//Pour les canons : méthode addCanons
+    }
+    public void addCanon(Canons c){
+    	canons.add(c);
+    }
+    
+    public Position getPos() {
+    	return this.pos;
+    }
+    
+    public String getNom() {
+		return this.nom;
+	}
+    public int getDepMax(){
+    	return depMax;
+    }
+    public Orientation getOrientation(){
+    	return dir;
+    }
+    
+    
+    public void initTour() {
+    	this.dep = this.depMax;
+    	this.nb_coup_reçu = 0;
+    	for(Canons canon : canons){
+    		canon.initTour();
+    	}
+    }
+
+    public boolean equals(Object obj) {
+    	if(this == obj) {
+    		return true;
+    	}
+    	if(!(obj instanceof Navire)) {
+    		return false;
+    	}
+    	Navire nav = (Navire) obj;
+    	return (this.nom.equals(nav.nom) && this.nomJ.equals(nav.nomJ));//TODO: Définir si ok  	
+    }
+    
+    public String toString() {
+    	return "Objet Navire\tnom = "+this.nom+"\tpv = "+this.pv+"\tdepMax = "+this.depMax+"\tnomJ = "+this.nomJ+"\tdir = "+this.dir+"\tpos = "+this.pos+"\n";
+    }
+   
+    /**
+     * 
+     * @param canon avec lequel on veut tirer
+     * @param pos : position de la case visée
+     * @return succès/echec
+     */
+    public boolean tir(Canons canon, Position pos) {
+    	return canon.tire(pos);
+    }
+    
+    
+
+    /**
+     * @param pos : la case où on veut aller 
+     * @param dir : l'orientation que l'on veut avoir 
+     * @return echec ou succès du déplacement
+     */
+    public void deplacement(Position pos, Orientation dir) {//TODO: la case d'arrivé doit-elle respecter une orientation ??? Oui: 
+    	
+    	/*Section inutile si on admet que le controleur gère le déplacement, la collision, ... Le contrôleur contrôle si la position est valide et calcule la direction finale. Pour se faire le controleur ourra accéder au deplacement max
+    	Case cell=plateau.getCase(pos);
+    	 
+    	
+        if(!(cell.getEstOccupe())){
+        	int distance;//=getDistance(this.pos,this.dir,pos,dir) TODO:
+        	if (distance <= this.dep) {
+        		this.dep =- distance;
+        		this.pos = pos;
+        		
+        		 this.dir = dir;
+        		 plateau.move(this.pos,pos); //informer le plateau le changement de case 
+        		 
+        		return true;
+        	}
+        }
+        return false;*/
+    	this.dir = dir;
+    	this.pos = pos;
     }
 
     /**
-     * 
-     */
-    public String nom;
-
-    /**
-     * 
-     */
-    public int pv;
-
-    /**
-     * 
-     */
-    public int depMax;
-
-    /**
-     * 
-     */
-    public String nomJ;
-
-    /**
-     * 
-     */
-    public Orientation dir;
-
-    /**
-     * 
-     */
-    public Position pos;
-
-
-
-    /**
-     * 
-     */
-    public Set<Canons> canons;
-
-    /**
-     * @param pos  
-     * @return
-     */
-    public boolean tirPrimaire(Position pos ) {
-        // TODO implement here
-        return false;
-    }
-
-    /**
-     * @param pos 
-     * @return
-     */
-    public boolean tirSecondaire(Position pos) {
-        // TODO implement here
-        return false;
-    }
-
-    /**
-     * @param pos 
-     * @return
-     */
-    public boolean deplacement(Position pos) {
-        // TODO implement here
-        return false;
-    }
-
-    /**
-     * @param degats
+     * @param degats à retirer aux pv du navire
      */
     public void toucher(int degats) {
-        // TODO implement here
+        this.pv -= degats;
+        if(pv<=0) {
+        	//TODO: Explosion ? :D 
+        }
+        
     }
 
     /**
@@ -90,5 +129,7 @@ public class Navire {
         // TODO implement here
         return null;
     }
+
+	
 
 }
