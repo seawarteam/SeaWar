@@ -9,7 +9,9 @@ public class Position {
     /**
      * Default constructor
      */
-    public Position() {
+    public Position(int x, int y) {
+    	this.x = x;
+    	this.y = y;
     }
 
     /**
@@ -26,16 +28,14 @@ public class Position {
      * @return
      */
     public int getX() {
-        // TODO implement here
-        return 0;
+        return this.x;
     }
 
     /**
      * @return
      */
     public int getY() {
-        // TODO implement here
-        return 0;
+        return this.y;
     }
 
     /**
