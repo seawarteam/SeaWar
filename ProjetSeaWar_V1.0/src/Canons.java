@@ -6,13 +6,27 @@ import java.util.*;
  */
 public class Canons {
 	
+	public static void main(String [] args) {
+		
+		List<Position> liste = new LinkedList<Position>();
+		liste.add(new Position(1,0));
+		liste.add(new Position(2,0));
+		liste.add(new Position(3,0));
+		liste.add(new Position(4,0));
+		Canons unCanon = new Canons("La Grosse Berta", 200, 2, liste, null);
+		System.out.println(unCanon.toString());
+	}
+	
+	
+	
+	
 	private Navire monNavire;
 	private String nom;
 	private int degat;
     private int tpsRech;
     private int tpsRest;
     private List<Position> zoneTire;
-    private List<List<Position>> matZoneTire;
+    private Map<Orientation,List<Position>> matZoneTire;
     
     /**
      * Default constructor
@@ -23,7 +37,7 @@ public class Canons {
     	this.tpsRech = tps;
     	this.zoneTire = p;
     	this.tpsRest = 0;
-    	this.matZoneTire = getMatrice(this.zoneTire);
+    	this.matZoneTire = getMap(this.zoneTire);
     	this.monNavire = nav;
     	
     }
@@ -38,7 +52,7 @@ public class Canons {
 
     
     public String toString() {
-    	return "Objet Canons\tnom = "+this.nom+"\tdegat = "+this.degat+"\tpsRech = "+this.tpsRech+"\tpsRest = "+this.tpsRest+"\n";
+    	return "Objet Canons\tnom = "+this.nom+"\ttdegat = "+this.degat+"\ttpsRech = "+this.tpsRech+"\tpsRest = "+this.tpsRest+"\n";
     }
     
     public String getNom() {
@@ -90,11 +104,11 @@ public class Canons {
      * 
      * @return La Liste des positions sur lequelles le canon peut tirer
      */
-	private List<Position> posCanShoot() {
+	public List<Position> posCanShoot() {
 		
-		int dir = monNavire.getOrientation().value;
+		Orientation dir = monNavire.getOrientation();
 		Position myPosition = monNavire.getPos();
-		List<Position> posRela = this.matZoneTire.get((int)dir);
+		List<Position> posRela = this.matZoneTire.get(dir);
 		List<Position> posReel = new LinkedList<Position>();
 		int x = myPosition.getX();
 		int y = myPosition.getY();
@@ -110,22 +124,23 @@ public class Canons {
 	 * ex: Mat[dir] => positions que l'on peut tirer avec l'orientation dir
 	 * @param zone == this.zoneTire : les positions que l'on peut tirer avec l'orientation du navire vers le Nord
 	 * @return la matrice
-	 */
-    private List<List<Position>> getMatrice(List<Position> zone){
-    	List<List<Position>> matZone = new LinkedList<List<Position>>();    	
+	 */    
+    private Map<Orientation,List<Position>> getMap(List<Position> zone){
+    	Map<Orientation,List<Position>>  mapZone = new HashMap<Orientation,List<Position>> ();    	
     	for(int i=0; i<6;i++) {
-    		double O= i*Math.PI/6;
+    		double O= -i*2*Math.PI/6;//parcours dans le sens horaire
     		List<Position> sousListe = new LinkedList<Position>();
     		for(Position pos : zone) {
     			int x = pos.getX();
         		int y = pos.getY();
-        		int x2 = (int) (x*Math.cos(O) - y*Math.sin(O));
-    			int y2 = (int) (x*Math.sin(O) + x*Math.cos(O));
+        		int x2 = (int) (x*Math.cos(O) - y*Math.sin(O));//TODO: Problème d'arrondit... => Prendre la partie supérieur du double
+    			int y2 = (int) (x*Math.sin(O) + y*Math.cos(O));
     			Position pos2 = new Position(x2, y2);
     			sousListe.add(pos2);
     		}
-    		matZone.set(i,sousListe);
+    		Orientation dir = Orientation.values()[i];
+    		mapZone.put(dir,sousListe);
     	}
-    	return matZone;
+    	return mapZone;
     }
 }

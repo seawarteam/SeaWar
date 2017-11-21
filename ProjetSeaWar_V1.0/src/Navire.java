@@ -6,9 +6,30 @@ import java.util.*;
  */
 public class Navire {
 
+	public static void main(String [] args) {
+		
+		
+		Navire unNavire = new Navire("Charles De Gaulle", 1000, 7, "France", Orientation.SE, new Position(0,0));
+		
+		List<Position> zone = new LinkedList<Position>();
+		zone.add(new Position(0,1));
+		zone.add(new Position(0,2));
+		zone.add(new Position(0,3));
+		zone.add(new Position(0,4));
+		Canons unCanon = new Canons("La Grosse Berta", 200, 2, zone, unNavire);
+		
+			
+			unNavire.addCanon(unCanon);
+			System.out.println(unCanon.getZoneTire().toString());
+			System.out.println(unCanon.posCanShoot().toString());
+			
+		
+	}
+	
+	
 	 private String nom;
 	 private int pv;
-	 private  int depMax;
+	 private int depMax;
 	 private String nomJ;
 	 private Orientation dir;
 	 private Position pos;
@@ -27,10 +48,10 @@ public class Navire {
     	this.nomJ = j;
     	this.dir = ori;
     	this.pos = p;
-    	//Pour les canons : méthode addCanons
+    	this.canons = new HashSet<Canons>();
     }
     public void addCanon(Canons c){
-    	canons.add(c);
+    	this.canons.add(c);
     }
     
     public Position getPos() {
@@ -88,25 +109,9 @@ public class Navire {
      * @param dir : l'orientation que l'on veut avoir 
      * @return echec ou succès du déplacement
      */
-    public void deplacement(Position pos, Orientation dir) {//TODO: la case d'arrivé doit-elle respecter une orientation ??? Oui: 
+    public void deplacement(Position pos, Orientation dir, int nbCase) {
     	
-    	/*Section inutile si on admet que le controleur gère le déplacement, la collision, ... Le contrôleur contrôle si la position est valide et calcule la direction finale. Pour se faire le controleur ourra accéder au deplacement max
-    	Case cell=plateau.getCase(pos);
-    	 
-    	
-        if(!(cell.getEstOccupe())){
-        	int distance;//=getDistance(this.pos,this.dir,pos,dir) TODO:
-        	if (distance <= this.dep) {
-        		this.dep =- distance;
-        		this.pos = pos;
-        		
-        		 this.dir = dir;
-        		 plateau.move(this.pos,pos); //informer le plateau le changement de case 
-        		 
-        		return true;
-        	}
-        }
-        return false;*/
+    	this.dep =- nbCase;
     	this.dir = dir;
     	this.pos = pos;
     }
