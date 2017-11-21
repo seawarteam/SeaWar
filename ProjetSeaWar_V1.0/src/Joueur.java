@@ -40,10 +40,10 @@ public class Joueur {
     }
     
     public String toString() {
-    	String navs="";
+    	String navs="\n\t";
     	for(Navire nav : navires) {
     		navs = navs+nav.toString();
-    		navs = navs+ "\t ";
+    		navs = navs+ "\n\t ";
     	}
     	return "Joueur\tnom = "+this.nom+"\tNavires :"+navs+"\n";
     }
