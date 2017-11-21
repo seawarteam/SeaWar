@@ -68,7 +68,7 @@ public class Navire {
     }
     
     public String toString() {
-    	return "Navire\tnom = "+this.nom+"\tpv = "+this.pv+"\tdepMax = "+this.depMax+"\tnomJ = "+this.nomJ+"\tdir = "+this.dir+"\tpos = "+this.pos+"\n";
+    	return "Navire\tnom = "+this.nom+"\tpv = "+this.pv+"\tdepMax = "+this.depMax+"\tnomJ = "+this.nomJ+"\tdir = "+this.dir+"\tpos = "+this.pos.toString()+"\n";
     }
    
     /**
@@ -115,11 +115,12 @@ public class Navire {
      * @param degats à retirer aux pv du navire
      */
     public void toucher(int degats) {
-        this.pv -= degats;
-        if(pv<=0) {
-        	//TODO: Explosion ? :D 
+    	this.nb_coup_reçu++;        
+        if(this.nb_coup_reçu == 2) {// ou >1 ? => Hyp: plus que 2 navires
+        	this.pv -= 3*degats; 
+        } else {
+        	this.pv -= degats;
         }
-        
     }
 
     /**

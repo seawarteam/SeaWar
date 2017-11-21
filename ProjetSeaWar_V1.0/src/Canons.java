@@ -74,7 +74,6 @@ public class Canons {
         if(this.tpsRest == 0) {
         	List<Position> posVisable = posCanShoot();
         	if(posVisable.contains(pos)) {
-	        	//TODO: this.doSon();
 	        	this.tpsRest=this.tpsRech;
 	        	return true;
         	}else{
@@ -123,13 +122,10 @@ public class Canons {
         		int x2 = (int) (x*Math.cos(O) - y*Math.sin(O));
     			int y2 = (int) (x*Math.sin(O) + x*Math.cos(O));
     			Position pos2 = new Position(x2, y2);
-    			sousListe.add(pos);
+    			sousListe.add(pos2);
     		}
     		matZone.set(i,sousListe);
     	}
     	return matZone;
     }
-
-	
-
 }

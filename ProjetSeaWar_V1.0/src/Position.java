@@ -52,8 +52,7 @@ public class Position {
      * @return
      */
     public String toString() {
-        // TODO implement here
-        return "";
+        return "("+this.x+";"+this.y+")";
     }
 
 }
