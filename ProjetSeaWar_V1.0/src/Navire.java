@@ -9,13 +9,16 @@ public class Navire {
 	public static void main(String [] args) {
 		
 		
-		Navire unNavire = new Navire("Charles De Gaulle", 1000, 7, "France", Orientation.SE, new Position(0,0));
+		Navire unNavire = new Navire("Charles De Gaulle", 1000, 7, "France", Orientation.NE, new Position(0,0));
 		
 		List<Position> zone = new LinkedList<Position>();
 		zone.add(new Position(0,1));
 		zone.add(new Position(0,2));
 		zone.add(new Position(0,3));
 		zone.add(new Position(0,4));
+		zone.add(new Position(0,5));
+		zone.add(new Position(0,6));
+		zone.add(new Position(0,7));
 		Canons unCanon = new Canons("La Grosse Berta", 200, 2, zone, unNavire);
 		
 			

@@ -133,8 +133,24 @@ public class Canons {
     		for(Position pos : zone) {
     			int x = pos.getX();
         		int y = pos.getY();
-        		int x2 = (int) (x*Math.cos(O) - y*Math.sin(O));//TODO: Problème d'arrondit... => Prendre la partie supérieur du double
-    			int y2 = (int) (x*Math.sin(O) + y*Math.cos(O));
+        		double xd2 = (x*Math.cos(O) - y*Math.sin(O));//TODO: Problème d'arrondit... => Prendre la partie supérieur du double
+        		double yd2 = (x*Math.sin(O) + y*Math.cos(O));
+        		int x2 = (int)xd2;int y2 = (int)yd2;
+        		//System.out.println("("+xd2+","+yd2+") => ("+x2+","+y2+")\n");
+        		if(xd2-x2 > 0.5) {
+        			x2++;
+        		} else {
+        			if(xd2-x2 < -0.5) {
+        				x2--;
+        			}
+        		}
+        		if(yd2-y2 > 0.5) {
+        			y2++;
+        		} else {
+        			if(yd2-y2 < -0.5) {
+        				y2--;
+        			}
+        		}//TODO: => c'est mieux des erreurs persistent...
     			Position pos2 = new Position(x2, y2);
     			sousListe.add(pos2);
     		}
