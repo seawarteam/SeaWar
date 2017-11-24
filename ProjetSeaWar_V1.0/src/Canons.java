@@ -113,7 +113,7 @@ public class Canons {
 		int x = myPosition.getX();
 		int y = myPosition.getY();
 		for(Position pos : posRela) {
-			Position reel = new Position(x+pos.getX(),y+pos.getY());
+			Position reel = new Position(x+pos.getX(),y+pos.getY());//TODO: Check si la cellule existe => Controleur ?
 			posReel.add(reel);
 		}
 		return posReel;
@@ -150,7 +150,7 @@ public class Canons {
         			if(yd2-y2 < -0.5) {
         				y2--;
         			}
-        		}//TODO: => c'est mieux des erreurs persistent...
+        		}//TODO: => c'est mieux mais des erreurs persistent...
     			Position pos2 = new Position(x2, y2);
     			sousListe.add(pos2);
     		}
