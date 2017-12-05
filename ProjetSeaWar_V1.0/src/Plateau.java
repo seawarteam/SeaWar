@@ -1,9 +1,6 @@
 
 import java.util.*;
 
-/**
- * 
- */
 public class Plateau {
     
     private Set<Case> cases;
@@ -17,9 +14,11 @@ public class Plateau {
         for (int i = 0 ; i < l ; i++) {
             for (int j = 0 ; j < L ; j++) { 
                 cases.add(new Eau(i, j));
-                
+            }
+        }           
               
-        
+        //TO DO : pouvoir retourner un set d'obstacles (tout les obstacles présents) 
+        //--> faire une liste "fixe" avec les rochers et une autre "changeante" avec les bateaux.
             
     }
 
