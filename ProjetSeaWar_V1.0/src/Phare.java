@@ -1,20 +1,22 @@
 
 import java.util.*;
 
-/**
- * 
- */
-public class Phare extends Case {
+public class Phare extends Eau {
 
-    /**
-     * Default constructor
-     */
+    
+ private Joueur proprio //J1,J2 ou Null
+     
+     
     public Phare() {
+        super();
+        proprio=null;
     }
-
-    /**
-     * 
-     */
-    public Joueur appartientA;
-
+    
+    public Joueur getProprio(){
+        return proprio;
+    }
+    
+    public void setProprio(Joueur proprio){
+        this.proprio=proprio;
+    }
 }
