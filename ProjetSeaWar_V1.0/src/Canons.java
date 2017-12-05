@@ -126,37 +126,26 @@ public class Canons {
 	 * @return la matrice
 	 */    
     private Map<Orientation,List<Position>> getMap(List<Position> zone){
-    	Map<Orientation,List<Position>>  mapZone = new HashMap<Orientation,List<Position>> ();    	
-    	for(int i=0; i<6;i++) {
-    		double O= -i*2*Math.PI/6;//parcours dans le sens horaire
-    		List<Position> sousListe = new LinkedList<Position>();
-    		for(Position pos : zone) {
-    			int x = pos.getX();
-        		int y = pos.getY();
-        		double xd2 = (x*Math.cos(O) - y*Math.sin(O));//TODO: Problème d'arrondit... => Prendre la partie supérieur du double
-        		double yd2 = (x*Math.sin(O) + y*Math.cos(O));
-        		int x2 = (int)xd2;int y2 = (int)yd2;
-        		//System.out.println("("+xd2+","+yd2+") => ("+x2+","+y2+")\n");
-        		if(xd2-x2 > 0.5) {
-        			x2++;
-        		} else {
-        			if(xd2-x2 < -0.5) {
-        				x2--;
-        			}
-        		}
-        		if(yd2-y2 > 0.5) {
-        			y2++;
-        		} else {
-        			if(yd2-y2 < -0.5) {
-        				y2--;
-        			}
-        		}//TODO: => c'est mieux mais des erreurs persistent...
-    			Position pos2 = new Position(x2, y2);
-    			sousListe.add(pos2);
+    	Map<Orientation,List<Position>>  mapZone = new HashMap<Orientation,List<Position>> (); 
+    	
+    	for(Position pos : zone) {
+    		for(int i=0; i<6;i++) {
+    			Orientation dir = Orientation.values()[i];
+    			List<Position> sousListe = mapZone.get(dir);
+    			if(sousListe == null){
+    				sousListe = new LinkedList<Position>();
+    				mapZone.put(dir, sousListe);
+    			}
+    			if(i != 0) pos = rotation(pos);
+    			sousListe.add(pos);
     		}
-    		Orientation dir = Orientation.values()[i];
-    		mapZone.put(dir,sousListe);
     	}
     	return mapZone;
+    }
+    
+    private Position rotation(Position pos){
+    	int x = pos.getX();
+		int y = pos.getY();
+		return new Position(-y, x+y);
     }
 }

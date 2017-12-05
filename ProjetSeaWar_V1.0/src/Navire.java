@@ -8,28 +8,31 @@ public class Navire {
 
 	public static void main(String [] args) {
 		
+		Position.initTabPosition(10, 10);
 		
-		Navire unNavire = new Navire("Charles De Gaulle", 1000, 4, "France", Orientation.NE, new Position(0,0));
+		Navire unNavire = new Navire("Charles De Gaulle", 1000, 2, "France", Orientation.S, new Position(2,1));
 		
 		List<Position> zone = new LinkedList<Position>();
-		zone.add(new Position(0,1));
-		zone.add(new Position(0,2));
-		zone.add(new Position(0,3));
-		zone.add(new Position(0,4));
-		zone.add(new Position(0,5));
-		zone.add(new Position(0,6));
-		zone.add(new Position(0,7));
+		zone.add(new Position(0,-1));
+		zone.add(new Position(0,-2));
+		zone.add(new Position(0,-3));
+		zone.add(new Position(0,-4));
+		zone.add(new Position(0,-5));
+		zone.add(new Position(0,-6));
+		zone.add(new Position(0,-7));
+		zone.add(new Position(0,-8));
 		Canons unCanon = new Canons("La Grosse Berta", 200, 2, zone, unNavire);
-		
-		/*	
-			unNavire.addCanon(unCanon);
-			System.out.println(unCanon.getZoneTire().toString());
-			System.out.println(unCanon.posCanShoot().toString());
-		*/	
+		unNavire.addCanon(unCanon);
+		//System.out.println(unCanon.getZoneTire().toString());
+		//System.out.println(unCanon.posCanShoot().toString());
+			
 		
 		//System.out.println(caseVoisineXPaire.toString());
 		unNavire.initTour();
-		System.out.println(unNavire.getCaseAccessible(new LinkedHashSet<Position>()).toString());
+		LinkedHashSet<Position> obstacles = new LinkedHashSet<Position>();
+		obstacles.add(Position.getPosition(3, 1));
+		System.out.println(unNavire.getCaseAccessible(obstacles).toString());
+		
 	}
 	
 	
@@ -41,10 +44,11 @@ public class Navire {
 	 private Position pos;
 	 private Set<Canons> canons;
 	 
+	 
 	 private int dep;
 	 private int nb_coup_reçu;
-	 private static Map<Orientation,List<Vector<Object>>> caseVoisineXPaire;
-	 private static Map<Orientation,List<Vector<Object>>> caseVoisineXImpaire;
+	 /*TODO: déplacer dans la Classe Plateau ???*/
+	 private static Map<Orientation,List<Vector<Object>>> caseVoisine;
 	
     /**
      * Default constructor
@@ -57,8 +61,7 @@ public class Navire {
     	this.dir = ori;
     	this.pos = p;
     	this.canons = new HashSet<Canons>();
-    	initCaseVoisineXImpaire();
-    	initCaseVoisineXPaire();
+    	initCaseVoisine();
     	
     }
     public void addCanon(Canons c){
@@ -115,7 +118,6 @@ public class Navire {
     }
     
     
-
     /**
      * Mets à jour les variables d'instances lors d'un déplacement
      * @param pos : la case où on veut aller 
@@ -123,7 +125,7 @@ public class Navire {
      */
     public void deplacement(Position pos, Orientation dir, int nbCase) {
     	
-    	this.dep =- nbCase;
+    	this.dep -= nbCase;
     	this.dir = dir;
     	this.pos = pos;
     }
@@ -151,7 +153,13 @@ public class Navire {
         return null;
     }
     
-    public Map<Position,Set<Orientation>> getCaseAccessible(Set<Position> obstacle){
+    
+    /**
+     * 
+     * @param obstacle : Set des positions où le navire ne peux pas aller
+     * @return Map avec pour clé une position accessible et valeur la liste des orientation possible pour cette position
+     */
+    public Map<Position,Set<Orientation>> getCaseAccessible(Set<Position> obstacle){//TODO: Calculer la distance en même temps !
     	List<Vector<Object>> fileDattente = new LinkedList<Vector<Object>>();
     			Vector<Object> v = new Vector<Object>(2);
     				v.add(0, this.pos);
@@ -162,7 +170,6 @@ public class Navire {
     	Map<Position,Set<Orientation>> map = new HashMap<Position,Set<Orientation>>();
     	_getNextCaseAcc(map, deplace, fileDattente, obstacle);
     	return map;
-    	
     }
     
     /**
@@ -179,16 +186,12 @@ public class Navire {
     			Position cell = (Position) vect.elementAt(0);
     			Orientation ori = (Orientation) vect.elementAt(1);
     			List<Vector<Object>> voisinsRela;
-    			if(cell.getX()%2 == 0){
-    				voisinsRela = Navire.caseVoisineXPaire.get(ori);
-    			} else {
-    				voisinsRela = Navire.caseVoisineXImpaire.get(ori);
-    			}
+    			voisinsRela = Navire.caseVoisine.get(ori);
     			for(Vector<Object> vectVoisinRela : voisinsRela){
     				Position cellVoisinRela = (Position) vectVoisinRela.elementAt(0);
     				Orientation DirVoisinRela = (Orientation)vectVoisinRela.elementAt(1);
-    				Position cellVoisinReel = new Position(cell.getX()+cellVoisinRela.getX(),cell.getY()+cellVoisinRela.getY());//TODO:Check si la position existe !!! => le navire connait les tailles max de la carte 
-    				if(!obstacle.contains(cellVoisinReel) || cellVoisinReel.equals(this.pos)){//TODO:vérifier que le contains ce fait bien avec la méthode equals et non avec @ => reponse: il le fait avec @ => faire un getPosition dans Position
+    				Position cellVoisinReel = Position.getPosition(cell.getX()+cellVoisinRela.getX(),cell.getY()+cellVoisinRela.getY());
+    				if(cellVoisinReel != null && (!obstacle.contains(cellVoisinReel) || cellVoisinReel.equals(this.pos))){
     					Vector<Object> v = new Vector<Object>(2);
     						v.add(0,cellVoisinReel);
     						v.add(1, DirVoisinRela);
@@ -209,203 +212,81 @@ public class Navire {
     	}
     }
     
-    
+        
     /**
-     * Remplit la Map des voisins avec pour clé l'orientation du Navire pour les cases X impaires
+     * Remplit la Map des voisins avec pour clé l'orientation du Navire pour les cases
+     * Les case voisines sont initialisés pour une case de position (0,0). Pour trouver les case suivantes pour une position (x, y) il faut appliquer la translation.
      */
-    private static void initCaseVoisineXImpaire(){//hypothèse : L'origine est en bas à gauche, l'axe des x va vers la droite et l'axe des y est vers le haut
-    	Navire.caseVoisineXImpaire = new HashMap<Orientation,List<Vector<Object>>>();
-    	
-    	List<Vector<Object>> Nord = new LinkedList<Vector<Object>>();
-    		Vector<Object> vect = new Vector<Object>(2);
-    			vect.add(0, new Position(0,1));
-    			vect.add(1, Orientation.N);
-    		Nord.add(vect);
-    		vect = new Vector<Object>(2);
-    			vect.add(0, new Position(-1,1));
-    			vect.add(1, Orientation.NO);
-    		Nord.add(vect);
-        	vect = new Vector<Object>(2);
-        		vect.add(0, new Position(1,1));
-        		vect.add(1, Orientation.NE);
-        	Nord.add(vect);
-    	Navire.caseVoisineXImpaire.put(Orientation.N,Nord);
-    	
-    	List<Vector<Object>> NordEst = new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(1,1));
-				vect.add(1, Orientation.NE);
-			NordEst.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,1));
-				vect.add(1, Orientation.N);
-			NordEst.add(vect);
-			vect = new Vector<Object>(2);
-    			vect.add(0, new Position(1,0));
-    			vect.add(1, Orientation.SE);
-    		NordEst.add(vect);
-    	Navire.caseVoisineXImpaire.put(Orientation.NE,NordEst);
-    	
-    	List<Vector<Object>> SudEst = new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(1,0));
-				vect.add(1, Orientation.SE);
-			SudEst.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,-1));
-				vect.add(1, Orientation.S);
-			SudEst.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(1,1));
-				vect.add(1, Orientation.NE);
-			SudEst.add(vect);
-		Navire.caseVoisineXImpaire.put(Orientation.SE,SudEst);
+    private static void initCaseVoisine(){
+		Navire.caseVoisine = new HashMap<Orientation,List<Vector<Object>>>();
+		//A chaque orientation correspond un vecteur (Position, Orientation)
+		Vector<Object> vectN = new Vector<Object>(2);
+		vectN.add(0, new Position(0,-1));
+		vectN.add(1, Orientation.N);
 		
-		List<Vector<Object>> Sud= new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,-1));
-				vect.add(1, Orientation.S);
-			Sud.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(1,0));
-				vect.add(1, Orientation.SE);
-			Sud.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(-1,0));
-				vect.add(1, Orientation.SO);
-			Sud.add(vect);
-		Navire.caseVoisineXImpaire.put(Orientation.S,Sud);
+		Vector<Object> vectNO = new Vector<Object>(2);
+		vectNO.add(0, new Position(-1,0));
+		vectNO.add(1, Orientation.NO);
 		
-		List<Vector<Object>> SudOuest= new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(-1,0));
-				vect.add(1, Orientation.SO);
-			SudOuest.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,-1));
-				vect.add(1, Orientation.S);
-			SudOuest.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(-1,1));
-				vect.add(1, Orientation.NO);
-			SudOuest.add(vect);
-		Navire.caseVoisineXImpaire.put(Orientation.SO,SudOuest);
+		Vector<Object> vectNE = new Vector<Object>(2);
+		vectNE.add(0, new Position(1,-1));
+		vectNE.add(1, Orientation.NE);
 		
-		List<Vector<Object>> NordOuest= new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(-1,1));
-				vect.add(1, Orientation.NO);
-			NordOuest.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,-1));
-				vect.add(1, Orientation.SO);
-			NordOuest.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,1));
-				vect.add(1, Orientation.N);
-			NordOuest.add(vect);
-		Navire.caseVoisineXImpaire.put(Orientation.NO,NordOuest);
-    	
-    }
-    
-    /**
-     * Remplit la Map des voisins avec pour clé l'orientation du Navire pour les cases X paires
-     */
-    private static void initCaseVoisineXPaire(){//hypothèse : L'origine est en bas à gauche, l'axe des x va vers la droite et l'axe des y est vers le haut
-    	Navire.caseVoisineXPaire = new HashMap<Orientation,List<Vector<Object>>>();
-    	
-    	List<Vector<Object>> Nord = new LinkedList<Vector<Object>>();
-    		Vector<Object> vect = new Vector<Object>(2);
-    			vect.add(0, new Position(0,1));
-    			vect.add(1, Orientation.N);
-    		Nord.add(vect);
-    		vect = new Vector<Object>(2);
-    			vect.add(0, new Position(-1,0));
-    			vect.add(1, Orientation.NO);
-    		Nord.add(vect);
-        	vect = new Vector<Object>(2);
-        		vect.add(0, new Position(1,0));
-        		vect.add(1, Orientation.NE);
-        	Nord.add(vect);
-    	Navire.caseVoisineXPaire.put(Orientation.N,Nord);
-    	
-    	List<Vector<Object>> NordEst = new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(1,0));
-				vect.add(1, Orientation.NE);
-			NordEst.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,1));
-				vect.add(1, Orientation.N);
-			NordEst.add(vect);
-			vect = new Vector<Object>(2);
-    			vect.add(0, new Position(1,-1));
-    			vect.add(1, Orientation.SE);
-    		NordEst.add(vect);
-    	Navire.caseVoisineXPaire.put(Orientation.NE,NordEst);
-    	
-    	List<Vector<Object>> SudEst = new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(1,-1));
-				vect.add(1, Orientation.SE);
-			SudEst.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,-1));
-				vect.add(1, Orientation.S);
-			SudEst.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(1,0));
-				vect.add(1, Orientation.NE);
-			SudEst.add(vect);
-		Navire.caseVoisineXPaire.put(Orientation.SE,SudEst);
+		Vector<Object> vectS = new Vector<Object>(2);
+		vectS.add(0, new Position(0,1));
+		vectS.add(1, Orientation.S);
 		
-		List<Vector<Object>> Sud= new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,-1));
-				vect.add(1, Orientation.S);
-			Sud.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(1,-1));
-				vect.add(1, Orientation.SE);
-			Sud.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(-1,-1));
-				vect.add(1, Orientation.SO);
-			Sud.add(vect);
-		Navire.caseVoisineXPaire.put(Orientation.S,Sud);
+		Vector<Object> vectSO = new Vector<Object>(2);
+		vectSO.add(0, new Position(-1,1));
+		vectSO.add(1, Orientation.SO);
 		
-		List<Vector<Object>> SudOuest= new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(-1,-1));
-				vect.add(1, Orientation.SO);
-			SudOuest.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,-1));
-				vect.add(1, Orientation.S);
-			SudOuest.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(-1,0));
-				vect.add(1, Orientation.NO);
-			SudOuest.add(vect);
-		Navire.caseVoisineXPaire.put(Orientation.SO,SudOuest);
+		Vector<Object> vectSE = new Vector<Object>(2);
+		vectSE.add(0, new Position(1,0));
+		vectSE.add(1, Orientation.SE);
 		
-		List<Vector<Object>> NordOuest= new LinkedList<Vector<Object>>();
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(-1,0));
-				vect.add(1, Orientation.NO);
-			NordOuest.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,-1));
-				vect.add(1, Orientation.SO);
-			NordOuest.add(vect);
-			vect = new Vector<Object>(2);
-				vect.add(0, new Position(0,1));
-				vect.add(1, Orientation.N);
-			NordOuest.add(vect);
-		Navire.caseVoisineXPaire.put(Orientation.NO,NordOuest);
-    	
-    }
-
+		
+		List<Vector<Object>> Nord = new LinkedList<Vector<Object>>();
+		Nord.add(vectN);
+		Nord.add(vectNO);
+		Nord.add(vectNE);
+		
+		List<Vector<Object>> NordOuest = new LinkedList<Vector<Object>>();
+		NordOuest.add(vectN);
+		NordOuest.add(vectNO);
+		NordOuest.add(vectSO);
+		
+		List<Vector<Object>> NordEst = new LinkedList<Vector<Object>>();
+		NordEst.add(vectN);
+		NordEst.add(vectNE);
+		NordEst.add(vectSE);
+		
+		List<Vector<Object>> Sud = new LinkedList<Vector<Object>>();
+		Sud.add(vectS);
+		Sud.add(vectSO);
+		Sud.add(vectSE);
+		
+		List<Vector<Object>> SudOuest = new LinkedList<Vector<Object>>();
+		SudOuest.add(vectS);
+		SudOuest.add(vectNO);
+		SudOuest.add(vectSO);
+		
+		List<Vector<Object>> SudEst = new LinkedList<Vector<Object>>();
+		SudEst.add(vectS);
+		SudEst.add(vectSE);
+		SudEst.add(vectNE);
+		
+		Navire.caseVoisine.put(Orientation.N,Nord);
+		Navire.caseVoisine.put(Orientation.NO,NordOuest);
+		Navire.caseVoisine.put(Orientation.NE,NordEst);
+		Navire.caseVoisine.put(Orientation.S,Sud);
+		Navire.caseVoisine.put(Orientation.SO,SudOuest);
+		Navire.caseVoisine.put(Orientation.SE,SudEst);
+		
+	}
 	
-
+	
+    
+    
+   
+    
 }
