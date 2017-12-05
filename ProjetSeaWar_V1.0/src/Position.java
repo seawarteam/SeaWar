@@ -49,7 +49,7 @@ public class Position {
     }
 
     /**
-     * Méthode statique qui permet d'initialisé toutes les positions du plateau de dimension tailleX*tailleY
+     * Méthode statique qui permet d'initialiser toutes les positions du plateau de dimension tailleX*tailleY
      * @param tailleX
      * @param tailleY
      */
@@ -57,11 +57,11 @@ public class Position {
     	Position.tabPosition = new Position [tailleX * tailleY];
     	for(int i=0; i<tailleX; i++) {
     		for(int j=0; j<tailleY; j++) {
-    			Position.tabPosition[i * tailleY + j] = new Position(i,j);
+    			Position.tabPosition[i * tailleY + j] = new Position(i,j-(int)i/2);
     		}
     	}
     	Position.tailleX = tailleX;
-    	Position.tailleY = tailleY;
+    	Position.tailleY = tailleY;    	
     }
     
     /**
@@ -73,10 +73,20 @@ public class Position {
      */
     public static Position getPosition(int x, int y) {
     	if(x < 0) return null;
-    	if(y < 0) return null;
+    	if(y+(int) x/2 < 0) return null;
     	if(x >= Position.tailleX) return null;
-    	if(y >= Position.tailleY) return null;
-    	return Position.tabPosition[x * Position.tailleY + y];
+    	if(y+(int) x/2 >= Position.tailleY) return null;
+    	return Position.tabPosition[x * Position.tailleY + (y + (int) x/2)];
+    }
+    
+    public static void main(String [] args) {
+    	initTabPosition(6, 5);
+    	System.out.println(getPosition(0, 4).toString());
+    	for(int i=0;i<tailleX*tailleY;i++){
+    		if(i%tailleY==0)System.out.println();
+    		System.out.print(tabPosition[i]+" ");
+    		
+    	}
     }
     
 }

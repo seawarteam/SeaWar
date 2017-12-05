@@ -159,15 +159,14 @@ public class Navire {
      * @param obstacle : Set des positions où le navire ne peux pas aller
      * @return Map avec pour clé une position accessible et valeur la liste des orientation possible pour cette position
      */
-    public Map<Position,Set<Orientation>> getCaseAccessible(Set<Position> obstacle){//TODO: Calculer la distance en même temps !
+    public Map<Position,Set<Vector<Object>>> getCaseAccessible(Set<Position> obstacle){//TODO: Calculer la distance en même temps !
     	List<Vector<Object>> fileDattente = new LinkedList<Vector<Object>>();
     			Vector<Object> v = new Vector<Object>(2);
     				v.add(0, this.pos);
     				v.add(1, this.dir);
     			fileDattente.add(v);
-    	int deplace = this.dep;
-		System.out.println(""+this.depMax);
-    	Map<Position,Set<Orientation>> map = new HashMap<Position,Set<Orientation>>();
+    	int deplace = 0;
+    	Map<Position,Set<Vector<Object>>> map = new HashMap<Position,Set<Vector<Object>>>();
     	_getNextCaseAcc(map, deplace, fileDattente, obstacle);
     	return map;
     }
@@ -178,8 +177,8 @@ public class Navire {
      * @param deplace : nbre de deplacement encore possible
      * @param fileDattente : dernières cases atteintes
      */
-    private void _getNextCaseAcc( Map<Position,Set<Orientation>> map, int deplace, List<Vector<Object>> fileDattente, Set<Position> obstacle){
-    	if(deplace > 0){
+    private void _getNextCaseAcc( Map<Position,Set<Vector<Object>>> map, int deplace, List<Vector<Object>> fileDattente, Set<Position> obstacle){
+    	if(deplace < this.dep){
     		List<Vector<Object>> prochaineFileDattente = new LinkedList<Vector<Object>>();
     		for(Vector<Object> vect : fileDattente){
     			
@@ -196,19 +195,24 @@ public class Navire {
     						v.add(0,cellVoisinReel);
     						v.add(1, DirVoisinRela);
     					prochaineFileDattente.add(v);
+    					Vector <Object> vectInfo = new Vector<Object>(3);
+							vectInfo.add(0, DirVoisinRela);
+							vectInfo.add(1, deplace);
+							vectInfo.add(2, vect);
     					// Ajouter les coordonnées dans la map
     					if(map.containsKey(cellVoisinReel)){
-    						Set<Orientation> s = map.get(cellVoisinReel);
-    						s.add(DirVoisinRela);
+    						Set<Vector<Object>> s = map.get(cellVoisinReel);
+    						s.add(vectInfo);
     					} else {
-    						Set<Orientation> s = new LinkedHashSet<Orientation>();
-    							s.add(DirVoisinRela);
+    						Set<Vector<Object>> s = new LinkedHashSet<Vector<Object>>();
+    							s.add(vectInfo);
     						map.put(cellVoisinReel, s);
     					}
     				}
     			}
     		}
-    		_getNextCaseAcc(map, deplace-1, prochaineFileDattente, obstacle);
+    		System.out.println(deplace);
+    		_getNextCaseAcc(map, ++deplace, prochaineFileDattente, obstacle);
     	}
     }
     
