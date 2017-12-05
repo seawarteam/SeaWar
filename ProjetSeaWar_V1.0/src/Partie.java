@@ -64,5 +64,11 @@ public class Partie {
         //Check si un joueur a gagné
         //Check et MAJ des compteurs du joueur courant
     }
+	
+	
+    public void hexClique(int x, int y){
+    	// TODO l'hexagone (x,y) a été cliqué, il faut faire qqch...
+    	
+    }
 
 }
