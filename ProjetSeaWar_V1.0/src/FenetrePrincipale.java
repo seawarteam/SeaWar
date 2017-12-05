@@ -12,15 +12,17 @@ public class FenetrePrincipale extends JFrame {
 	public final static int nBoutonsHaut = 3; //différent de zéro, nombre de boutons en haut
 	public final static int largeurMenuHaut = 2; //approximativement la largeur du menu en haut en pourcentage
 	public final static int largeurMenuGauche = 30; //approximativement la largeur du menu a gauche en pourcentage
-	public final static int nCasesX = 30;
+	public final static int nCasesX = 20;
 	public final static int nCasesY = 20;
 
 	private static int longueurCote;	//distance le centre et un point = longueur d'un cote
 	private static int apotheme; //apotheme = distance entre le centre et le milieu d'un cote
 	private static int resteX;	//resteX : longueur du 'triangle' sur un cote de l'hexagone
 
-	private static Graphics2D cg;
+	private Graphics2D cg;
 
+	private Partie partie;
+	
 	private static PolyCar tab[][] = new PolyCar[nCasesX][nCasesY];
 	private JPanel plateau;
 	private JScrollPane scroll;
@@ -33,6 +35,7 @@ public class FenetrePrincipale extends JFrame {
 
 		setTailleHex(30);
 		initTabHex();
+		partie = new Partie(new String[]{"cc","gg"}, 2);
 
 		JPanel panPrincipal = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -98,7 +101,7 @@ public class FenetrePrincipale extends JFrame {
 		slider.setValue(longueurCote);
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				int valeur = slider.getValue();
+				int valeur = ( (JSlider) e.getSource()).getValue();
 				setTailleHex(valeur);
 				scroll.repaint();
 				scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
@@ -148,10 +151,9 @@ public class FenetrePrincipale extends JFrame {
 			public void mouseClicked(MouseEvent e) { 
 				Point p = new Point( pxtoHex(e.getX(),e.getY()) );
 
-				if (p.x < 0 || p.y < 0 || p.x >= nCasesX || p.y >= nCasesY) return;
-				if(tab[p.x][p.y].col==Color.GRAY) {tab[p.x][p.y].col=Color.CYAN;}
-				else {tab[p.x][p.y].col=Color.GRAY;}
-				plateau.repaint();
+				partie.hexClique(p.x, p.y);
+				
+				//plateau.repaint();
 			}		
 
 		}
