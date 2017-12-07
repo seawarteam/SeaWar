@@ -10,7 +10,7 @@ public class Navire {
 		
 		Position.initTabPosition(10, 10);
 		
-		Navire unNavire = new Navire("Charles De Gaulle", 1000, 2, "France", Orientation.S, new Position(2,1));
+		Navire unNavire = new Navire("Charles De Gaulle", 1000, 2, "France", Orientation.N, Position.getPosition(2,1));
 		
 		List<Position> zone = new LinkedList<Position>();
 		zone.add(new Position(0,-1));
@@ -30,8 +30,8 @@ public class Navire {
 		//System.out.println(caseVoisineXPaire.toString());
 		unNavire.initTour();
 		LinkedHashSet<Position> obstacles = new LinkedHashSet<Position>();
-		obstacles.add(Position.getPosition(3, 1));
-		System.out.println(unNavire.getCaseAccessible(obstacles).toString());
+		//obstacles.add(Position.getPosition(3, 1));
+		System.out.println(unNavire.getCaseAccessible(obstacles)/*.keySet()*/.toString());
 		
 	}
 	
@@ -167,7 +167,7 @@ public class Navire {
     			fileDattente.add(v);
     	int deplace = 0;
     	Map<Position,Set<Vector<Object>>> map = new HashMap<Position,Set<Vector<Object>>>();
-    	_getNextCaseAcc(map, deplace, fileDattente, obstacle);
+    	_getNextCaseAcc(map, ++deplace, fileDattente, obstacle);
     	return map;
     }
     
@@ -178,7 +178,7 @@ public class Navire {
      * @param fileDattente : dernières cases atteintes
      */
     private void _getNextCaseAcc( Map<Position,Set<Vector<Object>>> map, int deplace, List<Vector<Object>> fileDattente, Set<Position> obstacle){
-    	if(deplace < this.dep){
+    	if(deplace <= this.dep){
     		List<Vector<Object>> prochaineFileDattente = new LinkedList<Vector<Object>>();
     		for(Vector<Object> vect : fileDattente){
     			
@@ -211,7 +211,6 @@ public class Navire {
     				}
     			}
     		}
-    		System.out.println(deplace);
     		_getNextCaseAcc(map, ++deplace, prochaineFileDattente, obstacle);
     	}
     }
