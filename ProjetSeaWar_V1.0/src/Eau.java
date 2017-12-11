@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.util.*;
 
 /**
@@ -17,7 +18,11 @@ public class Eau extends Case {
         estOccupe = false;
     }
     
-    public Boolean getEstOccupe(){
+    public Eau(int i, int j) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Boolean getEstOccupe(){
         return estOccupe;  
     }
     
