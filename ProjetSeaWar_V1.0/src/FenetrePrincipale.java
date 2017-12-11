@@ -9,7 +9,7 @@ import javax.swing.event.ChangeListener;
 public class FenetrePrincipale extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public final static String titreFenetre = "Sea War"; //titre de la fenetre de jeu
-	public final static int nBoutonsHaut = 3; //différent de zéro, nombre de boutons en haut
+	public final static int nBoutonsHaut = 3; //diffÃ©rent de zÃ©ro, nombre de boutons en haut
 	public final static int largeurMenuHaut = 2; //approximativement la largeur du menu en haut en pourcentage
 	public final static int largeurMenuGauche = 30; //approximativement la largeur du menu a gauche en pourcentage
 	public final static int nCasesX = 20;
@@ -30,7 +30,7 @@ public class FenetrePrincipale extends JFrame {
 
 	public FenetrePrincipale() {
 		this.setTitle(titreFenetre);
-		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est créée en plein ecran
+		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est crÃ©Ã©e en plein ecran
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO Demander a sauvegarder en fermant?
 
 		setTailleHex(30);
@@ -124,12 +124,12 @@ public class FenetrePrincipale extends JFrame {
 			col = c;
 		}
 	}
-	//crée un hexagone au coordonnées pixel x0,y0 (!!! pour l'insant, x0 et y0 sont les coordonnées en pixels)
+	//crÃ©e un hexagone au coordonnÃ©es pixel x0,y0 (!!! pour l'insant, x0 et y0 sont les coordonnÃ©es en pixels)
 	public static Polygon hexagone(int x0, int y0) {
 		int x = x0;
 		int y = y0;
 
-		int[] cx, cy; // tableau de coordonnées x et y de tous les points d'un hexagone en commencant par le point en haut à gauche
+		int[] cx, cy; // tableau de coordonnÃ©es x et y de tous les points d'un hexagone en commencant par le point en haut Ã  gauche
 
 		cx = new int[] {x+resteX,x+longueurCote+resteX,x+longueurCote+resteX+resteX,x+longueurCote+resteX,x+resteX,x,x+resteX};
 		cy = new int[] {y,y,y+apotheme,y+apotheme+apotheme,y+apotheme+apotheme,y+apotheme,y};
@@ -159,12 +159,12 @@ public class FenetrePrincipale extends JFrame {
 		}
 
 
-		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement à l'autre
+		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement Ã  l'autre
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'éviter des effets de bords moches
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'Ã©viter des effets de bords moches
 			super.paintComponent(g);
 			cg = g2;
-			for (int i=0;i<nCasesX;i++) {	//TODO Cela ne marche que pour une grille carrée. Créer une méthode si le type de grille change
+			for (int i=0;i<nCasesX;i++) {	//TODO Cela ne marche que pour une grille carrÃ©e. CrÃ©er une mÃ©thode si le type de grille change
 				for (int j=0;j<nCasesY;j++) {
 					drawHex(i,j,g2);
 				}
@@ -221,3 +221,4 @@ public class FenetrePrincipale extends JFrame {
 		FenetrePrincipale f = new FenetrePrincipale();
 	}
 }
+
