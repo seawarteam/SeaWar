@@ -70,5 +70,10 @@ public class Partie {
     	// TODO l'hexagone (x,y) a été cliqué, il faut faire qqch...
     	
     }
+	
+    public Joueur getJoueur() {
+    	return currentJ;
+    }
+
 
 }
