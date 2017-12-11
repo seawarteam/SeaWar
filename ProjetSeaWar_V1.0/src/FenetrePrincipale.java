@@ -1,6 +1,9 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -24,8 +27,13 @@ public class FenetrePrincipale extends JFrame {
 	private Partie partie;
 	
 	private static PolyCar tab[][] = new PolyCar[nCasesX][nCasesY];
+
 	private JPanel plateau;
 	private JScrollPane scroll;
+	private InfoJoueur infoJoueur;
+	private InfoCase infoCase;
+	private ActionBateau actionsBateau;
+	private JButton finTour;
 
 
 	public FenetrePrincipale() {
@@ -35,8 +43,10 @@ public class FenetrePrincipale extends JFrame {
 
 		setTailleHex(30);
 		initTabHex();
-		partie = new Partie(new String[]{"cc","gg"}, 2);
+		partie = new Partie(new String[]{"J1","J2"}, 2);
 
+
+		
 		JPanel panPrincipal = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -61,8 +71,7 @@ public class FenetrePrincipale extends JFrame {
 		gbc.weighty = 100;
 		gbc.gridx = nBoutonsHaut;
 		gbc.gridheight = 2;
-		JPanel menuGauche = new JPanel(new GridLayout(5,1));
-		initSliderTailleHex(menuGauche);
+		MenuGauche menuGauche = new MenuGauche();
 		panPrincipal.add(menuGauche, gbc);
 		
 		gbc.weightx = 100-largeurMenuGauche;
@@ -94,26 +103,7 @@ public class FenetrePrincipale extends JFrame {
 		resteX =(int) (dapotheme - (dlcote/4));	
 	}
 	
-	public void initSliderTailleHex(JPanel panel) {
-		JSlider slider = new JSlider();
-		slider.setMaximum(100);
-		slider.setMinimum(10);
-		slider.setValue(longueurCote);
-		slider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				int valeur = ( (JSlider) e.getSource()).getValue();
-				setTailleHex(valeur);
-				scroll.repaint();
-				scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
-				scroll.getHorizontalScrollBar().setUnitIncrement(resteX+longueurCote);
-				plateau.setPreferredSize(new Dimension(nCasesX*(resteX+longueurCote)+resteX,(2*apotheme)*nCasesY+apotheme));
-				scroll.revalidate();
-			}
-		});
-		
-		
-		panel.add(slider);
-	}
+
 	
 	
 	public static class PolyCar{ //combinaison d'un polygone , une cooleur et plus peut etre
@@ -215,10 +205,192 @@ public class FenetrePrincipale extends JFrame {
 		repaint();
 	}
 
+	class InfoJoueur extends JLabel{
+		private static final long serialVersionUID = 9053249404465682334L;
+		
+		public InfoJoueur(String nomJoueur) {
+			super();
+			setHorizontalAlignment(CENTER);
+			setVerticalAlignment(NORTH);
+			setFont(new Font(Font.SERIF,Font.PLAIN,32));
+			setText("Joueur : " + nomJoueur);
+		}
+		
+		public void changerJoueur(String nomJoueur) {
+			setText("Joueur : " + nomJoueur);
+		}
+	}
+	
+	class InfoCase extends JPanel{
+		private static final long serialVersionUID = -8644027093047733015L;
+		private JLabel typeCase;
+		private JLabel bateau;
+		
+		public InfoCase() {
+			super(new GridLayout(2,1));
+			typeCase = new JLabel("Case de type :");
+			bateau = new JLabel("bateau :");
+			this.add(typeCase);
+			this.add(bateau);
+		}
+		
+		public void setNomCase(String type) {
+			typeCase.setText("Case de type "+type);
+		}
+		
+		public void setBateau(String nomBateau) {
+			bateau.setText("bateau : "+ nomBateau);
+		}
+		
+	}
+	
+	class ActionBateau extends JPanel{
+		private static final long serialVersionUID = 3038068045018435496L;
+		private JButton deplacement;
+		private JButton tir;
+		
+		public ActionBateau() {
+			super(new GridBagLayout());
+			GridBagConstraints gab = new GridBagConstraints();
+			
+			deplacement = new JButton("Deplacer");
+			deplacement.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// TODO demander au controleur d'afficher les cases ou on peut se deplacer 
+					System.out.println("deplacer appuye");
+				}
+			});
+			
+			tir = new JButton("Tirer");
+			tir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// TODO demander au controleur ou on peut tirer
+					System.out.println("tirer appuye");
+				}
+			});
+			
 
+			gab.weightx = 100;
+			gab.weighty = 50;
+			gab.fill = GridBagConstraints.BOTH;
+			gab.gridx = 0;
+			gab.gridy = 0;
+			gab.insets = new Insets(10, 10, 10, 10);
+			add(deplacement, gab);
+			
+			gab.gridy = 1;
+			add(tir,gab);
+		}
+		
+	}
+	
+	class SliderTaille extends JPanel{
+		private static final long serialVersionUID = 1L;
+		JSlider slider;
+		JLabel legende;
+		
+		public SliderTaille() {
+			super(new GridLayout(2,1));
+			slider = new JSlider();
+			slider.setMaximum(100);
+			slider.setMinimum(10);
+			slider.setValue(longueurCote);
+			slider.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					int valeur = ( (JSlider) e.getSource()).getValue();
+					setTailleHex(valeur);
+					scroll.repaint();
+					scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
+					scroll.getHorizontalScrollBar().setUnitIncrement(resteX+longueurCote);
+					plateau.setPreferredSize(new Dimension(nCasesX*(resteX+longueurCote)+resteX,(2*apotheme)*nCasesY+apotheme));
+					scroll.revalidate();
+				}
+			});
+			
+			legende = new JLabel("Taille des hexagones : ");
+			add(legende);
+			add(slider);
+		}
+	}
+	
+	class BoutonFinTour extends JButton implements MouseListener{
+		private static final long serialVersionUID = 4980038874495857453L;
+		
+		public BoutonFinTour() {
+			super("Fin tour");
+			setBackground(Color.WHITE);
+			this.addMouseListener(this);
+			setFont(new Font(Font.SERIF,Font.BOLD,20));
+		}
+		
+		
+		public void mouseClicked(MouseEvent e) {
+			//TODO appeler fintour dans le controleur
+
+		}
+		
+		public void mouseEntered(MouseEvent e) {
+			this.setBackground(Color.GRAY);
+		}
+		public void mouseExited(MouseEvent e) {
+			setBackground(Color.WHITE);
+		}
+		public void mousePressed(MouseEvent e) {
+		}
+		public void mouseReleased(MouseEvent e) {
+		}
+		
+	}
+	
+	class MenuGauche extends JPanel{
+		private static final long serialVersionUID = 1L;
+		public MenuGauche() {
+			super(new GridBagLayout());
+			GridBagConstraints g = new GridBagConstraints();
+
+			infoJoueur = new InfoJoueur(partie.getJoueur().getNom());
+			infoCase = new InfoCase();
+			actionsBateau = new ActionBateau();
+			finTour = new BoutonFinTour();
+
+
+			g.weightx = 100;
+			g.weighty = 10;
+			g.fill = GridBagConstraints.BOTH;
+			g.gridx = 0;
+			g.gridy = 0;
+			add(infoJoueur, g);
+			
+			g.gridy = 1;
+			g.weighty = 50;
+			add(infoCase,g);
+			
+			g.gridy = 2;
+			g.weighty = 30;
+			add(actionsBateau,g);
+
+			g.gridy = 3;
+			g.weighty = 5;
+			add(new SliderTaille(), g);
+			
+			g.gridy = 4;
+			g.weighty = 5;
+			add(finTour,g);
+		}
+	}
+	
+	public void updateCaseTir() {
+		
+	}
+	
+	public void updateCaseDeplacement() {
+		
+	}
+	
+	
+	
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
 		FenetrePrincipale f = new FenetrePrincipale();
 	}
 }
-
