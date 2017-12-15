@@ -15,7 +15,7 @@ public class Joueur {
 	
 	private String nom;
 	private List<Navire> navires;
-	private Navire currentN;// Navire selectionné dans l'interface
+	private Navire currentN;// Navire selectionnÃ© dans l'interface
 	
     /**
      * Default constructor
