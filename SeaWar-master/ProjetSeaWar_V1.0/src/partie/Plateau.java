@@ -95,5 +95,34 @@ public class Plateau {
     public Case[][] getCases(){
     	return cases;
     }
+    
+    public void surbrillanceO(Set<Position> s){
+    	for(Position p : s){
+    		cases[p.getX()][p.getY()+(int)p.getX()/2].surbrillanceO();
+    	}
+    }
+    
+    public void surbrillanceD(Set<Position> s){
+    	for(Position p : s){
+    		cases[p.getX()][p.getY()+(int)p.getX()/2].surbrillanceD();
+    	}
+    }
+    
+    public void surbrillanceT(Set<Position> s){
+    	for(Position p : s){
+    		cases[p.getX()][p.getY()+(int)p.getX()/2].surbrillanceT();
+    	}
+    }
+    
+
+
+	public void ResetCouleur() {
+		for(int i=0; i < nCasesX; i++) {
+			for (int j=0; j < nCasesY; j++) {
+				cases[i][j].ResetCouleur();
+			}
+		}
+		
+	}
 
 }

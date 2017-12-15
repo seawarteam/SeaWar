@@ -30,11 +30,14 @@ public class Navire extends Observable{
 		nav.addCanon(canonP, canonS);
 		nav.initTour();
 		
-		
+		/*
 		nav.afficherCasesAccessibles(new HashSet<Position>());
 		nav.findOrientationsPossibles(Position.getPosition(2, 1), new HashSet<Position>());
 		System.out.println(nav.affichageCaseAccessible.toString());
-		System.out.println(nav.orientationsPossibles.toString());
+		System.out.println(nav.orientationsPossibles.toString());*/
+		
+		
+		System.out.println(caseVoisine.toString());
 	}
 	
 	
@@ -54,10 +57,6 @@ public class Navire extends Observable{
 	 private boolean aEteDeplace;
 	 private int dep;
 	 private int nb_coup_recu;
-	 private Set<Position> affichageCaseAccessible;
-	 private Set<Position> casesVisableCanonP;
-	 private Set<Position> casesVisableCanonS;
-	 private Set<Orientation> orientationsPossibles;
 	 /*TODO: déplacer dans la Classe Plateau ???*/
 	 private static Map<Orientation,List<Vector<Object>>> caseVoisine;
 	
@@ -86,6 +85,9 @@ public class Navire extends Observable{
     	this.canonP = P;
     }
     
+    public EtatDeplacement getEtat(){
+    	return etatCourant;
+    }
     
     public Position getPos() {
     	return this.pos;
@@ -107,20 +109,8 @@ public class Navire extends Observable{
     	return aDejaTire;
     }
     
-    public Set<Position> getAffichageCaseAccessible() {
-    	return this.affichageCaseAccessible;
-    }
     
-    public Set<Position> getCasesVisableCanonP() {
-    	return this.casesVisableCanonP;
-    }
     
-    public Set<Position> getCasesVisableCanonS() {
-    	return this.casesVisableCanonS;
-    }
-    public Set<Orientation> getOrientationsPossible() {
-		return orientationsPossibles;
-	}
     
     public void initTour() {
     	//TODO: changer les états
@@ -198,19 +188,23 @@ public class Navire extends Observable{
     	notifyObservers(this); //TODO:
     }
     
+    public void getPrivateInfo() {
+		// TODO Auto-generated method stub
+		
+	}
+    
     
     
     /*TODO: Stocker dans une variable d'instance le résultat de la fonction : "getCaseAccessible(obstacle)"
     *	+ créer un booléen pour savoir si le résultat est à jour
     *	=> but : limité l'appel de la fonction dans les 4 fonctions ci-dessous
     **/
-    public void afficherCasesAccessibles(Set<Position> obstacle) {
+    public Set<Position> afficherCasesAccessibles(Set<Position> obstacle) {
     	Map<Position,Set<Vector<Object>>> MapCases = getCaseAccessible(obstacle);
-    	this.affichageCaseAccessible = MapCases.keySet();
-    	notifyObservers(this.affichageCaseAccessible);// TODO:
+    	return MapCases.keySet();
     }
     
-    public void afficherCasesVisableCanonP(Set<Position> obstacle){
+    public Set<Position> afficherCasesVisableCanonP(Set<Position> obstacle){
     	Map<Position,Set<Vector<Object>>> mapCasesAcc = getCaseAccessible(obstacle);
     	Set<Position> resultat = new HashSet<Position>();
     	
@@ -230,11 +224,10 @@ public class Navire extends Observable{
 		for(Position cell : cellCible){
 			resultat.add(cell);
 		}
-    	this.casesVisableCanonP = resultat;
-    	notifyObservers(this.casesVisableCanonP);// TODO:
+    	return resultat;
     }
     
-    public void afficherCasesVisableCanonS(Set<Position> obstacle){
+    public Set<Position> afficherCasesVisableCanonS(Set<Position> obstacle){
     	Map<Position,Set<Vector<Object>>> mapCasesAcc = getCaseAccessible(obstacle);
     	Set<Position> resultat = new HashSet<Position>();
     	
@@ -254,24 +247,52 @@ public class Navire extends Observable{
 		for(Position cell : cellCible){
 			resultat.add(cell);
 		}
-    	this.casesVisableCanonS = resultat;
-    	notifyObservers(this.casesVisableCanonP);// TODO:
+    	return resultat;
     }
     
-    public void findOrientationsPossibles(Position pos, Set<Position> obstacle) {
+    public Set<Position> findOrientationsPossibles(Position pos, Set<Position> obstacle) {
     	Set<Vector<Object>> setVectPos = getCaseAccessible(obstacle).get(pos);
-    	Set<Orientation> resultat = new HashSet<Orientation>();
+    	Set<Position> resultat = new HashSet<Position>();
     	
 	    if(setVectPos != null) {
 	    	for(Vector<Object> vect : setVectPos) {
 	    		Orientation dir = (Orientation) vect.get(0);
-	    		resultat.add(dir);
+	    		Position p = null;
+	    		if(dir == Orientation.N) {
+	    			p = Position.getPosition(pos.getX(), pos.getY() - 1);
+	    		}
+	    		if(dir == Orientation.NO) {
+	    			p = Position.getPosition(pos.getX() - 1, pos.getY());
+	    		}
+	    		if(dir == Orientation.NE) {
+	    			p = Position.getPosition(pos.getX() + 1, pos.getY() - 1);
+	    		}
+	    		if(dir == Orientation.S) {
+	    			p = Position.getPosition(pos.getX(), pos.getY() + 1);
+	    		}
+	    		if(dir == Orientation.SO) {
+	    			p = Position.getPosition(pos.getX() - 1, pos.getY() + 1);
+	    		}
+	    		if(dir == Orientation.SE) {
+	    			p = Position.getPosition(pos.getX() + 1, pos.getY());
+	    		}
+	    		resultat.add(p);
 	    	}
-	    	this.orientationsPossibles = resultat;
+	    	return resultat;
 	    } else {
-	    	this.orientationsPossibles = null;
+	    	return null;
 	    }
-	    notifyObservers(this.orientationsPossibles);// TODO:
+    }
+    
+    public int getPathLengh(Position pos, Orientation dir, Set<Position> obstacle) {
+    	
+    	Set<Vector<Object>> setCasesAcc = getCaseAccessible(obstacle).get(pos);
+    	for (Vector<Object> vect : setCasesAcc) {
+    		if (vect.get(0).equals(dir)) {
+    			return ((Integer) vect.get(1)).intValue();
+    		}
+    	}
+    	return -1;
     }
     
     
@@ -434,6 +455,13 @@ public class Navire extends Observable{
 	public Canons getCanonP() {
 		return canonP;
 	}
+	public String getNomJ() {
+		return nomJ;
+	}
+	public void setNomJ(String nomJ) {
+		this.nomJ = nomJ;
+	}
+	
 	
 	
 	

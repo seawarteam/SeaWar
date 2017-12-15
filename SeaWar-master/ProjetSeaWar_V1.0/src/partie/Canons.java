@@ -1,12 +1,12 @@
 package partie;
 
 import java.util.*;
-import java.io.Serializable;
+
 
 /**
  * 
  */
-public class Canons implements Serializable {
+public class Canons {
 	
 	public static void main(String [] args) {
 		
@@ -121,14 +121,14 @@ public class Canons implements Serializable {
 		int y = posi.getY();
 		for(Position pos : posRela) {
 			Position reel = Position.getPosition(x+pos.getX(),y+pos.getY());
-			//TODO: Checker si la ligne de vue est dÃ©gagÃ©e
+			//TODO: Checker si la ligne de vue est dégagée
 			if(reel != null) posReel.add(reel);
 		}
 		return posReel;
 	}
 
 	/**
-	 * CrÃ©Ã©e une matrice contenant les positions relative par rapport au navire d'indicer par l'orientation du navire
+	 * Créée une matrice contenant les positions relative par rapport au navire d'indicer par l'orientation du navire
 	 * ex: Mat[dir] => positions que l'on peut tirer avec l'orientation dir
 	 * @param zone == this.zoneTire : les positions que l'on peut tirer avec l'orientation du navire vers le Nord
 	 * @return la matrice

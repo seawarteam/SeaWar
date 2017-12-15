@@ -10,6 +10,7 @@ import java.util.*;
 public class Rocher extends Case {
 
     public static final Color couleurVide = Color.YELLOW;
+    public static final Color couleurTir = Color.GRAY;
 	
     public Rocher(Polygon p, int i, int j) {
     	poly = p;
@@ -23,18 +24,31 @@ public class Rocher extends Case {
         return true;
     }
 
-	
+    public void ResetCouleur() {
+		if(col != couleurVide){
+			col = couleurVide;
+			notifyObservers(this);			
+		}
+	}
+    
 	public void takeCase(Navire n){
 		//Ne rien faire
 	}
 
 	public void surbrillanceT() {
+		col = couleurTir;
+	}
+	
+	public void surbrillanceO(){
 		//Ne rien faire
 	}
 
-	@Override
+	
 	public void surbrillanceD() {
 		//Ne rien faire
 	}
+
+	
+	
 }
 

@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * 
  */
-public abstract class Case {
+public abstract class Case extends Observable{
 
 	public boolean estOccupe;
 	public Navire takePosition;
@@ -22,7 +22,7 @@ public abstract class Case {
     	estOccupe = false;
     	takePosition = null;
 		col = c;
-		position = new Position(i, j);
+		position = Position.getPosition(i, j);
     }
     
     public Case(){
@@ -32,6 +32,8 @@ public abstract class Case {
     public abstract void takeCase(Navire n);
     public abstract void surbrillanceT();
     public abstract void surbrillanceD();
+    public abstract void surbrillanceO();
+    public abstract void ResetCouleur();
     
     public List getInfo() {
         // TODO implement here
@@ -49,16 +51,8 @@ public abstract class Case {
     public void setTakePosition(Navire n) {
     	takePosition = n;
     }
+
+	
     
-    public Color getColor() {
-    	return col;
-    }
-    
-    public Position getPosition() {
-    	return position;
-    }
-    
-    public String toString() {
-    	return "Case de type "+"vide";
-    }
+
 }

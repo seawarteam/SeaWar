@@ -15,7 +15,7 @@ public class Joueur {
 	
 	private String nom;
 	private List<Navire> navires;
-	private Navire currentN;// Navire selectionnÃ© dans l'interface
+	private Navire currentN;// Navire selectionné dans l'interface
 	
     /**
      * Default constructor
@@ -95,6 +95,14 @@ public class Joueur {
 
 	public Navire getCurrentN() {
 		return currentN;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public void setCurrentN(Navire currentN) {
+		this.currentN = currentN;
 	}
 
 

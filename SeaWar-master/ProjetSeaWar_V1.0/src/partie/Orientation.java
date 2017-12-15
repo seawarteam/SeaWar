@@ -14,4 +14,29 @@ public enum Orientation {
     	this.value = value;
     }
     
+    public static Orientation getOrientation (Position fromP, Position toP) {
+    	int x = toP.getX() - fromP.getX();
+    	int y = toP.getY() - fromP.getY();
+    	
+    	if(x==0 && y==-1) {
+    		return Orientation.N;
+    	}
+    	if(x==1 && y==-1) {
+    		return Orientation.NE;
+    	}
+    	if(x==-1 && y==0) {
+    		return Orientation.SE;
+    	}
+    	if(x==0 && y==1) {
+    		return Orientation.S;
+    	}
+    	if(x==-1 && y==1) {
+    		return Orientation.SO;
+    	}
+    	if(x==-1 && y==0) {
+    		return Orientation.NO;
+    	}
+		return null;
+    }
+    
 }

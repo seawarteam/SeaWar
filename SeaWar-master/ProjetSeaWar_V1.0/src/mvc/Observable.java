@@ -27,17 +27,17 @@ public class Observable {
 		hasChanged = false;
 	}
 	
-	public void notifyObserver(Observer o){
+	public void notifyObserver(Observer o, Object obj){
 		if(hasChanged){
-			o.update();
+			o.update(obj);
 		}
 		clearChange();
 	}
 	
-	public void notifyObservers(){
+	public void notifyObservers(Object obj){
 		if(hasChanged){
 			for(Observer o : obs){
-				o.update();
+				o.update(obj);
 			}
 		}
 		clearChange();

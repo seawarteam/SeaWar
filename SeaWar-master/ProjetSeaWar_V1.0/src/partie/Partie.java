@@ -96,4 +96,42 @@ public class Partie extends Observable{
 		return null;
 	}
 
+	public Case getCaseOnPos(Position pos) {
+		Case [][] c = plateau.getCases();
+		return c[pos.getX()][pos.getY()+(int)pos.getX()/2];
+		
+	}
+
+	public Joueur getCurrentJ() {
+		return currentJ;
+	}
+
+	public void setCurrentJ(Joueur currentJ) {
+		this.currentJ = currentJ;
+	}
+	
+	public void surbrillanceO(Set<Position> s){
+		plateau.surbrillanceO(s);
+	}
+	
+	public void surbrillanceD(Set<Position> s) {
+		plateau.surbrillanceD(s);
+	}
+	
+	public void surbrillanceT(Set<Position> s) {
+		plateau.surbrillanceT(s);
+	}
+
+	public void notifier(Object nav) {
+		notifyObservers(nav);
+		
+	}
+
+	public void ResetCouleur() {
+		plateau.ResetCouleur();
+		
+	}
+
+	
+
 }

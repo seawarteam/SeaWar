@@ -1,5 +1,7 @@
 package partie;
 
+import java.util.Set;
+
 import etatActivite.*;
 
 public class Controleur {
@@ -12,6 +14,7 @@ public class Controleur {
 	}
 	
 	public void setEtat(EtatAction e) {
+		partie.ResetCouleur();
 		etat = e;
 	}
 	public Partie getPartie() {
@@ -28,15 +31,24 @@ public class Controleur {
 	}
 	
 	public void demandeDeplacement() {
-		// TODO s'occuper de la demande de se deplacer (appui sur le bouton deplacer)
+		Navire nav = partie.getCurrentJ().getCurrentN();
+		Set<Position> obstacle = partie.getObstacle();
+		partie.surbrillanceD(nav.afficherCasesAccessibles(obstacle));
+		etat = EtatDeplacement.getEtat();
 	}
 	
 	public void demandeTirP() {
-		// TODO s'occuper de la demande de tirer avec le canon primaire (appui sur le bouton tir primaire)
+		Navire nav = partie.getCurrentJ().getCurrentN();
+		Set<Position> obstacle = partie.getObstacle();
+		partie.surbrillanceT(nav.afficherCasesVisableCanonP(obstacle));
+		etat = EtatDeplacement.getEtat();
 	}
 	
 	public void demandeTirS() {
-		// TODO s'occuper de la demande de tirer avec le canon secondaire (appui sur le bouton tir secondaire)
+		Navire nav = partie.getCurrentJ().getCurrentN();
+		Set<Position> obstacle = partie.getObstacle();
+		partie.surbrillanceT(nav.afficherCasesVisableCanonS(obstacle));
+		etat = EtatDeplacement.getEtat();
 	}
 
 	
