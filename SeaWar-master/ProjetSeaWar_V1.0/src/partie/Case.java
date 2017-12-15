@@ -50,5 +50,15 @@ public abstract class Case {
     	takePosition = n;
     }
     
-
+    public Color getColor() {
+    	return col;
+    }
+    
+    public Position getPosition() {
+    	return position;
+    }
+    
+    public String toString() {
+    	return "Case de type "+"vide";
+    }
 }
