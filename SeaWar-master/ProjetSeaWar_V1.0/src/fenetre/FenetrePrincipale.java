@@ -2,7 +2,6 @@ package fenetre;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Set;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -13,7 +12,7 @@ import mvc.*;
 public class FenetrePrincipale extends JFrame implements Observer{
 	private static final long serialVersionUID = 1L;
 	public final static String titreFenetre = "Sea War"; //titre de la fenetre de jeu
-	public final static int nBoutonsHaut = 3; //diffÃ©rent de zÃ©ro, nombre de boutons en haut
+	public final static int nBoutonsHaut = 3; //different de zero, nombre de boutons en haut
 	public final static int largeurMenuHaut = 2; //approximativement la largeur du menu en haut en pourcentage
 	public final static int largeurMenuGauche = 30; //approximativement la largeur du menu a gauche en pourcentage
 	public final static int nCasesX = 20;
@@ -23,12 +22,9 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	private static int apotheme; //apotheme = distance entre le centre et le milieu d'un cote
 	private static int resteX;	//resteX : longueur du 'triangle' sur un cote de l'hexagone
 
-	private Graphics2D cg;
-
 	private static Partie partie;
 	private Controleur controleur;
 	
-
 	private JPanel plateau;
 	private JScrollPane scroll;
 	private InfoJoueur infoJoueur;
@@ -39,7 +35,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 
 	public FenetrePrincipale() {
 		this.setTitle(titreFenetre);
-		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est crÃ©Ã©e en plein ecran
+		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est cree en plein ecran
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO Demander a sauvegarder en fermant?
 
 		
@@ -93,78 +89,14 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		scroll.getHorizontalScrollBar().setUnitIncrement(resteX+longueurCote);
 
 		panPrincipal.add(scroll, gbc);
-
-
+		
 		this.setContentPane(panPrincipal);
 		this.setVisible(true);
 
 	}	
 
-	public void setTailleHex(int tailleCote) {
-		longueurCote = tailleCote;
-		double dlcote = longueurCote;
-		apotheme = (int) (dlcote * (Math.sqrt(3)/2)); 
-		double dapotheme = apotheme;
-		resteX =(int) (dapotheme - (dlcote/4));	
-	}
 	
-
-	
-	
-	public static class PolyCar{ //combinaison d'un polygone , une cooleur et plus peut etre
-		public Polygon poly;
-		public Color col;
-		public PolyCar(Polygon p, Color c) {
-			poly = p;
-			col = c;
-		}
-	}
-	//crÃ©e un hexagone au coordonnÃ©es pixel x0,y0 (!!! pour l'insant, x0 et y0 sont les coordonnÃ©es en pixels)
-	public static Polygon hexagone(int x0, int y0) {
-		int x = x0;
-		int y = y0;
-
-		int[] cx, cy; // tableau de coordonnÃ©es x et y de tous les points d'un hexagone en commencant par le point en haut Ã  gauche
-
-		cx = new int[] {x+resteX,x+longueurCote+resteX,x+longueurCote+resteX+resteX,x+longueurCote+resteX,x+resteX,x,x+resteX};
-		cy = new int[] {y,y,y+apotheme,y+apotheme+apotheme,y+apotheme+apotheme,y+apotheme,y};
-		return new Polygon(cx,cy,6);
-	}
-
-	// Le Panel du plateau d'hexagones
-	class DrawingPanel extends JPanel {
-		private static final long serialVersionUID = 1L;
-		public DrawingPanel() {
-			setPreferredSize(new Dimension(nCasesX*(resteX+longueurCote)+resteX,(2*apotheme)*nCasesY+apotheme));
-			
-				setBackground(Color.BLACK);
-			MyMouseListener ml = new MyMouseListener();            
-			addMouseListener(ml);
-		}
-
-		class MyMouseListener extends MouseAdapter	{
-			public void mouseClicked(MouseEvent e) { 
-				controleur.hexClique(pxtoPosHex(e.getX(),e.getY()));
-			}		
-		}
-
-
-		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement Ã  l'autre
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'Ã©viter des effets de bords moches
-			super.paintComponent(g);
-			cg = g2;
-			for (int i=0;i<nCasesX;i++) {
-				for (int j=0;j<nCasesY;j++) {
-					drawHex(i,j,g2);
-					
-				}
-			}
-			
-		}
-	}
-	
-	public static void drawHex(int i, int j, Graphics2D g2) { //Cee un hexagone en (i,j)
+	public static void drawHex(int i, int j, Graphics2D g2) { //Cree un hexagone en (i,j)
 		int x = i * (longueurCote+resteX);
 		int y = j * apotheme*2 + (i%2) * apotheme;
 		Polygon polyg = hexagone(x,y);
@@ -174,6 +106,23 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		g2.fillPolygon(polyg);
 		g2.setColor(Color.BLACK);
 		g2.drawPolygon(polyg);
+	}
+	
+	//cree un hexagone au coordonnees pixel x0,y0 (!!! pour l'insant, x0 et y0 sont les coordonnees en pixels)
+	public static Polygon hexagone(int x0, int y0) {
+		int x = x0;
+		int y = y0;
+
+		int[] cx, cy; // tableau de coordonnees x et y de tous les points d'un hexagone en commencant par le point en haut a  gauche
+
+		cx = new int[] {x+resteX,x+longueurCote+resteX,x+longueurCote+resteX+resteX,x+longueurCote+resteX,x+resteX,x,x+resteX};
+		cy = new int[] {y,y,y+apotheme,y+apotheme+apotheme,y+apotheme+apotheme,y+apotheme,y};
+		return new Polygon(cx,cy,6);
+	}
+	
+	public static Point posHextoHex(Position pos){
+		return new Point(pos.getX(), pos.getY() + (int) pos.getX()/2);
+		
 	}
 	
 	public static Point pxtoHex(int mx, int my) { //on a clique sur le pixel (mx,my) et on renvoie le polygone correspondant
@@ -203,54 +152,46 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 		return null;
 	}
-
 	
-	public void changerColCase(int i, int j, Color c) { //Change la couleur d'une seule case par la couleur c
-		Case elt = partie.getPlateau().getCases()[i][j];
-		elt.col = c;
-		cg.fillPolygon(elt.poly);
+	public void setTailleHex(int tailleCote) {
+		longueurCote = tailleCote;
+		double dlcote = longueurCote;
+		apotheme = (int) (dlcote * (Math.sqrt(3)/2)); 
+		double dapotheme = apotheme;
+		resteX =(int) (dapotheme - (dlcote/4));	
+	}
+	
+	public void update(Object o) {	
+		if(o instanceof Navire) {updateNavire((Navire) o);}
+		else if(o instanceof Case) {updateCase((Case) o);}
+	}
+	
+	private void updateCase(Case c) {	
+	/*	La case c a change ses caracteristiques donc il faut afficher les changements:
+	 * 		-Sa couleur a change
+	 * 		-???
+	 * 
+	 */
+		infoCase.setBateau("");
+		infoCase.setNomCase(c.toString());
+		infoCase.revalidate();
 		repaint();
 	}
+	
+	private void updateNavire(Navire n) {
+		/*	Le bateau n a change, c'est par ailleur celui qui est clique
+		 * 
+		 */
+		Navire navireCourant = partie.currentJ.getCurrentN();
+		if(n.equals(navireCourant)) {
+			actionsBateau.setVisible(true);
+		} else {actionsBateau.setVisible(false);}
+		infoCase.setNomCase(partie.plateau.getCases()[posHextoHex(n.getPos()).x][posHextoHex(n.getPos()).y].toString());
+		infoCase.setBateau(n.toString());
+		infoCase.revalidate();
+	}
+	
 
-	class InfoJoueur extends JLabel{
-		private static final long serialVersionUID = 9053249404465682334L;
-		
-		public InfoJoueur(String nomJoueur) {
-			super();
-			setHorizontalAlignment(CENTER);
-			setVerticalAlignment(NORTH);
-			setFont(new Font(Font.SERIF,Font.PLAIN,32));
-			setText("Joueur : " + nomJoueur);
-		}
-		
-		public void changerJoueur(String nomJoueur) {
-			setText("Joueur : " + nomJoueur);
-		}
-	}
-	
-	class InfoCase extends JPanel{
-		private static final long serialVersionUID = -8644027093047733015L;
-		private JLabel typeCase;
-		private JLabel bateau;
-		
-		public InfoCase() {
-			super(new GridLayout(2,1));
-			typeCase = new JLabel("Case de type :");
-			bateau = new JLabel("bateau :");
-			this.add(typeCase);
-			this.add(bateau);
-		}
-		
-		public void setNomCase(String type) {
-			typeCase.setText("Case de type "+type);
-		}
-		
-		public void setBateau(String nomBateau) {
-			bateau.setText("bateau : "+ nomBateau);
-		}
-		
-	}
-	
 	class ActionBateau extends JPanel{
 		private static final long serialVersionUID = 3038068045018435496L;
 		private JButton deplacement;
@@ -300,37 +241,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 		
 	}
-	
-	class SliderTaille extends JPanel{
-		private static final long serialVersionUID = 1L;
-		JSlider slider;
-		JLabel legende;
-		
-					
-		public SliderTaille() {
-			super(new GridLayout(2,1));
-			slider = new JSlider();
-			slider.setMaximum(100);
-			slider.setMinimum(10);
-			slider.setValue(longueurCote);
-			slider.addChangeListener(new ChangeListener() {
-				public void stateChanged(ChangeEvent e) {
-					int valeur = ( (JSlider) e.getSource()).getValue();
-					setTailleHex(valeur);
-					scroll.repaint();
-					scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
-					scroll.getHorizontalScrollBar().setUnitIncrement(resteX+longueurCote);
-					plateau.setPreferredSize(new Dimension(nCasesX*(resteX+longueurCote)+resteX,(2*apotheme)*nCasesY+apotheme));
-					scroll.revalidate();
-				}
-			});
-			
-			legende = new JLabel("Taille des hexagones : ");
-			add(legende);
-			add(slider);
-		}
-	}
-	
+
 	class BoutonFinTour extends JButton implements MouseListener{
 		private static final long serialVersionUID = 4980038874495857453L;
 		
@@ -357,6 +268,77 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		public void mouseReleased(MouseEvent e) {
 		}
 		
+	}
+	
+	// Le Panel du plateau d'hexagones
+	class DrawingPanel extends JPanel {
+		private static final long serialVersionUID = 1L;
+		public DrawingPanel() {
+			setPreferredSize(new Dimension(nCasesX*(resteX+longueurCote)+resteX,(2*apotheme)*nCasesY+apotheme));
+			
+				setBackground(Color.BLACK);
+			MyMouseListener ml = new MyMouseListener();            
+			addMouseListener(ml);
+		}
+
+		class MyMouseListener extends MouseAdapter	{
+			public void mouseClicked(MouseEvent e) { 
+				controleur.hexClique(pxtoPosHex(e.getX(),e.getY()));
+			}		
+		}
+
+
+		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement Ã  l'autre
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'eviter des effets de bords moches
+			super.paintComponent(g);
+			for (int i=0;i<nCasesX;i++) {
+				for (int j=0;j<nCasesY;j++) {
+					drawHex(i,j,g2);
+					
+				}
+			}
+			
+		}
+	}
+	
+	class InfoCase extends JPanel{
+		private static final long serialVersionUID = -8644027093047733015L;
+		private JLabel typeCase;
+		private JLabel bateau;
+		
+		public InfoCase() {
+			super(new GridLayout(2,1));
+			typeCase = new JLabel("Case de type :");
+			bateau = new JLabel("bateau :");
+			this.add(typeCase);
+			this.add(bateau);
+		}
+		
+		public void setNomCase(String type) {
+			typeCase.setText("Case de type "+type);
+		}
+		
+		public void setBateau(String nomBateau) {
+			bateau.setText("bateau : "+ nomBateau);
+		}
+		
+	}
+
+	class InfoJoueur extends JLabel{
+		private static final long serialVersionUID = 9053249404465682334L;
+		
+		public InfoJoueur(String nomJoueur) {
+			super();
+			setHorizontalAlignment(CENTER);
+			setVerticalAlignment(NORTH);
+			setFont(new Font(Font.SERIF,Font.PLAIN,32));
+			setText("Joueur : " + nomJoueur);
+		}
+		
+		public void changerJoueur(String nomJoueur) {
+			setText("Joueur : " + nomJoueur);
+		}
 	}
 	
 	class MenuGauche extends JPanel{
@@ -396,62 +378,41 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 	}
 	
-	
-	
-	public static Point posHextoHex(Position pos){
-		return new Point(pos.getX(), pos.getY() + (int) pos.getX()/2);
+	class SliderTaille extends JPanel{
+		private static final long serialVersionUID = 1L;
+		JSlider slider;
+		JLabel legende;
 		
-	}
-	
-	public void updateCaseTirP() {
-		Case[][] elt = partie.getPlateau().getCases();
-		Set<Position> casesPos = partie.currentJ.getCurrentN().getCasesVisableCanonP();
-		for(Position pos : casesPos){
-			Point p = posHextoHex(pos);
-			//tab[p.x][p.y].col = nav.getColorCanonP();
-			elt[p.x][p.y].col = Color.BLACK;
+					
+		public SliderTaille() {
+			super(new GridLayout(2,1));
+			slider = new JSlider();
+			slider.setMaximum(100);
+			slider.setMinimum(10);
+			slider.setValue(longueurCote);
+			slider.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					int valeur = ( (JSlider) e.getSource()).getValue();
+					setTailleHex(valeur);
+					scroll.repaint();
+					scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
+					scroll.getHorizontalScrollBar().setUnitIncrement(resteX+longueurCote);
+					plateau.setPreferredSize(new Dimension(nCasesX*(resteX+longueurCote)+resteX,(2*apotheme)*nCasesY+apotheme));
+					scroll.revalidate();
+				}
+			});
 			
+			legende = new JLabel("Taille des hexagones : ");
+			add(legende);
+			add(slider);
 		}
-		
-		//repaint();
 	}
-	
-	public void updateCaseTirS() {
-		Case[][] elt = partie.getPlateau().getCases();
-		Set<Position> casesPos = partie.currentJ.getCurrentN().getCasesVisableCanonS();
-		for(Position pos : casesPos){
-			Point p = posHextoHex(pos);
-			//tab[p.x][p.y].col = nav.getColorCanonP();
-			elt[p.x][p.y].col = Color.DARK_GRAY;
-		}
-		//repaint();
-	}
-	
-	public void updateCaseDeplacement() {
-		Case[][] elt = partie.getPlateau().getCases();
-		
-		Set<Position> casesPos = partie.currentJ.getCurrentN().getAffichageCaseAccessible();
-		for(Position pos : casesPos){
-			Point p = posHextoHex(pos);
-			//tab[p.x][p.y].col = nav.getColorDeplacement();
-			elt[p.x][p.y].col = Color.BLUE;
-			
-		}
-		//repaint();
-	}
-	
-	public void update() {
-		updateCaseDeplacement();
-		updateCaseTirS();
-		updateCaseTirP();
-		
-		repaint();
-	}
+
+
 	
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		FenetrePrincipale f = new FenetrePrincipale();
 	}
-
-
 }
 
