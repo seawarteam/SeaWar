@@ -25,7 +25,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	private static Partie partie;
 	private Controleur controleur;
 	
-	private JPanel plateau;
+	private DrawingPanel plateau;
 	private JScrollPane scroll;
 	private InfoJoueur infoJoueur;
 	private InfoCase infoCase;
@@ -103,6 +103,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		Case elt = partie.getPlateau().getCases()[i][j];
 		elt.poly = polyg;
 		g2.setColor(elt.col);
+		//int coeff = 5;
+		//g2.setPaint(new GradientPaint(i*2*(resteX+longueurCote)+longueurCote, j*2*apotheme+apotheme, elt.col, i*2*(resteX+longueurCote)+longueurCote + coeff*longueurCote, j*2*apotheme+apotheme+coeff*apotheme, Color.WHITE, true));
 		g2.fillPolygon(polyg);
 		g2.setColor(Color.BLACK);
 		g2.drawPolygon(polyg);
@@ -175,7 +177,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		infoCase.setBateau("");
 		infoCase.setNomCase(c.toString());
 		infoCase.revalidate();
-		repaint();
+		plateau.repaint();
 	}
 	
 	private void updateNavire(Navire n) {
@@ -273,10 +275,10 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	// Le Panel du plateau d'hexagones
 	class DrawingPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
+		
 		public DrawingPanel() {
 			setPreferredSize(new Dimension(nCasesX*(resteX+longueurCote)+resteX,(2*apotheme)*nCasesY+apotheme));
-			
-				setBackground(Color.BLACK);
+			setBackground(Color.BLACK);
 			MyMouseListener ml = new MyMouseListener();            
 			addMouseListener(ml);
 		}
@@ -288,17 +290,15 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 
 
-		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement Ã  l'autre
+		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement Ãƒ  l'autre
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'eviter des effets de bords moches
 			super.paintComponent(g);
 			for (int i=0;i<nCasesX;i++) {
 				for (int j=0;j<nCasesY;j++) {
 					drawHex(i,j,g2);
-					
 				}
 			}
-			
 		}
 	}
 	
