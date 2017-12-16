@@ -39,8 +39,10 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO Demander a sauvegarder en fermant?
 
 		
+		
 		plateau = new DrawingPanel();
-		partie = jeu;//new Partie(new String[]{"cc","gg"}, 2, nCasesX, nCasesY, 2, 10, (Observer)this);
+		jeu.addObserveur(this);
+		partie =  jeu;
 		controleur = control;//new Controleur(partie);
 		
 		setTailleHex(30);
@@ -290,7 +292,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 
 
-		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement Ãƒ  l'autre
+		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement ÃƒÆ’  l'autre
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'eviter des effets de bords moches
 			super.paintComponent(g);
@@ -367,7 +369,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			g.gridy = 2;
 			g.weighty = 30;
 			add(actionsBateau,g);
-
+			actionsBateau.setVisible(false);
+			
 			g.gridy = 3;
 			g.weighty = 5;
 			add(new SliderTaille(), g);
@@ -375,6 +378,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			g.gridy = 4;
 			g.weighty = 5;
 			add(finTour,g);
+			
+			
 		}
 	}
 	
@@ -412,7 +417,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	
 	public static void main(String[] args) {
 		
-		Partie p = new Partie(new String[]{"cc","gg"}, 2, nCasesX, nCasesY, 2, 10, null);
+		Partie p = new Partie(new String[]{"J1","J2"}, nCasesX, nCasesY, 2, 10, null);
 		Controleur c = new Controleur(p);	
 		FenetrePrincipale f = new FenetrePrincipale(p, c);
 		p.addObserver(f);
