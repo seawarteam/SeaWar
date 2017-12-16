@@ -1,16 +1,16 @@
 package partie;
-import java.awt.Point;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 import java.util.Vector;
 
 import fenetre.FenetrePrincipale;
 
 import List.*;
-import mvc.Observable;
-import mvc.Observer;
+
 
 /**
  * 
@@ -31,7 +31,7 @@ public class Partie extends Observable{
 		
 		/*=============== Fenetre =================*/
 		
-		FenetrePrincipale carte = new FenetrePrincipale(partie, controleur);
+		FenetrePrincipale carte = new FenetrePrincipale();
 		partie.addObserver(carte);
 		
 		/*================ Joueurs ================*/
@@ -42,8 +42,8 @@ public class Partie extends Observable{
 		
 		/*=============== Navire ================*/
 		
-		Vector<Navire> navs1 = j1.ajoutDefaultNavire();
-		Vector<Navire> navs2 = j2.ajoutDefaultNavire();
+		Vector<Navire> navs1 = j1.ajoutDefaultNavire(carte);
+		Vector<Navire> navs2 = j2.ajoutDefaultNavire(carte);
 		Navire Fregate1 = navs1.get(0);
 		Navire Amiral1 = navs1.get(1);
 		Navire Fregate2 = navs2.get(0);
@@ -99,40 +99,38 @@ public class Partie extends Observable{
 	public Plateau plateau;
 	private Iterator<Joueur> iteratorJ;
 	public Joueur currentJ;
+	public Joueur[] listeJ;
 	
 	
     /**
      * Default constructor
      */
-    public Partie(String []nomJ, int nX, int nY, int nbPhares, int nbRochers, mvc.Observer observeur) {
+    public Partie(String []nomJ, int nX, int nY, int nbPhares, int nbRochers, Observer observeur) {
     	Position.initTabPosition(nX, nY);
     	if(observeur != null) {addObserver(observeur);}
-    	plateau = new Plateau(nX, nY, nbPhares, nbRochers);
+    	plateau = new Plateau(nX, nY, nbPhares, nbRochers,observeur);
     	numTour = 1;
     	joueurs = new WheelList<Joueur>();
     	nbJoueurs = nomJ.length;
     	ajoutJoueurs(nomJ, nbJoueurs);
     	iteratorJ = joueurs.getIterator();
     	currentJ = iteratorJ.present();
-    	initDefNavires(getJoueurs());
+    	initDefNavires(getJoueurs(),observeur);
     	initNavires();
     	
     }
     
     public Joueur[] getJoueurs() {
-    	Joueur[] j = new Joueur[nbJoueurs];
-    	for(int i=0; i<nbJoueurs; i++) {
-    		j[i]=iteratorJ.present();
-    		iteratorJ.next();
-    	}
-    	return j;
+    	return listeJ;
     }
     
     private void ajoutJoueurs(String []nomJ, int nbJoueurs){
     	Joueur newJ = null;
+    	listeJ = new Joueur[nbJoueurs];
     	for(int i=0; i<nbJoueurs; i++){
     		newJ = new Joueur(nomJ[i]);
     		joueurs.add(newJ);
+    		listeJ[i]=newJ;
     	}
     }
     public String toString(){
@@ -181,12 +179,11 @@ public class Partie extends Observable{
     }
 
 	public Navire getNavOnPos(Position pos) {
-		//TODO: Ã  Tester !
 		int i = 0;
 		Navire nav = null;
-		while(i<= nbJoueurs) {
-			nav = iteratorJ.next().getNavOnPos(pos);
-			i++;
+		while((i<nbJoueurs) && (nav == null)) {
+			nav = listeJ[i].getNavOnPos(pos);
+			i=i+1;
 		}
 		return nav;
 	}
@@ -236,9 +233,9 @@ public class Partie extends Observable{
 		addObserver(obs);
 	}
 
-	private void initDefNavires(Joueur[] j) {
+	private void initDefNavires(Joueur[] j, Observer obs) {
 		for(Joueur jou : j) {
-			jou.ajoutDefaultNavire();
+			jou.ajoutDefaultNavire(obs);
 		}
 	}
 
