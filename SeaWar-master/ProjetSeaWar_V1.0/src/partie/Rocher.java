@@ -29,8 +29,9 @@ public class Rocher extends Case {
     public void ResetCouleur() {
 		if(col != couleurVide){
 			col = couleurVide;
-			notifyObservers(this);			
-		}
+	    	setChanged();
+	    	notifyObservers(this);
+	    	clearChanged();		}
 	}
     
     public String toString() {
@@ -52,7 +53,9 @@ public class Rocher extends Case {
 	}
 	
 	public void surbrillanceO(){
-		//Ne rien faire
+    	setChanged();
+    	notifyObservers(this);
+    	clearChanged();
 	}
 
 	
