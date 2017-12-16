@@ -105,8 +105,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		Case elt = partie.getPlateau().getCases()[i][j];
 		elt.poly = polyg;
 		g2.setColor(elt.col);
-		//int coeff = 5;
-		//g2.setPaint(new GradientPaint(i*2*(resteX+longueurCote)+longueurCote, j*2*apotheme+apotheme, elt.col, i*2*(resteX+longueurCote)+longueurCote + coeff*longueurCote, j*2*apotheme+apotheme+coeff*apotheme, Color.WHITE, true));
 		g2.fillPolygon(polyg);
 		g2.setColor(Color.BLACK);
 		g2.drawPolygon(polyg);
@@ -132,7 +130,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	public static Point pxtoHex(int mx, int my) { //on a clique sur le pixel (mx,my) et on renvoie le polygone correspondant
 		Point p = new Point(-1,-1);
 		Case elt;
-		for(int i=0;i<nCasesX;i++) {
+		for(int i=0;i<nCasesX;i++) {	
 			for(int j=0;j<nCasesY;j++) {
 				elt = partie.getPlateau().getCases()[i][j];
 				if(elt.poly.contains(mx, my)) {
@@ -191,7 +189,11 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		Navire navireCourant = partie.currentJ.getCurrentN();
 		if(n.equals(navireCourant)) {
 			actionsBateau.setVisible(true);
-		} else {actionsBateau.setVisible(false);}
+		} else {
+			actionsBateau.setVisible(false);
+			
+			
+		}
 		infoCase.setNomCase(partie.plateau.getCases()[posHextoHex(n.getPos()).x][posHextoHex(n.getPos()).y].toString());
 		infoCase.setBateau(n.toString());
 		infoCase.revalidate();
@@ -423,8 +425,4 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	public static void main(String[] args) {
 		FenetrePrincipale f = new FenetrePrincipale();
 	}
-
-
-
 }
-
