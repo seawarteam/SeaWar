@@ -17,12 +17,13 @@ public abstract class Case extends Observable{
 		
 	
 
-    public Case(Polygon p, Color c, int i, int j) {
+    public Case(Polygon p, Color c, int i, int j,Observer obs) {
     	poly = p;
     	estOccupe = false;
     	takePosition = null;
 		col = c;
 		position = Position.getPosition(i, j);
+		addObserver(obs);
     }
     
     public Case(){
@@ -35,10 +36,7 @@ public abstract class Case extends Observable{
     public abstract void surbrillanceO();
     public abstract void ResetCouleur();
     
-    public List getInfo() {
-        // TODO implement here
-        return null;
-    }
+    public abstract void getInfo();
     
     public boolean getEstOccupe() {
     	return estOccupe;
@@ -51,8 +49,4 @@ public abstract class Case extends Observable{
     public void setTakePosition(Navire n) {
     	takePosition = n;
     }
-
-	
-    
-
 }
