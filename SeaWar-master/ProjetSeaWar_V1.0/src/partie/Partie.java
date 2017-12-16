@@ -184,8 +184,9 @@ public class Partie extends Observable{
 		//TODO: Ã  Tester !
 		int i = 0;
 		Navire nav = null;
-		while(i<= nbJoueurs && nav == null) {
+		while(i<= nbJoueurs) {
 			nav = iteratorJ.next().getNavOnPos(pos);
+			i++;
 		}
 		return nav;
 	}
