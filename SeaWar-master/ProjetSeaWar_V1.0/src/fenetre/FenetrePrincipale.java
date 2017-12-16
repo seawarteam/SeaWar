@@ -289,7 +289,10 @@ public class FenetrePrincipale extends JFrame implements Observer{
 
 		class MyMouseListener extends MouseAdapter	{
 			public void mouseClicked(MouseEvent e) { 
-				controleur.hexClique(pxtoPosHex(e.getX(),e.getY()));
+				Position pos = pxtoPosHex(e.getX(),e.getY());
+				if(pos != null) {
+					controleur.hexClique(pos);
+				}
 			}		
 		}
 
