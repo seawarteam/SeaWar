@@ -17,7 +17,7 @@ public class Rocher extends Case {
     	estOccupe = false;
     	takePosition = null;
 		col = couleurVide;
-		position = new Position(i, j);
+		position = Position.getPosition(i, j);
     }
     
     public boolean getEstOccupe(){

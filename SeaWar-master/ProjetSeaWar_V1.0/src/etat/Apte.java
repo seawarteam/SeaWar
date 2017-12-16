@@ -22,7 +22,7 @@ public class Apte implements EtatDeplacement {
 
 
 
-	public EtatDeplacement getEtat() {
+	public static EtatDeplacement getEtat() {
 		return a;
 	}
 

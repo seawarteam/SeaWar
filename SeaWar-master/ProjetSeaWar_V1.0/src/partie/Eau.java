@@ -20,7 +20,7 @@ public class Eau extends Case {
     	estOccupe = false;
     	takePosition = null;
 		col = couleurVide;
-		position = new Position(i, j);
+		position = Position.getPosition(i, j);
     }
     
 

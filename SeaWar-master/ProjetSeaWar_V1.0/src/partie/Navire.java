@@ -3,6 +3,8 @@ package partie;
 import java.awt.Color;
 import java.util.*;
 
+import etat.Apte;
+import etat.Detruit;
 import etat.EtatDeplacement;
 
 /**
@@ -113,12 +115,11 @@ public class Navire extends Observable{
     
     
     public void initTour() {
-    	//TODO: changer les états
+    	if(etatCourant != Detruit.getEtat()) {
+    		etatCourant = Apte.getEtat(); 
+    	}
     	this.dep = this.depMax;
     	this.nb_coup_recu = 0;
-    	/*for(Canons canon : CanonS){
-    		canon.initTour();
-    	}*/
     	if(canonP != null) canonP.initTour();
     	if(canonS != null) canonS.initTour();
     }
@@ -287,11 +288,13 @@ public class Navire extends Observable{
     public int getPathLengh(Position pos, Orientation dir, Set<Position> obstacle) {
     	
     	Set<Vector<Object>> setCasesAcc = getCaseAccessible(obstacle).get(pos);
-    	for (Vector<Object> vect : setCasesAcc) {
-    		if (vect.get(0).equals(dir)) {
-    			return ((Integer) vect.get(1)).intValue();
-    		}
-    	}
+    	if(setCasesAcc != null) {
+	    	for (Vector<Object> vect : setCasesAcc) {
+	    		if (vect.get(0).equals(dir)) {
+	    			return ((Integer) vect.get(1)).intValue();
+	    		}
+	    	}
+    	} else System.err.println("la position n'est pas accessible ???");
     	return -1;
     }
     

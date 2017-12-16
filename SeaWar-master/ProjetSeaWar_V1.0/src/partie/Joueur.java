@@ -23,13 +23,16 @@ public class Joueur {
     public Joueur(String s) {
     	this.nom=s;
     	navires = new ArrayList<Navire>();
-    	ajoutNavire();
     }
     
-    private void ajoutNavire(){
-    	navires.add(new Navire("Fregate", 50, 7, this.nom, Orientation.N, Position.getPosition(0, 0)));
-    	navires.add(new Navire("Amiral", 100, 3, this.nom, Orientation.N, Position.getPosition(0, 1)));
-    }
+    public Vector<Navire> ajoutDefaultNavire(){
+    	Vector<Navire> navs = new Vector<Navire>(2);
+    	navs.add(new Navire("Fregate", 50, 7, this.nom, Orientation.N, Position.getPosition(0, 0)));
+    	navs.add(new Navire("Amiral", 100, 3, this.nom, Orientation.N, Position.getPosition(0, 1)));
+    	navires.add(navs.get(0));
+    	navires.add(navs.get(1));
+    	return navs;
+	}
 
     
     public boolean equals(Object obj) {
@@ -94,6 +97,7 @@ public class Joueur {
     }
 
 	public Navire getCurrentN() {
+		System.out.println("CurrentN ="+currentN);
 		return currentN;
 	}
 
@@ -101,9 +105,15 @@ public class Joueur {
 		this.nom = nom;
 	}
 
-	public void setCurrentN(Navire currentN) {
-		this.currentN = currentN;
+	public void setCurrentN(Navire nav) {
+		this.currentN = nav;
+		System.out.println("CurrentN ="+currentN);
 	}
 
+	public void initTour() {
+		for(Navire nav : navires) {
+			nav.initTour();
+		}
+	}
 
 }

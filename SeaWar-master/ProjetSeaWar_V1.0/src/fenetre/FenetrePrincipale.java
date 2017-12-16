@@ -33,15 +33,15 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	private JButton finTour;
 
 
-	public FenetrePrincipale() {
+	public FenetrePrincipale(Partie jeu, Controleur control) {
 		this.setTitle(titreFenetre);
 		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est cree en plein ecran
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO Demander a sauvegarder en fermant?
 
 		
 		plateau = new DrawingPanel();
-		partie = new Partie(new String[]{"cc","gg"}, 2, nCasesX, nCasesY, 2, 10, (Observer)this);
-		controleur = new Controleur(partie);
+		partie = jeu;//new Partie(new String[]{"cc","gg"}, 2, nCasesX, nCasesY, 2, 10, (Observer)this);
+		controleur = control;//new Controleur(partie);
 		
 		setTailleHex(30);
 
@@ -411,8 +411,11 @@ public class FenetrePrincipale extends JFrame implements Observer{
 
 	
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
-		FenetrePrincipale f = new FenetrePrincipale();
+		
+		Partie p = new Partie(new String[]{"cc","gg"}, 2, nCasesX, nCasesY, 2, 10, null);
+		Controleur c = new Controleur(p);	
+		FenetrePrincipale f = new FenetrePrincipale(p, c);
+		p.addObserver(f);
 	}
 }
 

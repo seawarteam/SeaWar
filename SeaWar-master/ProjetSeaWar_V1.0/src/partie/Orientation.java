@@ -24,7 +24,7 @@ public enum Orientation {
     	if(x==1 && y==-1) {
     		return Orientation.NE;
     	}
-    	if(x==-1 && y==0) {
+    	if(x==1 && y==0) {
     		return Orientation.SE;
     	}
     	if(x==0 && y==1) {

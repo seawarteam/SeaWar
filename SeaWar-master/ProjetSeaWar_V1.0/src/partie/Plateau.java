@@ -17,7 +17,7 @@ public class Plateau {
     	cases = new Case[l][L];
         nCasesX = l;
         nCasesY = L;
-        initTabHex(nbPhares, nbRochers);      
+        initTabHex(nbPhares, nbRochers);
         
         //TO DO : pouvoir retourner un set d'obstacles (tout les obstacles présents) 
         //--> faire une liste "fixe" avec les rochers et une autre "changeante" avec les bateaux.
@@ -60,7 +60,7 @@ public class Plateau {
 			while(!ok){
 				nbx = 0 + (int)(Math.random() * ((nCasesX - 1) + 1));
 				nby = 0 + (int)(Math.random() * ((nCasesY - 1) + 1));
-				p = new Position(nbx, nby);
+				p = Position.getPosition(nbx, nby - (int)nbx/2);
 				if(!tabPosUtil.contains(p)){
 					tabPosUtil.add(p);
 					x = nbx * (longueurCote+resteX);
@@ -77,7 +77,7 @@ public class Plateau {
 			while(!ok){
 				nbx = 0 + (int)(Math.random() * ((nCasesX - 1) + 1));
 				nby = 0 + (int)(Math.random() * ((nCasesY - 1) + 1));
-				p = new Position(nbx, nby);
+				p = Position.getPosition(nbx, nby - (int)nbx/2);
 				if(!tabPosUtil.contains(p)){
 					tabPosUtil.add(p);
 					tabPosUtil.add(p);

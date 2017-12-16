@@ -73,7 +73,7 @@ public class Position {
     }
     
     public static void main(String [] args) {
-    	initTabPosition(6, 5);
+    	initTabPosition(20, 20);
     	System.out.println(getPosition(0, 4).toString());
     	for(int i=0;i<tailleX*tailleY;i++){
     		if(i%tailleY==0)System.out.println();

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Phare extends Eau {
 
-    public static final Color couleurVide = Color.PINK;
+    public static final Color couleurVide = Color.WHITE;
     public static final Color couleurOccupe = Color.RED;
 	
 	
@@ -16,7 +16,7 @@ public class Phare extends Eau {
     	estOccupe = false;
     	takePosition = null;
 		col = couleurVide;
-		position = new Position(i, j);
+		position = Position.getPosition(i, j);
     }
     
     public void takeCase(Navire n){

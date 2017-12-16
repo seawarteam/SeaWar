@@ -19,6 +19,7 @@ public class EtatInit implements EtatAction{
 			n.getInfo();
 			if(n.getNomJ().equals(c.getPartie().getCurrentJ().getNom())){
 				c.getPartie().getCurrentJ().setCurrentN(n);
+				
 				n.getPrivateInfo();
 			}
 		}else{

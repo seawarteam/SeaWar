@@ -31,7 +31,7 @@ public class Controleur {
 	}
 	
 	public void demandeDeplacement() {
-		Navire nav = partie.getCurrentJ().getCurrentN();
+		Navire nav = partie.getCurrentJ().getCurrentN(); if(nav == null) System.err.println("nav == null");
 		Set<Position> obstacle = partie.getObstacle();
 		partie.surbrillanceD(nav.afficherCasesAccessibles(obstacle));
 		etat = EtatDeplacement.getEtat();
