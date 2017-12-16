@@ -13,24 +13,24 @@ public class Plateau {
     private static int apotheme;
     private static int resteX;
     
-    public Plateau(int l, int L, int nbPhares, int nbRochers) {
+    public Plateau(int l, int L, int nbPhares, int nbRochers,Observer obs) {
     	cases = new Case[l][L];
         nCasesX = l;
         nCasesY = L;
-        initTabHex(nbPhares, nbRochers);
+        initTabHex(nbPhares, nbRochers,obs);
         
-        //TO DO : pouvoir retourner un set d'obstacles (tout les obstacles présents) 
+        //TO DO : pouvoir retourner un set d'obstacles (tout les obstacles prÃ©sents) 
         //--> faire une liste "fixe" avec les rochers et une autre "changeante" avec les bateaux.
             
     }
     
     
-  //crée un hexagone au coordonnées pixel x0,y0 (!!! pour l'insant, x0 et y0 sont les coordonnées en pixels)
+  //crÃ©e un hexagone au coordonnÃ©es pixel x0,y0 (!!! pour l'insant, x0 et y0 sont les coordonnÃ©es en pixels)
   	public static Polygon hexagone(int x0, int y0) {
   		int x = x0;
   		int y = y0;
 
-  		int[] cx, cy; // tableau de coordonnées x et y de tous les points d'un hexagone en commencant par le point en haut à gauche
+  		int[] cx, cy; // tableau de coordonnÃ©es x et y de tous les points d'un hexagone en commencant par le point en haut Ã  gauche
 
   		cx = new int[] {x+resteX,x+longueurCote+resteX,x+longueurCote+resteX+resteX,x+longueurCote+resteX,x+resteX,x,x+resteX};
   		cy = new int[] {y,y,y+apotheme,y+apotheme+apotheme,y+apotheme+apotheme,y+apotheme,y};
@@ -38,7 +38,7 @@ public class Plateau {
   		return new Polygon(cx,cy,6);
   	}
   	
-    private void initTabHex(int nbPhares, int nbRochers) {
+    private void initTabHex(int nbPhares, int nbRochers, Observer obs) {
 		int x,y;
 		
 		int nbx, nby;
@@ -50,10 +50,10 @@ public class Plateau {
 				x = i * (longueurCote+resteX);
 				y = j * apotheme*2 + (i%2) * apotheme;
 				Polygon poly = hexagone(x,y);
-				cases[i][j]= new Eau(poly, x, y);
+				cases[i][j]= new Eau(poly, x, y,obs);
 			}
 		}
-		//On vient positionner les entiés (Phares, Rochers)
+		//On vient positionner les entiÃ©s (Phares, Rochers)
 		for(int i=1; i<=nbPhares; i++){
 			Position p;
 			ok = false;
@@ -66,7 +66,7 @@ public class Plateau {
 					x = nbx * (longueurCote+resteX);
 					y = nby * apotheme*2 + (i%2) * apotheme;
 					Polygon poly = hexagone(x,y);
-					cases[nbx][nby]= new Phare(poly, x, y);
+					cases[nbx][nby]= new Phare(poly, x, y,obs);
 					ok  = true;
 				}
 			}
@@ -84,7 +84,7 @@ public class Plateau {
 					x = nbx * (longueurCote+resteX);
 					y = nby * apotheme*2 + (i%2) * apotheme;
 					Polygon poly = hexagone(x,y);
-					cases[nbx][nby]= new Rocher(poly, x, y);
+					cases[nbx][nby]= new Rocher(poly, x, y,obs);
 					ok  = true;
 				}
 			}
