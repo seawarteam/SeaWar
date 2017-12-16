@@ -194,9 +194,7 @@ public class Partie extends Observable{
 	}
 
 	public Case getCaseOnPos(Position pos) {
-		Case [][] c = plateau.getCases();
-		return c[pos.getX()][pos.getY()+(int)pos.getX()/2];
-		
+		return plateau.getCases()[pos.getX()][pos.getY() + (int) pos.getX()/2];
 	}
 
 	public Joueur getCurrentJ() {
