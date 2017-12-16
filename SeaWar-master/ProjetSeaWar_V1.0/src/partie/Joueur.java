@@ -2,7 +2,6 @@ package partie;
 
 import java.util.*;
 
-import List.WheelList;
 import etat.Courant;
 
 /**
@@ -25,10 +24,10 @@ public class Joueur {
     	navires = new ArrayList<Navire>();
     }
     
-    public Vector<Navire> ajoutDefaultNavire(){
+    public Vector<Navire> ajoutDefaultNavire(Observer obs){
     	Vector<Navire> navs = new Vector<Navire>(2);
-    	navs.add(new Navire("Fregate", 50, 7, this.nom, Orientation.N, Position.getPosition(0, 0)));
-    	navs.add(new Navire("Amiral", 100, 3, this.nom, Orientation.N, Position.getPosition(0, 1)));
+    	navs.add(new Navire("Fregate", 50, 7, this.nom, Orientation.N, Position.getPosition(0, 0),obs));
+    	navs.add(new Navire("Amiral", 100, 3, this.nom, Orientation.N, Position.getPosition(0, 1),obs));
     	navires.add(navs.get(0));
     	navires.add(navs.get(1));
     	return navs;
@@ -97,7 +96,6 @@ public class Joueur {
     }
 
 	public Navire getCurrentN() {
-		System.out.println("CurrentN ="+currentN);
 		return currentN;
 	}
 
@@ -107,7 +105,6 @@ public class Joueur {
 
 	public void setCurrentN(Navire nav) {
 		this.currentN = nav;
-		System.out.println("CurrentN ="+currentN);
 	}
 
 	public void initTour() {
