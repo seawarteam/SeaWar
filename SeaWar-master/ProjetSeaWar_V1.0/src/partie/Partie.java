@@ -23,7 +23,7 @@ public class Partie extends Observable{
 		String []nomJ = new String[2];
 		nomJ[0] = "Joueur 1";
 		nomJ[1] = "Joueur 2";
-		Partie partie = new Partie(nomJ, 2, 20, 20, 3, 25, null);
+		Partie partie = new Partie(nomJ, 20, 20, 3, 25, null);
 		
 		/*================== Controleur ==================*/
 		
@@ -104,17 +104,18 @@ public class Partie extends Observable{
     /**
      * Default constructor
      */
-    public Partie(String []nomJ, int nbJ, int nX, int nY, int nbPhares, int nbRochers, mvc.Observer carte) {
+    public Partie(String []nomJ, int nX, int nY, int nbPhares, int nbRochers, mvc.Observer observeur) {
     	Position.initTabPosition(nX, nY);
-    	//addObserver(carte);
+    	if(observeur != null) {addObserver(observeur);}
     	plateau = new Plateau(nX, nY, nbPhares, nbRochers);
     	numTour = 1;
-    	nbJoueurs = nbJ;
     	joueurs = new WheelList<Joueur>();
-    	ajoutJoueurs(nomJ, nbJ);
+    	nbJoueurs = nomJ.length;
+    	ajoutJoueurs(nomJ, nbJoueurs);
     	iteratorJ = joueurs.getIterator();
     	currentJ = iteratorJ.present();
-    	
+    	initDefNavires(getJoueurs());
+    	initNavires();
     	
     }
     
@@ -132,11 +133,10 @@ public class Partie extends Observable{
     	for(int i=0; i<nbJoueurs; i++){
     		newJ = new Joueur(nomJ[i]);
     		joueurs.add(newJ);
- 
     	}
     }
     public String toString(){
-    	return "Partie de "+nbJoueurs+" joueurs et de caractéristiques :\n"+joueurs.toString();
+    	return "Partie de "+nbJoueurs+" joueurs et de caractÃ©ristiques :\n"+joueurs.toString();
     }
     /**
      * 
@@ -145,7 +145,7 @@ public class Partie extends Observable{
     	numTour++; 
         currentJ = iteratorJ.next();
         currentJ.initTour();
-        //Check si un joueur a gagné
+        //Check si un joueur a gagnÃ©
         //Check et MAJ des compteurs du joueur courant
     }
     
@@ -163,13 +163,25 @@ public class Partie extends Observable{
 		plateau.getCases()[x][y].col = n.couleur;
 	}
 	
+	private void initNavires() { //Seulement pour 2 navires à 2 joueurs
+		Joueur[] jou = getJoueurs();
+		
+		Navire[] navs = jou[0].getNavires();
+		initBateau(Position.getPosition(0, 0), Orientation.SE, navs[0]);
+		initBateau(Position.getPosition(0, 1), Orientation.SE, navs[1]);
+		
+		navs = jou[1].getNavires();
+		initBateau(Position.getPosition(plateau.getCases().length-1,(int) plateau.getCases()[0].length/2), Orientation.NO, navs[0]);
+		initBateau(Position.getPosition(plateau.getCases().length-2, (int) plateau.getCases()[0].length/2), Orientation.NO, navs[1]);
+	}
+	
     
     public Plateau getPlateau(){
     	return plateau;
     }
 
 	public Navire getNavOnPos(Position pos) {
-		//TODO: à Tester !
+		//TODO: Ã  Tester !
 		int i = 0;
 		Navire nav = null;
 		while(i<= nbJoueurs && nav == null) {
@@ -218,7 +230,15 @@ public class Partie extends Observable{
 		plateau.ResetCouleur();
 		
 	}
-
 	
+	public void addObserveur(Observer obs) {
+		addObserver(obs);
+	}
+
+	private void initDefNavires(Joueur[] j) {
+		for(Joueur jou : j) {
+			jou.ajoutDefaultNavire();
+		}
+	}
 
 }
