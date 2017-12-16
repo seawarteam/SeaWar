@@ -39,4 +39,26 @@ public enum Orientation {
 		return null;
     }
     
+    public static Position getPosition (Position pos, Orientation or) {
+		switch(or) {
+		case N:
+			return Position.getPosition(pos.getX(), pos.getY()-1);
+		case NE:
+			return Position.getPosition(pos.getX()+1, pos.getY()-1);
+		case SE:
+			return Position.getPosition(pos.getX()+1, pos.getY());
+		case S:
+			return Position.getPosition(pos.getX(), pos.getY()+1);
+		case SO:
+			return Position.getPosition(pos.getX()-1, pos.getY()+1);
+		case NO:
+			return Position.getPosition(pos.getX()-1, pos.getY());
+		
+		}
+    	
+    	
+    	return pos;
+    	
+    }
+    
 }
