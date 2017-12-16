@@ -15,7 +15,7 @@ public class Joueur {
 	
 	private String nom;
 	private List<Navire> navires;
-	private Navire currentN;// Navire selectionné dans l'interface
+	private Navire currentN;// Navire selectionnÃ© dans l'interface
 	
     /**
      * Default constructor
@@ -116,4 +116,13 @@ public class Joueur {
 		}
 	}
 
+	public Navire[] getNavires() {
+		Navire[] nav = new Navire[navires.size()];
+		int i = 0;
+		for(Navire n : navires) {
+			nav[i] = n;
+			i++;
+		}
+		return nav;
+	}
 }
