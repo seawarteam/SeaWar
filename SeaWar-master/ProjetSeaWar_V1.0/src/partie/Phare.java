@@ -10,8 +10,8 @@ public class Phare extends Eau {
     public static final Color couleurOccupe = Color.RED;
 	
 	
-    public Phare(Polygon p, int i, int j) {
-    	super(p, i, j);
+    public Phare(Polygon p, int i, int j,Observer obs) {
+    	super(p, i, j,obs);
     	poly = p;
     	estOccupe = false;
     	takePosition = null;
@@ -19,6 +19,15 @@ public class Phare extends Eau {
 		position = Position.getPosition(i, j);
     }
     
+	public void getInfo() {
+    	setChanged();
+    	notifyObservers(this);
+    	clearChanged();
+	}
+	
+	public String toString() {
+		return "Phare";
+	}
     public void takeCase(Navire n){
         estOccupe = true;  
         takePosition = n;
