@@ -2,12 +2,13 @@ package fenetre;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.*;
 import javax.swing.event.*;
 
 import partie.*;
-import mvc.*;
 
 public class FenetrePrincipale extends JFrame implements Observer{
 	private static final long serialVersionUID = 1L;
@@ -33,17 +34,16 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	private JButton finTour;
 
 
-	public FenetrePrincipale(Partie jeu, Controleur control) {
+	public FenetrePrincipale() {
 		this.setTitle(titreFenetre);
 		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est cree en plein ecran
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO Demander a sauvegarder en fermant?
 
 		
-		
+		Partie p = new Partie(new String[]{"J1","J2"}, nCasesX, nCasesY, 2, 10, this);
 		plateau = new DrawingPanel();
-		jeu.addObserveur(this);
-		partie =  jeu;
-		controleur = control;//new Controleur(partie);
+		partie =  p;
+		controleur = new Controleur(partie);
 		
 		setTailleHex(30);
 
@@ -165,10 +165,11 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		resteX =(int) (dapotheme - (dlcote/4));	
 	}
 	
-	public void update(Object o) {	
+	public void update(Observable obs, Object o) {
 		if(o instanceof Navire) {updateNavire((Navire) o);}
 		else if(o instanceof Case) {updateCase((Case) o);}
 	}
+	
 	
 	private void updateCase(Case c) {	
 	/*	La case c a change ses caracteristiques donc il faut afficher les changements:
@@ -176,6 +177,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	 * 		-???
 	 * 
 	 */
+		actionsBateau.setVisible(false);
 		infoCase.setBateau("");
 		infoCase.setNomCase(c.toString());
 		infoCase.revalidate();
@@ -183,7 +185,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	}
 	
 	private void updateNavire(Navire n) {
-		/*	Le bateau n a change, c'est par ailleur celui qui est clique
+		/*	Le bateau n a change, c'est par ailleurs celui qui est clique
 		 * 
 		 */
 		Navire navireCourant = partie.currentJ.getCurrentN();
@@ -416,11 +418,10 @@ public class FenetrePrincipale extends JFrame implements Observer{
 
 	
 	public static void main(String[] args) {
-		
-		Partie p = new Partie(new String[]{"J1","J2"}, nCasesX, nCasesY, 2, 10, null);
-		Controleur c = new Controleur(p);	
-		FenetrePrincipale f = new FenetrePrincipale(p, c);
-		p.addObserver(f);
+		FenetrePrincipale f = new FenetrePrincipale();
 	}
+
+
+
 }
 
