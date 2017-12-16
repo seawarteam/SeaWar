@@ -15,15 +15,25 @@ public class Eau extends Case {
     
     
     
-	public Eau(Polygon p, int i, int j) {
+	public Eau(Polygon p, int i, int j,Observer obs) {
+		super();
     	poly = p;
     	estOccupe = false;
     	takePosition = null;
 		col = couleurVide;
 		position = Position.getPosition(i, j);
+		addObserver(obs);
     }
     
-
+	public void getInfo() {
+    	setChanged();
+    	notifyObservers(this);
+    	clearChanged();
+	}
+	
+	public String toString() {
+		return "Eau";
+	}
     
     public void freeCase(){
         estOccupe = false;   
