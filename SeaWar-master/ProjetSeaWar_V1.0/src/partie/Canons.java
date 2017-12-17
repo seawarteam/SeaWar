@@ -65,6 +65,10 @@ public class Canons {
     	return this.tpsRech;
     }
     
+    public int getTpsRest() {
+    	return tpsRest;
+    }
+    
     public List<Position> getZoneTire() {
     	return this.zoneTire;
     }

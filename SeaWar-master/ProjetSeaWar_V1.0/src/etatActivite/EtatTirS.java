@@ -19,6 +19,7 @@ public class EtatTirS implements EtatAction {
 		if(succes) {
 			int degats = nav.getCanonS().getDegat();
 			Navire cible = c.getPartie().getNavOnPos(pos);
+			
 			if(cible != null) {
 				cible.toucher(degats);
 			}
@@ -27,6 +28,7 @@ public class EtatTirS implements EtatAction {
 		}
 		
 		c.setEtat(EtatInit.getEtat());
+		c.getPartie().ResetCouleur();
 
 	}
 

@@ -25,7 +25,7 @@ public class EtatTirP implements EtatAction {
 		} else {
 			//tps de recharge ou case non atteignable
 		}
-		
+		c.getPartie().ResetCouleur();
 		c.setEtat(EtatInit.getEtat());
 	}
 
