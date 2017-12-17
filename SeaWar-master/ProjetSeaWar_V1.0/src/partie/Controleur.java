@@ -24,6 +24,7 @@ public class Controleur {
 
 	public void demandeFinTour() {
 		partie.initTour();
+		etat = EtatInit.getEtat();
 	}
 
 	public void hexClique(Position pos) {

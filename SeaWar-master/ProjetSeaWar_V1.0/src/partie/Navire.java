@@ -51,7 +51,6 @@ public class Navire extends Observable{
 	 private String nomJ;
 	 private Orientation dir;
 	 private Position pos;
-	 //private Set<Canons> canons;
 	 private Canons canonP;
 	 private Canons canonS;
 	 private EtatDeplacement etatCourant;
@@ -147,7 +146,7 @@ public class Navire extends Observable{
     }
     
     public String toString() {
-    	return "Navire\tnom = "+this.nom+"\tpv = "+this.pv+"\tdepMax = "+this.depMax+"\tnomJ = "+this.nomJ+"\tdir = "+this.dir+"\tpos = "+this.pos.toString()+"\n";
+    	return "nom = "+this.nom+" \tpv = "+this.pv+" \tdepMax = "+this.depMax+" \tdepRest = "+this.dep+" \tnomJ = "+this.nomJ+" \tdir = "+this.dir+" \tpos = "+this.pos.toString();
     }
    
     /**
@@ -206,6 +205,7 @@ public class Navire extends Observable{
     **/
     public Set<Position> afficherCasesAccessibles(Set<Position> obstacle) {
     	Map<Position,Set<Vector<Object>>> MapCases = getCaseAccessible(obstacle);
+    	System.out.println("Navire.afficherCasesAccessibles\n"+MapCases);
     	return MapCases.keySet();
     }
     
@@ -290,13 +290,24 @@ public class Navire extends Observable{
 	    }
     }
     
+    
+    /**
+     * 
+     * @param pos : Position ou on veux aller
+     * @param dir : Orientation souhaitee
+     * @param obstacle 
+     * @return la longueur du chemain pour aller de la position du navire à la position pos
+     */
     public int getPathLengh(Position pos, Orientation dir, Set<Position> obstacle) {
     	
-    	Set<Vector<Object>> setCasesAcc = getCaseAccessible(obstacle).get(pos);
+    	Map<Position, Set<Vector<Object>>> mapsCaseAcc = getCaseAccessible(obstacle);
+    	System.out.println("Navire.getPathLengh("+pos+", "+dir+"\n"+mapsCaseAcc);
+    	
+    	Set<Vector<Object>> setCasesAcc = mapsCaseAcc.get(pos);
     	if(setCasesAcc != null) {
 	    	for (Vector<Object> vect : setCasesAcc) {
 	    		if (vect.get(0).equals(dir)) {
-	    			return ((Integer) vect.get(1)).intValue()-1;
+	    			return ((Integer) vect.get(1)).intValue();
 	    		}
 	    	}
     	} else System.err.println("la position n'est pas accessible ???");

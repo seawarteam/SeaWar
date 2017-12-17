@@ -21,7 +21,7 @@ public class EtatOrientation implements EtatAction {
 			Navire nav = c.getPartie().currentJ.getCurrentN();
 			Navire navCourant = c.getPartie().currentJ.getNavEtatCourant();
 			Set<Position> obstacle = c.getPartie().getObstacle();
-			int nbCase = nav.getPathLengh(pos, dir, obstacle);
+			int nbCase = nav.getPathLengh(position, dir, obstacle);
 			if (nbCase == -1) System.err.println("nbCase = -1");
 			Position posNavInit = nav.getPos();
 			boolean ok = nav.deplacement(position, dir, nbCase, navCourant);
