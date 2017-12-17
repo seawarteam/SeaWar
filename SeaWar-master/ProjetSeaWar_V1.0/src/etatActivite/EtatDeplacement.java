@@ -1,5 +1,6 @@
 package etatActivite;
 
+import java.awt.Color;
 import java.util.Set;
 
 import partie.Controleur;
@@ -14,10 +15,12 @@ public class EtatDeplacement implements EtatAction {
 	}
 
 	public void clique(Position pos, Controleur c) {
-		
+		c.getPartie().ResetCouleur();
 		Navire nav = c.getPartie().currentJ.getCurrentN();
 		Set<Position> obstacle = c.getPartie().getObstacle();
 		if(nav.afficherCasesAccessibles(obstacle).contains(pos)) {
+			c.getPartie().plateau.getCases()[pos.getX()][pos.getY() + ((int) pos.getX()/2)].surbrillanceDeptemp();
+
 			c.getPartie().surbrillanceO(nav.findOrientationsPossibles(pos, obstacle));//Notify + surbillance
 			EtatOrientation.setPos(pos);
 			c.setEtat(EtatOrientation.getEtat());

@@ -35,6 +35,7 @@ public abstract class Case extends Observable{
     public abstract void surbrillanceD();
     public abstract void surbrillanceO();
     public abstract void ResetCouleur();
+    public abstract void surbrillanceDeptemp();
     
     public abstract void getInfo();
     

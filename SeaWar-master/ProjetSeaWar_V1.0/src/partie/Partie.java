@@ -134,7 +134,7 @@ public class Partie extends Observable{
     	}
     }
     public String toString(){
-    	return "Partie de "+nbJoueurs+" joueurs et de caractÃ©ristiques :\n"+joueurs.toString();
+    	return "Partie de "+nbJoueurs+" joueurs et de caractéristiques :\n"+joueurs.toString();
     }
     /**
      * 
@@ -143,7 +143,7 @@ public class Partie extends Observable{
     	numTour++; 
         currentJ = iteratorJ.next();
         currentJ.initTour();
-        //Check si un joueur a gagnÃ©
+        //Check si un joueur a gagné
         //Check et MAJ des compteurs du joueur courant
     }
     
@@ -161,7 +161,7 @@ public class Partie extends Observable{
 		plateau.getCases()[x][y].col = n.couleur;
 	}
 	
-	private void initNavires() { //Seulement pour 2 navires à 2 joueurs
+	private void initNavires() { //Seulement pour 2 navires � 2 joueurs
 		Joueur[] jou = getJoueurs();
 		
 		Navire[] navs = jou[0].getNavires();
@@ -223,8 +223,7 @@ public class Partie extends Observable{
 	}
 
 	public void ResetCouleur() {
-		plateau.ResetCouleur();
-		
+		plateau.ResetCouleur();	
 	}
 	
 	public void addObserveur(Observer obs) {

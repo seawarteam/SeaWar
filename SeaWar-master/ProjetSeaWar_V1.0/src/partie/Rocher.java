@@ -18,7 +18,7 @@ public class Rocher extends Case {
     	estOccupe = false;
     	takePosition = null;
 		col = couleurVide;
-		position = Position.getPosition(i, j);
+		position = Position.getPosition(i, j - ((int) i/2));
 		addObserver(obs);
     }
     
@@ -27,11 +27,21 @@ public class Rocher extends Case {
     }
 
     public void ResetCouleur() {
-		if(col != couleurVide){
+    	
+    		col = couleurVide;
+        	setChanged();
+        	notifyObservers(this);
+        	clearChanged();    	
+    	
+    	
+    	
+		/*if(col != couleurVide){
 			col = couleurVide;
 	    	setChanged();
 	    	notifyObservers(this);
-	    	clearChanged();		}
+	    	clearChanged();		
+	    	
+		}*/
 	}
     
     public String toString() {
@@ -57,6 +67,12 @@ public class Rocher extends Case {
     	notifyObservers(this);
     	clearChanged();
 	}
+    public void surbrillanceDeptemp() {
+    	col = Color.black;
+    	setChanged();
+    	notifyObservers(this);
+    	clearChanged();
+    }
 
 	
 	public void surbrillanceD() {

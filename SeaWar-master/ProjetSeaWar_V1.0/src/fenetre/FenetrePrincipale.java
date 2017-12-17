@@ -33,7 +33,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	private ActionBateau actionsBateau;
 	private JButton finTour;
 
-
+	public Graphics2D cg;
+	
 	public FenetrePrincipale() {
 		this.setTitle(titreFenetre);
 		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est cree en plein ecran
@@ -165,7 +166,10 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	
 	public void update(Observable obs, Object o) {
 		if(o instanceof Navire) {updateNavire((Navire) o);}
-		else if(o instanceof Case) {updateCase((Case) o);}
+		else if(o instanceof Case) {
+			updateCase((Case) o);
+
+		}
 	}
 	
 	
@@ -175,11 +179,13 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	 * 		-???
 	 * 
 	 */
+
 		actionsBateau.setVisible(false);
 		infoCase.setBateau("");
 		infoCase.setNomCase(c.toString());
 		infoCase.revalidate();
-		plateau.repaint();
+		repaint();
+		revalidate();
 	}
 	
 	private void updateNavire(Navire n) {
@@ -191,12 +197,11 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			actionsBateau.setVisible(true);
 		} else {
 			actionsBateau.setVisible(false);
-			
-			
 		}
 		infoCase.setNomCase(partie.plateau.getCases()[posHextoHex(n.getPos()).x][posHextoHex(n.getPos()).y].toString());
 		infoCase.setBateau(n.toString());
 		infoCase.revalidate();
+		plateau.repaint();
 	}
 	
 
@@ -299,9 +304,10 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 
 
-		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement ÃƒÆ’  l'autre
+		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement Ãƒ  l'autre
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'eviter des effets de bords moches
+			cg = g2;
 			super.paintComponent(g);
 			for (int i=0;i<nCasesX;i++) {
 				for (int j=0;j<nCasesY;j++) {

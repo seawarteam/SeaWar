@@ -14,7 +14,7 @@ public class Joueur {
 	
 	private String nom;
 	private List<Navire> navires;
-	private Navire currentN;// Navire selectionnÃ© dans l'interface
+	private Navire currentN;// Navire selectionné dans l'interface
 	
     /**
      * Default constructor
@@ -29,10 +29,10 @@ public class Joueur {
     	navs.add(new Navire("Fregate", 50, 7, this.nom, Orientation.N, Position.getPosition(0, 0),obs));
     	navs.add(new Navire("Amiral", 100, 3, this.nom, Orientation.N, Position.getPosition(0, 1),obs));
 		List<Position> liste = new LinkedList<Position>();
-		liste.add(new Position(1,0));
-		liste.add(new Position(2,0));
-		liste.add(new Position(3,0));
-		liste.add(new Position(4,0));
+		liste.add(new Position(0,-1));
+		liste.add(new Position(0,-2));
+		liste.add(new Position(0,-3));
+		liste.add(new Position(0,-4));
 		Canons unCanon = new Canons("La Grosse Berta", 200, 2, liste, navs.get(0));
     	navs.get(0).addCanon(unCanon, unCanon);
 		unCanon = new Canons("La Grosse Berta", 200, 2, liste, navs.get(1));

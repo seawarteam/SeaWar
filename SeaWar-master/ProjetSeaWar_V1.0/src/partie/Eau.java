@@ -10,9 +10,9 @@ import java.util.*;
 public class Eau extends Case {
 	public static final Color couleurVide = Color.CYAN;
     public static final Color couleurDep = new Color(0, 0, 255, 60);
-    public static final Color couleurOri = Color.orange;
+    public static final Color couleurOri = new Color(0,255,0);
     public static final Color couleurTir = Color.GRAY;
-    
+    public static final Color couleurDeptemp = Color.black;
     
     
 	public Eau(Polygon p, int i, int j,Observer obs) {
@@ -21,7 +21,7 @@ public class Eau extends Case {
     	estOccupe = false;
     	takePosition = null;
 		col = couleurVide;
-		position = Position.getPosition(i, j);
+		position = Position.getPosition(i, j - ((int) i/2));
 		addObserver(obs);
     }
     
@@ -40,33 +40,56 @@ public class Eau extends Case {
     }
     
     public void ResetCouleur() {
-    	if(!estOccupe) {
+    	col = couleurVide;
+    	if(estOccupe) {
+   			col = takePosition.couleur;
+   		}
+       	setChanged();
+       	notifyObservers(this);
+       	clearChanged();
+    	
+    	
+ /*   	if(!estOccupe) {
 			if(col != couleurVide){
 				col = couleurVide;
-				notifyObservers(this);			
-			}
+		    	setChanged();
+		    	notifyObservers(this);
+		    	clearChanged();			}
     	} else {
     		if(!col.equals(takePosition.couleur)){
     			col = takePosition.couleur;
-    			notifyObservers(this);
-    		}
+    	    	setChanged();
+    	    	notifyObservers(this);
+    	    	clearChanged();    		}
     	}
-		
+		*/
 	}
     
     public void surbrillanceT(){
     	col = couleurTir;
+    	setChanged();
     	notifyObservers(this);
+    	clearChanged();    	
     }
     
     public void surbrillanceD(){
     	col = couleurDep;
+    	setChanged();
     	notifyObservers(this);
-    }
+    	clearChanged();    }
     
     public void surbrillanceO(){
     	col = couleurOri;
+    	setChanged();
     	notifyObservers(this);
+    	clearChanged();
+    }
+    
+    public void surbrillanceDeptemp() {
+    	col = couleurDeptemp;
+    	setChanged();
+    	notifyObservers(this);
+    	clearChanged();
     }
     
     public void takeCase(Navire n){

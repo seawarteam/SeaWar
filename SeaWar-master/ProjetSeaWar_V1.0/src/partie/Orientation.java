@@ -55,8 +55,6 @@ public enum Orientation {
 			return Position.getPosition(pos.getX()-1, pos.getY());
 		
 		}
-    	
-    	
     	return pos;
     	
     }

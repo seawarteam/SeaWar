@@ -14,7 +14,6 @@ public class Controleur {
 	}
 	
 	public void setEtat(EtatAction e) {
-		partie.ResetCouleur();
 		etat = e;
 	}
 	public Partie getPartie() {
