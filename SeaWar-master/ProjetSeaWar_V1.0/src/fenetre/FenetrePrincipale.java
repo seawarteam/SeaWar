@@ -41,14 +41,14 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO Demander a sauvegarder en fermant?
 
 		
-		Partie p = new Partie(new String[]{"J1","J2"}, nCasesX, nCasesY, 2, 10, this);
+		Partie p = new Partie(new String[]{"J1","J2"}, nCasesX, nCasesY, 2, 25, this);
 		plateau = new DrawingPanel();
 		partie =  p;
 		controleur = new Controleur(partie);
 		
 		setTailleHex(30);
 
-		Position.initTabPosition(20, 20);
+		//Position.initTabPosition(20, 20);
 		
 		JPanel panPrincipal = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();

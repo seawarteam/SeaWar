@@ -295,7 +295,7 @@ public class Navire extends Observable{
      * @param pos : Position ou on veux aller
      * @param dir : Orientation souhaitee
      * @param obstacle 
-     * @return la longueur du chemain pour aller de la position du navire à la position pos
+     * @return la longueur du chemin pour aller de la position du navire à la position pos
      */
     public int getPathLengh(Position pos, Orientation dir, Set<Position> obstacle) {
     	
@@ -310,6 +310,16 @@ public class Navire extends Observable{
 	    	}
     	} else System.err.println("la position n'est pas accessible ???");
     	return -1;
+    }
+    
+    public boolean canGoOnPos(Position pos, Orientation dir, Set<Position> obstacle){
+    	Set<Vector<Object>> setCasesAcc = getCaseAccessible(obstacle).get(pos);
+    	for(Vector<Object> vect : setCasesAcc) {
+    		if(vect.get(0) == dir) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     

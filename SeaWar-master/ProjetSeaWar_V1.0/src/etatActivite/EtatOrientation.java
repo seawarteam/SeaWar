@@ -17,28 +17,25 @@ public class EtatOrientation implements EtatAction {
 
 	public void clique(Position pos, Controleur c) {
 		Orientation dir = Orientation.getOrientation(position, pos);
-		if(dir != null) {
+		if (dir != null) {
 			Navire nav = c.getPartie().currentJ.getCurrentN();
 			Navire navCourant = c.getPartie().currentJ.getNavEtatCourant();
 			Set<Position> obstacle = c.getPartie().getObstacle();
-			int nbCase = nav.getPathLengh(position, dir, obstacle);
-			if (nbCase == -1) System.err.println("nbCase = -1");
-			Position posNavInit = nav.getPos();
-			boolean ok = nav.deplacement(position, dir, nbCase, navCourant);
-			if (ok) {
-				c.getPartie().notifier(nav);
-				System.out.println("EtatOri : Deplacement reussi");
-				c.getPartie().plateau.getCases()[position.getX()][position.getY()+ ((int) position.getX()/2)].estOccupe=true;
-				c.getPartie().plateau.getCases()[position.getX()][position.getY()+ ((int) position.getX()/2)].takePosition=nav;
-				c.getPartie().plateau.getCases()[posNavInit.getX()][posNavInit.getY()+ ((int) posNavInit.getX()/2)].estOccupe=false;
-				c.getPartie().plateau.getCases()[posNavInit.getX()][posNavInit.getY()+ ((int) posNavInit.getX()/2)].takePosition = null;
+			if(nav.canGoOnPos(position, dir, obstacle)) {
+				int nbCase = nav.getPathLengh(position, dir, obstacle);
+				if (nbCase == -1)
+					System.err.println("nbCase = -1");
+				Position posNavInit = nav.getPos();
+				boolean ok = nav.deplacement(position, dir, nbCase, navCourant);
+				if (ok) {
+					// c.getPartie().notifier(nav);
+					c.getPartie().plateau.freeCase(posNavInit);
+					c.getPartie().plateau.takeCase(position, nav);
+				}
 			}
-		} else {
-			
 		}
 		c.getPartie().ResetCouleur();
 		c.setEtat(EtatInit.getEtat());
-		//getInfo;
 	}
 
 	public static EtatOrientation getEtat() {
@@ -47,7 +44,7 @@ public class EtatOrientation implements EtatAction {
 
 	public static void setPos(Position pos) {
 		position = pos;
-		
+
 	}
 
 }

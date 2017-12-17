@@ -161,7 +161,7 @@ public class Partie extends Observable{
 		plateau.getCases()[x][y].col = n.couleur;
 	}
 	
-	private void initNavires() { //Seulement pour 2 navires à 2 joueurs
+	private void initNavires() { //Seulement pour 2 navires ï¿½ 2 joueurs
 		Joueur[] jou = getJoueurs();
 		
 		Navire[] navs = jou[0].getNavires();
@@ -189,8 +189,7 @@ public class Partie extends Observable{
 	}
 
 	public Set<Position> getObstacle() {
-		// TODO Auto-generated method stub
-		return new HashSet<Position>();
+		return plateau.getObstacle();
 	}
 
 	public Case getCaseOnPos(Position pos) {
