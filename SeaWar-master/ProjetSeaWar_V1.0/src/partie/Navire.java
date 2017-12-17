@@ -205,7 +205,6 @@ public class Navire extends Observable{
     **/
     public Set<Position> afficherCasesAccessibles(Set<Position> obstacle) {
     	Map<Position,Set<Vector<Object>>> MapCases = getCaseAccessible(obstacle);
-    	System.out.println("Navire.afficherCasesAccessibles\n"+MapCases);
     	return MapCases.keySet();
     }
     
@@ -301,7 +300,6 @@ public class Navire extends Observable{
     public int getPathLengh(Position pos, Orientation dir, Set<Position> obstacle) {
     	
     	Map<Position, Set<Vector<Object>>> mapsCaseAcc = getCaseAccessible(obstacle);
-    	System.out.println("Navire.getPathLengh("+pos+", "+dir+"\n"+mapsCaseAcc);
     	
     	Set<Vector<Object>> setCasesAcc = mapsCaseAcc.get(pos);
     	if(setCasesAcc != null) {
