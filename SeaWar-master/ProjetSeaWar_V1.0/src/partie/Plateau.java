@@ -54,7 +54,8 @@ public class Plateau {
 		int nbx, nby;
 		ArrayList<Position> tabPosUtil = new ArrayList<Position>();
 		
-		//Positions obstacles o� il y a les bateaux au debut
+		//Positions obstacles ou il y a les bateaux au debut
+		//TODO: à Vérifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		caseN.add(Position.getPosition(1, 1));
 		tabPosUtil.add(Position.getPosition(1, 2));

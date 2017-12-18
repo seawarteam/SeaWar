@@ -114,6 +114,9 @@ public class Navire extends Observable{
     public boolean getADejaTire() {
     	return aDejaTire;
     }
+    public int getPV(){
+    	return this.pv;
+    }
     
     
     
@@ -122,6 +125,7 @@ public class Navire extends Observable{
     	if(etatCourant != Detruit.getEtat()) {
     		etatCourant = Apte.getEtat(); 
     	}
+    	this.aDejaTire = false;
     	this.dep = this.depMax;
     	this.nb_coup_recu = 0;
     	if(canonP != null) canonP.initTour();
