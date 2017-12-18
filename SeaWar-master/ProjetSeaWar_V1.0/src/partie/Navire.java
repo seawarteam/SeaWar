@@ -187,6 +187,9 @@ public class Navire extends Observable{
         } else {
         	this.pv -= degats;
         }
+        if(this.pv <= 0) {
+        	etatCourant = Detruit.getEtat();
+        }
     }
     
      
