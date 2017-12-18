@@ -18,6 +18,7 @@ public class Apte implements EtatDeplacement {
 	}
 
 	public void setEtatInapte(Navire n) {
+		n.setEtat(InApte.getEtat());
 	}
 
 
@@ -54,12 +55,17 @@ public class Apte implements EtatDeplacement {
      */
     public boolean deplacement(Position pos, Orientation dir, int nbCase, Navire previous, Navire current) {
     	if(previous != null) {
-    		setEtatInapte(previous);
+    		if(previous.getaEteDeplace()) {
+    			setEtatInapte(previous);
+    		} else {
+    			return false;
+    		}	
     	}
     	setEtatCourant(current);
     	current.setDep(current.getDep()- nbCase);
     	current.setDir(dir);
     	current.setPos(pos);
+    	current.setaEteDeplace(true);
     	return true;
     }
     

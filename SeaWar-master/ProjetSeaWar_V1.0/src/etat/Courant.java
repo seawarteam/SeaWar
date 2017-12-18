@@ -47,6 +47,7 @@ private static Courant c = new Courant();
     	current.setDep(current.getDep()- nbCase);
     	current.setDir(dir);
     	current.setPos(pos);
+    	current.setaEteDeplace(true);
     	return true;
     }
 	

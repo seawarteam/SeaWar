@@ -59,7 +59,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		/*JButton b1 = new JButton("Bouton1");
+		JButton b1 = new JButton("Bouton1");
 		panPrincipal.add(b1, gbc);
 
 
@@ -69,7 +69,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 
 		gbc.gridx = 2;
 		JButton b3 = new JButton("Bouton3");
-		panPrincipal.add(b3, gbc);*/
+		panPrincipal.add(b3, gbc);
 
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = largeurMenuGauche;
@@ -82,11 +82,11 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		gbc.weightx = 100-largeurMenuGauche;
 		gbc.weighty = 100-largeurMenuHaut;
 		gbc.gridx = 0;
-		gbc.gridy = 0;
+		gbc.gridy = 1;
 		gbc.gridheight = 1;
 		gbc.gridwidth = nBoutonsHaut;
 
-		
+		/*
 		plateau = new DrawingPanel();
 		scroll = new JScrollPane(plateau);
 		scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
@@ -95,12 +95,19 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		panPrincipal.add(scroll, gbc);
 		
 		this.setContentPane(panPrincipal);
-		//this.setVisible(true);
+		this.setVisible(true);*/
 
 	}	
 
 	public void initFenetrePrincipale(JPanel panPrincipal, GridBagConstraints gbc) {
+		plateau = new DrawingPanel();
+		scroll = new JScrollPane(plateau);
+		scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
+		scroll.getHorizontalScrollBar().setUnitIncrement(resteX+longueurCote);
 
+		panPrincipal.add(scroll, gbc);
+		
+		this.setContentPane(panPrincipal);
 		this.setVisible(true);
 	}
 	
@@ -214,9 +221,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		infoJoueur.changerJoueur(partie.currentJ.getNom());
 		if(p.currentJ.getNavEtatCourant()==null) {
 			actionsBateau.setVisible(false);
-		}
-		if(partie.gagne) {
-			Gagne gg = new Gagne(partie.currentJ);
 		}
 	}
 	
@@ -333,13 +337,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 	}
 	
-	class Gagne extends JOptionPane{
-		public Gagne(Joueur jou) {
-			super();
-			showMessageDialog(null, "Victoire de "+jou.getNom(), "Partie terminee", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
-	
 	class InfoCase extends JPanel{
 		private static final long serialVersionUID = -8644027093047733015L;
 		private JLabel typeCase;
@@ -358,7 +355,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			String sBat = ("<html>Case de type "+cas);
 			if(nav!=(null)) {
 				sBat += "<br><br>";
-				sBat += "<table><tr><td>Proprietaire : </td><td>"+nav.getNomJ()+"</td></tr>";
+				Joueur jou = partie.getProprio(nav);
+				sBat += "<table><tr><td>Proprietaire : </td><td>"+jou.getNom()+"</td></tr>";
 				sBat += "<tr><td>Nom du bateau : </td><td>"+nav.getNom()+"</td></tr>";
 				sBat += "<tr><td>PV restants : </td><td>"+nav.getPV()+"</td></tr>";
 				sBat += "<tr><td>Orientation : </td><td>"+nav.getOrientation()+"</td></tr></table><br>";
@@ -465,5 +463,11 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			add(legende);
 			add(slider);
 		}
+	}
+
+
+	
+	public static void main(String[] args) {
+		//FenetrePrincipale f = new FenetrePrincipale();
 	}
 }

@@ -23,8 +23,22 @@ public class Controleur {
 	}
 
 	public void demandeFinTour() {
-		partie.initTour();
-		etat = EtatInit.getEtat();
+		boolean changerTour;
+		boolean navApte = partie.existeApteNav();
+		if(navApte) {
+			changerTour = false;
+		} else {
+			Navire nav = partie.currentJ.getNavEtatCourant();
+			if (nav.getaEteDeplace()) {
+				changerTour = true;
+			} else {
+				changerTour = false;
+			}
+		}
+		if(changerTour) {
+			partie.initTour();
+			etat = EtatInit.getEtat();
+		}
 	}
 
 	public void hexClique(Position pos) {

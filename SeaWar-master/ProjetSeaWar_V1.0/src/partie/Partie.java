@@ -8,6 +8,7 @@ import java.util.Observer;
 import java.util.Set;
 import java.util.Vector;
 
+import etat.Apte;
 import fenetre.FenetrePrincipale;
 
 import List.*;
@@ -27,7 +28,6 @@ public class Partie extends Observable {
 	private Iterator<Joueur> iteratorJ;
 	public Joueur currentJ;
 	public Joueur[] listeJ;
-	public boolean gagne;
 
 	/**
 	 * Default constructor
@@ -37,7 +37,6 @@ public class Partie extends Observable {
 		// if(observeur != null) {addObserver(observeur);}
 		// plateau = new Plateau(nX, nY, nbPhares, nbRochers,observeur);
 		numTour = 1;
-		gagne= false;
 		joueurs = new WheelList<Joueur>();
 		nbJoueurs = nomJ.length;
 		ajoutJoueurs(nomJ, nbJoueurs);
@@ -94,10 +93,6 @@ public class Partie extends Observable {
 		}
 		if (hasWinner || plateau.hasWinner(currentJ)) {
 			System.out.println("Victory");
-			gagne=true;
-			setChanged();
-			notifyObservers(this);
-			clearChanged();
 			return true;
 		}
 
@@ -213,6 +208,16 @@ public class Partie extends Observable {
 			i = i + 1;
 		}
 		return null;
+	}
+
+	public boolean existeApteNav() {
+		Navire[] navs = currentJ.getNavires();
+		for (Navire nav : navs) {
+			if(nav.getEtat() == Apte.getEtat()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

@@ -126,6 +126,7 @@ public class Navire extends Observable{
     		etatCourant = Apte.getEtat(); 
     	}
     	this.aDejaTire = false;
+    	this.aEteDeplace = false;
     	this.dep = this.depMax;
     	this.nb_coup_recu = 0;
     	if(canonP != null) canonP.initTour();
