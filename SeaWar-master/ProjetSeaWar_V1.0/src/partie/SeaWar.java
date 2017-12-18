@@ -46,7 +46,6 @@ public class SeaWar {
 		/*=============== Fenetre =================*/
 		
 		FenetrePrincipale carte = new FenetrePrincipale(partie, controleur);
-		//partie.addObserver(carte);
 		
 		/*================ Joueurs ================*/
 		
@@ -101,7 +100,7 @@ public class SeaWar {
 		
 		/*================ Start ===========================*/
 		partie.initPartie(nX, nY, nbPhares, nbRochers, carte);
-		carte.initFenetrePrincipale(carte.panPrincipal, carte.gbc);
+		carte.initFenetrePrincipale();
 		
 		partie.initBateau(Position.getPosition(1, 1), Orientation.SE, Amiral1);
 		partie.initBateau(Position.getPosition(2, 0), Orientation.SE, Fregate1);
