@@ -29,7 +29,7 @@ public abstract class Case extends Observable{
     public Case(){
     	super();
     }
-    
+    public abstract void freeCase();
     public abstract void takeCase(Navire n);
     public abstract void surbrillanceT();
     public abstract void surbrillanceD();
@@ -45,6 +45,10 @@ public abstract class Case extends Observable{
     
     public void setEstOccupe(boolean b) {
     	estOccupe = b;
+    }
+    
+    public Navire getTakePosition(){
+    	return takePosition;
     }
     
     public void setTakePosition(Navire n) {

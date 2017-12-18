@@ -6,7 +6,7 @@ import java.util.*;
 public class Plateau {
 
 	private Case cases[][];
-
+	private Set<Phare> phares;
 	private Set<Position> caseR;
 	private Set<Position> caseN;
 	private int nCasesX;
@@ -21,6 +21,7 @@ public class Plateau {
 		nCasesY = L;
 		caseR = new HashSet<Position>();
 		caseN = new HashSet<Position>();
+		phares = new HashSet<Phare>();
 		initTabHex(nbPhares, nbRochers, obs);
 
 		// TO DO : pouvoir retourner un set d'obstacles (tout les obstacles
@@ -53,20 +54,20 @@ public class Plateau {
 
 		int nbx, nby;
 		ArrayList<Position> tabPosUtil = new ArrayList<Position>();
-		
-		//Positions obstacles ou il y a les bateaux au debut
-		//TODO: à Vérifier !
+
+		// Positions obstacles ou il y a les bateaux au debut
+		// TODO: à Vérifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		caseN.add(Position.getPosition(1, 1));
 		tabPosUtil.add(Position.getPosition(1, 2));
 		caseN.add(Position.getPosition(1, 2));
-		tabPosUtil.add(Position.tabPosition[(nCasesX-2)*(nCasesY)+ nCasesY-2]);
-		caseN.add(Position.tabPosition[(nCasesX-2)*(nCasesY)+ nCasesY-2]);
-		tabPosUtil.add(Position.tabPosition[(nCasesX-3)*(nCasesY)+ nCasesY-2]);
-		caseN.add(Position.tabPosition[(nCasesX-3)*(nCasesY)+ nCasesY-2]);
+		tabPosUtil.add(Position.tabPosition[(nCasesX - 2) * (nCasesY) + nCasesY
+				- 2]);
+		caseN.add(Position.tabPosition[(nCasesX - 2) * (nCasesY) + nCasesY - 2]);
+		tabPosUtil.add(Position.tabPosition[(nCasesX - 3) * (nCasesY) + nCasesY
+				- 2]);
+		caseN.add(Position.tabPosition[(nCasesX - 3) * (nCasesY) + nCasesY - 2]);
 
-		
-		
 		boolean ok = false;
 
 		for (int i = 0; i < nCasesX; i++) {
@@ -74,7 +75,7 @@ public class Plateau {
 				x = i * (longueurCote + resteX);
 				y = j * apotheme * 2 + (i % 2) * apotheme;
 				Polygon poly = hexagone(x, y);
-				if(i==0 || j==0 || i==nCasesX-1 || j==nCasesY-1) {
+				if (i == 0 || j == 0 || i == nCasesX - 1 || j == nCasesY - 1) {
 					cases[i][j] = new Rocher(poly, i, j, obs);
 					Position p = Position.getPosition(i, j - ((int) i / 2));
 					tabPosUtil.add(p);
@@ -84,6 +85,7 @@ public class Plateau {
 				}
 			}
 		}
+		Phare ph;
 		// On vient positionner les entiés (Phares, Rochers)
 		for (int i = 1; i <= nbPhares; i++) {
 			Position p;
@@ -97,7 +99,9 @@ public class Plateau {
 					x = nbx * (longueurCote + resteX);
 					y = nby * apotheme * 2 + (i % 2) * apotheme;
 					Polygon poly = hexagone(x, y);
-					cases[nbx][nby] = new Phare(poly, nbx, nby, obs);
+					ph = new Phare(poly, nbx, nby, obs);
+					cases[nbx][nby] = ph;
+					phares.add(ph);
 					ok = true;
 				}
 			}
@@ -127,8 +131,8 @@ public class Plateau {
 	public void freeCase(Position p) {
 		int i, j;
 		i = p.getX();
-		j = p.getY() + i/2;
-		cases[i][j].takeCase(null);
+		j = p.getY() + i / 2;
+		cases[i][j].freeCase();
 		cases[i][j].estOccupe = false;
 		caseN.remove(p);
 	}
@@ -136,7 +140,7 @@ public class Plateau {
 	public void takeCase(Position p, Navire N) {
 		int i, j;
 		i = p.getX();
-		j = p.getY() + i/2;
+		j = p.getY() + i / 2;
 		cases[i][j].takeCase(N);
 		cases[i][j].estOccupe = true;
 		caseN.add(p);
@@ -151,6 +155,23 @@ public class Plateau {
 
 	public Case[][] getCases() {
 		return cases;
+	}
+
+	public boolean hasWinner(Joueur currentJ) {
+		Iterator<Phare> i = phares.iterator();
+		boolean stop = false;
+		Phare ph;
+		while (i.hasNext() && !stop) {
+			ph = i.next();
+			if (ph.getTakePosition() != null) {
+				if (!currentJ.getListNavires().contains(ph.getTakePosition())) {
+					stop = true;
+				}
+			} else {
+				stop = true;
+			}
+		}
+		return (!stop);
 	}
 
 	public void surbrillanceO(Set<Position> s) {
