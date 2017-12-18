@@ -189,6 +189,7 @@ public class Navire extends Observable{
         }
         if(this.pv <= 0) {
         	etatCourant = Detruit.getEtat();
+        	couleur = couleurEpave;
         }
     }
     

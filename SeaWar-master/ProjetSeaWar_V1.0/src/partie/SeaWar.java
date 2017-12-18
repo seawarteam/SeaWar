@@ -85,14 +85,14 @@ public class SeaWar {
 			
 		/*================= Canon ====================*/
 		
-		Canons CAP1 = new Canons("Primaire", 50, 3, ZCAP, Amiral1);
-		Canons CAS1 = new Canons("Secondaire", 30, 1, ZCAS, Fregate1);
-		Canons CFP1 = new Canons("Primaire", 30, 1, ZCFP, Amiral1);
-		Canons CFS1 = new Canons("Secondaire", 10, 0, ZCFS, Fregate1);
-		Canons CAP2 = new Canons("Primaire", 50, 3, ZCAP, Amiral2);
-		Canons CAS2 = new Canons("Secondaire", 30, 1, ZCAS, Fregate2);
-		Canons CFP2 = new Canons("Primaire", 30, 1, ZCFP, Amiral2);
-		Canons CFS2 = new Canons("Secondaire", 10, 0, ZCFS, Fregate2);
+		Canons CAP1 = new Canons("Primaire", 50, 4, ZCAP, Amiral1);
+		Canons CAS1 = new Canons("Secondaire", 30, 2, ZCAS, Fregate1);
+		Canons CFP1 = new Canons("Primaire", 30, 2, ZCFP, Amiral1);
+		Canons CFS1 = new Canons("Secondaire", 10, 1, ZCFS, Fregate1);
+		Canons CAP2 = new Canons("Primaire", 50, 4, ZCAP, Amiral2);
+		Canons CAS2 = new Canons("Secondaire", 30, 2, ZCAS, Fregate2);
+		Canons CFP2 = new Canons("Primaire", 30, 2, ZCFP, Amiral2);
+		Canons CFS2 = new Canons("Secondaire", 10, 1, ZCFS, Fregate2);
 		
 		Amiral1.addCanon(CAP1, CAS1);
 		Amiral2.addCanon(CAP2, CAS2);
