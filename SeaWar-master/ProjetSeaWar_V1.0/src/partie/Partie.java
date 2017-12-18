@@ -27,6 +27,7 @@ public class Partie extends Observable {
 	private Iterator<Joueur> iteratorJ;
 	public Joueur currentJ;
 	public Joueur[] listeJ;
+	public boolean gagne;
 
 	/**
 	 * Default constructor
@@ -36,6 +37,7 @@ public class Partie extends Observable {
 		// if(observeur != null) {addObserver(observeur);}
 		// plateau = new Plateau(nX, nY, nbPhares, nbRochers,observeur);
 		numTour = 1;
+		gagne= false;
 		joueurs = new WheelList<Joueur>();
 		nbJoueurs = nomJ.length;
 		ajoutJoueurs(nomJ, nbJoueurs);
@@ -92,6 +94,10 @@ public class Partie extends Observable {
 		}
 		if (hasWinner || plateau.hasWinner(currentJ)) {
 			System.out.println("Victory");
+			gagne=true;
+			setChanged();
+			notifyObservers(this);
+			clearChanged();
 			return true;
 		}
 
