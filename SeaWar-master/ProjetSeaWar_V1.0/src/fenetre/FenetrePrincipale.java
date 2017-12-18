@@ -33,23 +33,26 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	private ActionBateau actionsBateau;
 	private JButton finTour;
 
+	public JPanel panPrincipal;//TODO: New
+	public GridBagConstraints gbc;
+	
 	public Graphics2D cg;
 	
-	public FenetrePrincipale() {
+	public FenetrePrincipale(Partie p, Controleur c) {
 		this.setTitle(titreFenetre);
 		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est cree en plein ecran
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO Demander a sauvegarder en fermant?
 
 		
-		Partie p = new Partie(new String[]{"J1","J2"}, nCasesX, nCasesY, 2, 25, this);
+		//Partie p = new Partie(new String[]{"J1","J2"}, nCasesX, nCasesY, 2, 25, this);
 		plateau = new DrawingPanel();
 		partie =  p;
-		controleur = new Controleur(partie);
+		controleur = c;//new Controleur(partie);
 		
 		setTailleHex(30);
 		
-		JPanel panPrincipal = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
+		panPrincipal = new JPanel(new GridBagLayout());
+		gbc = new GridBagConstraints();
 
 		gbc.weightx = (int) (100-largeurMenuGauche)/nBoutonsHaut;
 		gbc.weighty = largeurMenuHaut;
@@ -83,7 +86,20 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		gbc.gridheight = 1;
 		gbc.gridwidth = nBoutonsHaut;
 
+		/*
+		plateau = new DrawingPanel();
+		scroll = new JScrollPane(plateau);
+		scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
+		scroll.getHorizontalScrollBar().setUnitIncrement(resteX+longueurCote);
 
+		panPrincipal.add(scroll, gbc);
+		
+		this.setContentPane(panPrincipal);
+		this.setVisible(true);*/
+
+	}	
+
+	public void initFenetrePrincipale(JPanel panPrincipal, GridBagConstraints gbc) {
 		plateau = new DrawingPanel();
 		scroll = new JScrollPane(plateau);
 		scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
@@ -93,9 +109,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		
 		this.setContentPane(panPrincipal);
 		this.setVisible(true);
-
-	}	
-
+	}
+	
 	
 	public static void drawHex(int i, int j, Graphics2D g2) { //Cree un hexagone en (i,j)
 		int x = i * (longueurCote+resteX);
@@ -453,6 +468,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 
 	
 	public static void main(String[] args) {
-		FenetrePrincipale f = new FenetrePrincipale();
+		//FenetrePrincipale f = new FenetrePrincipale();
 	}
 }
