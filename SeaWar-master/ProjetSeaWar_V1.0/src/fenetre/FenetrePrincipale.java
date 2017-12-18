@@ -99,7 +99,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 
 	}	
 
-	public void initFenetrePrincipale(JPanel panPrincipal, GridBagConstraints gbc) {
+	public void initFenetrePrincipale() {
 		plateau = new DrawingPanel();
 		scroll = new JScrollPane(plateau);
 		scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
