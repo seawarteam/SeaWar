@@ -53,6 +53,19 @@ public class Plateau {
 
 		int nbx, nby;
 		ArrayList<Position> tabPosUtil = new ArrayList<Position>();
+		
+		//Positions obstacles où il y a les bateaux au debut
+		tabPosUtil.add(Position.getPosition(1, 1));
+		caseN.add(Position.getPosition(1, 1));
+		tabPosUtil.add(Position.getPosition(1, 2));
+		caseN.add(Position.getPosition(1, 2));
+		tabPosUtil.add(Position.tabPosition[(nCasesX-2)*(nCasesY)+ nCasesY-2]);
+		caseN.add(Position.tabPosition[(nCasesX-2)*(nCasesY)+ nCasesY-2]);
+		tabPosUtil.add(Position.tabPosition[(nCasesX-3)*(nCasesY)+ nCasesY-2]);
+		caseN.add(Position.tabPosition[(nCasesX-3)*(nCasesY)+ nCasesY-2]);
+
+		
+		
 		boolean ok = false;
 
 		for (int i = 0; i < nCasesX; i++) {
@@ -60,7 +73,13 @@ public class Plateau {
 				x = i * (longueurCote + resteX);
 				y = j * apotheme * 2 + (i % 2) * apotheme;
 				Polygon poly = hexagone(x, y);
-				cases[i][j] = new Eau(poly, i, j, obs);
+				if(i==0 || j==0 || i==nCasesX-1 || j==nCasesY-1) {
+					cases[i][j] = new Rocher(poly, i, j, obs);
+					Position p = Position.getPosition(i, j - ((int) i / 2));
+					tabPosUtil.add(p);
+				} else {
+					cases[i][j] = new Eau(poly, i, j, obs);
+				}
 			}
 		}
 		// On vient positionner les entiÃ©s (Phares, Rochers)

@@ -9,8 +9,9 @@ import java.util.*;
  */
 public class Rocher extends Case {
 
-    public static final Color couleurVide = Color.YELLOW;
+    public static final Color couleurVide = new Color(150,100,0);
     public static final Color couleurTir = Color.GRAY;
+    public static final Color couleurOri = new Color(50,100,0);
 	
     public Rocher(Polygon p, int i, int j,Observer obs) {
     	super();
@@ -63,6 +64,7 @@ public class Rocher extends Case {
 	}
 	
 	public void surbrillanceO(){
+		col = couleurOri;
     	setChanged();
     	notifyObservers(this);
     	clearChanged();

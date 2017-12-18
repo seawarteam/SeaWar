@@ -38,6 +38,7 @@ public class Detruit implements EtatDeplacement {
 		return false;
 	}
 	public boolean deplacement(Position pos, Orientation dir, int nbCase, Navire previous, Navire current){
+		System.out.println("Detruit : deplacement");
 		return false;
 	}
 

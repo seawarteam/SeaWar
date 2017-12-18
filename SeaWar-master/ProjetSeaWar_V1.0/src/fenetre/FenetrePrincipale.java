@@ -16,8 +16,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	public final static int nBoutonsHaut = 3; //different de zero, nombre de boutons en haut
 	public final static int largeurMenuHaut = 2; //approximativement la largeur du menu en haut en pourcentage
 	public final static int largeurMenuGauche = 30; //approximativement la largeur du menu a gauche en pourcentage
-	public final static int nCasesX = 20;
-	public final static int nCasesY = 20;
+	public final static int nCasesX = 21;
+	public final static int nCasesY = 21;
 
 	private static int longueurCote;	//distance le centre et un point = longueur d'un cote
 	private static int apotheme; //apotheme = distance entre le centre et le milieu d'un cote
@@ -47,8 +47,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		controleur = new Controleur(partie);
 		
 		setTailleHex(30);
-
-		//Position.initTabPosition(20, 20);
 		
 		JPanel panPrincipal = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -168,7 +166,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		if(o instanceof Navire) {updateNavire((Navire) o);}
 		else if(o instanceof Case) {
 			updateCase((Case) o);
-
+		} else if(o instanceof Partie) {
+			updatePartie((Partie) o);
 		}
 	}
 	
@@ -202,6 +201,13 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		infoCase.setBateau(n.toString());
 		infoCase.revalidate();
 		plateau.repaint();
+	}
+	
+	private void updatePartie(Partie p) {
+		infoJoueur.changerJoueur(partie.currentJ.getNom());
+		if(p.currentJ.getNavEtatCourant()==null) {
+			actionsBateau.setVisible(false);
+		}
 	}
 	
 

@@ -42,8 +42,10 @@ public class Navire extends Observable{
 		System.out.println(caseVoisine.toString());
 	}
 	
-	
-	 public Color couleur = new Color(254, 45, 87);
+	 
+	 public static final Color couleurEnVie = new Color(254, 45, 87);
+	 public static final Color couleurEpave = new Color(200, 0 , 200);
+	 public Color couleur = couleurEnVie;
 	
 	 private String nom;
 	 private int pv;

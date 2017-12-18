@@ -10,8 +10,9 @@ import java.util.*;
 public class Eau extends Case {
 	public static final Color couleurVide = Color.CYAN;
     public static final Color couleurDep = new Color(0, 0, 255, 60);
-    public static final Color couleurOri = new Color(0,255,0);
+    public static final Color couleurOri = new Color(150,200,0);
     public static final Color couleurTir = Color.GRAY;
+    public static final Color couleurTirOccupe = new Color(255,50,255);
     public static final Color couleurDeptemp = Color.black;
     
     
@@ -66,7 +67,12 @@ public class Eau extends Case {
 	}
     
     public void surbrillanceT(){
-    	col = couleurTir;
+    	if(this.estOccupe) {
+    		col = couleurTirOccupe;
+    	} else {
+    		col = couleurTir;
+    	}
+    	
     	setChanged();
     	notifyObservers(this);
     	clearChanged();    	

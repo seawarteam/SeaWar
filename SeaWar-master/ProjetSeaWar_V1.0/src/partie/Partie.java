@@ -143,6 +143,9 @@ public class Partie extends Observable{
     	numTour++; 
         currentJ = iteratorJ.next();
         currentJ.initTour();
+        setChanged();
+        notifyObservers(this);
+        clearChanged();
         //Check si un joueur a gagné
         //Check et MAJ des compteurs du joueur courant
     }
@@ -165,12 +168,12 @@ public class Partie extends Observable{
 		Joueur[] jou = getJoueurs();
 		
 		Navire[] navs = jou[0].getNavires();
-		initBateau(Position.getPosition(0, 0), Orientation.SE, navs[0]);
-		initBateau(Position.getPosition(0, 1), Orientation.SE, navs[1]);
+		initBateau(Position.getPosition(1, 1), Orientation.SE, navs[0]);
+		initBateau(Position.getPosition(1, 2), Orientation.SE, navs[1]);
 		
 		navs = jou[1].getNavires();
-		initBateau(Position.getPosition(plateau.getCases().length-1,(int) plateau.getCases()[0].length/2), Orientation.NO, navs[0]);
-		initBateau(Position.getPosition(plateau.getCases().length-2, (int) plateau.getCases()[0].length/2), Orientation.NO, navs[1]);
+		initBateau(Position.tabPosition[(plateau.getCases().length-2)*(plateau.getCases()[0].length)+ plateau.getCases()[0].length-2],Orientation.NO, navs[0]);
+		initBateau(Position.tabPosition[(plateau.getCases().length-3)*(plateau.getCases()[0].length)+ plateau.getCases()[0].length-2], Orientation.NO, navs[1]);
 	}
 	
     
