@@ -78,6 +78,7 @@ public class Plateau {
 					cases[i][j] = new Rocher(poly, i, j, obs);
 					Position p = Position.getPosition(i, j - ((int) i / 2));
 					tabPosUtil.add(p);
+					caseR.add(p);
 				} else {
 					cases[i][j] = new Eau(poly, i, j, obs);
 				}
