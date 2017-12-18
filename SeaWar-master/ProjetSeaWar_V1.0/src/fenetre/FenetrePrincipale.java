@@ -180,7 +180,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	 */
 
 		actionsBateau.setVisible(false);
-		infoCase.setBateau("");
 		infoCase.setNomCase(c.toString());
 		infoCase.revalidate();
 		repaint();
@@ -198,7 +197,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			actionsBateau.setVisible(false);
 		}
 		infoCase.setNomCase(partie.plateau.getCases()[posHextoHex(n.getPos()).x][posHextoHex(n.getPos()).y].toString());
-		infoCase.setBateau(n.toString());
+		infoCase.setBateau(n,partie.getCaseOnPos(n.getPos()));
 		infoCase.revalidate();
 		plateau.repaint();
 	}
@@ -310,7 +309,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 
 
-		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement Ãƒ  l'autre
+		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement ÃƒÆ’  l'autre
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'eviter des effets de bords moches
 			cg = g2;
@@ -326,22 +325,41 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	class InfoCase extends JPanel{
 		private static final long serialVersionUID = -8644027093047733015L;
 		private JLabel typeCase;
-		private JLabel bateau;
 		
 		public InfoCase() {
-			super(new GridLayout(2,1));
-			typeCase = new JLabel("Case de type :");
-			bateau = new JLabel("bateau :");
+			super(new GridLayout(1,1));
+			typeCase = new JLabel("");
 			this.add(typeCase);
-			this.add(bateau);
 		}
 		
 		public void setNomCase(String type) {
 			typeCase.setText("Case de type "+type);
 		}
 		
-		public void setBateau(String nomBateau) {
-			bateau.setText("bateau : "+ nomBateau);
+		public void setBateau(Navire nav,Case cas) {
+			String sBat = ("<html>Case de type "+cas);
+			if(nav!=(null)) {
+				sBat += "<br><br>";
+				Joueur jou = partie.getProprio(nav);
+				sBat += "<table><tr><td>Proprietaire : </td><td>"+jou.getNom()+"</td></tr>";
+				sBat += "<tr><td>Nom du bateau : </td><td>"+nav.getNom()+"</td></tr>";
+				sBat += "<tr><td>PV restants : </td><td>"+nav.getPV()+"</td></tr>";
+				sBat += "<tr><td>Orientation : </td><td>"+nav.getOrientation()+"</td></tr></table><br>";
+				sBat += "<table><tr><td>Canon Principal : </td><td>"+nav.getCanonP().getNom()+"</td></tr>";
+				sBat += "<tr><td>Degats : </td><td>"+nav.getCanonP().getDegat()+"</td></tr>";
+				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonP().getTpsRech()+1)+"</td></tr>";
+				sBat += "<tr><td>Prochain Tir : </td><td>"+(nav.getCanonP().getTpsRest()+1)+"</td></tr></table><br>";
+				sBat += "<table><tr><td>Canon Secondaire : </td><td>"+nav.getCanonS().getNom()+"</td></tr>";
+				sBat += "<tr><td>Degats : </td><td>"+nav.getCanonS().getDegat()+"</td></tr>";
+				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonS().getTpsRech()+1)+"</td></tr>";
+				sBat += "</tr></td>Prochain Tir : </td><td>"+(nav.getCanonS().getTpsRest()+1)+"</td></tr></table>";
+				
+				
+				
+			}
+			sBat +="</html>";
+			typeCase.setText(sBat);
+			
 		}
 		
 	}
