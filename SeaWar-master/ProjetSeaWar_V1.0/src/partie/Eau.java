@@ -37,7 +37,8 @@ public class Eau extends Case {
 	}
     
     public void freeCase(){
-        estOccupe = false;   
+        estOccupe = false;
+        takePosition = null;
     }
     
     public void ResetCouleur() {
