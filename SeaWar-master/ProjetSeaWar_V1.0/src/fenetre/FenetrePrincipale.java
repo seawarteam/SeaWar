@@ -16,8 +16,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	public final static int nBoutonsHaut = 3; //different de zero, nombre de boutons en haut
 	public final static int largeurMenuHaut = 2; //approximativement la largeur du menu en haut en pourcentage
 	public final static int largeurMenuGauche = 30; //approximativement la largeur du menu a gauche en pourcentage
-	public final static int nCasesX = 21;
-	public final static int nCasesY = 21;
+	public static int nCasesX;
+	public static int nCasesY;
 
 	private static int longueurCote;	//distance le centre et un point = longueur d'un cote
 	private static int apotheme; //apotheme = distance entre le centre et le milieu d'un cote
@@ -48,6 +48,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		plateau = new DrawingPanel();
 		partie =  p;
 		controleur = c;//new Controleur(partie);
+		nCasesX = Position.getTailleX();
+		nCasesY = Position.getTailleY();
 		
 		setTailleHex(30);
 		

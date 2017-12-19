@@ -13,6 +13,14 @@ public class Position {
     public static Position [] tabPosition;
     private static int tailleX;
     private static int tailleY;
+    
+    public static int getTailleX() {
+    	return tailleX;
+    }
+    
+    public static int getTailleY() {
+    	return tailleY;
+    }
 
     public Position(int x, int y) {
     	this.x = x;

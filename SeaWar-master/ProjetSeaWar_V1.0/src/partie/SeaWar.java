@@ -32,10 +32,10 @@ public class SeaWar {
 		String []nomJ = new String[2];
 		nomJ[0] = "Joueur 1";
 		nomJ[1] = "Joueur 2";
-		int nX = 21;
-		int nY = 21;
-		int nbPhares = 3;
-		int nbRochers = 25;
+		int nX = 20;
+		int nY = 10;
+		int nbPhares = 5;
+		int nbRochers = 10;
 		Position.initTabPosition(nX, nY);
 		Partie partie = new Partie(nomJ, nX, nY);
 		
@@ -46,6 +46,7 @@ public class SeaWar {
 		/*=============== Fenetre =================*/
 		
 		FenetrePrincipale carte = new FenetrePrincipale(partie, controleur);
+		//partie.addObserver(carte);
 		
 		/*================ Joueurs ================*/
 		
@@ -104,8 +105,8 @@ public class SeaWar {
 		
 		partie.initBateau(Position.getPosition(1, 1), Orientation.SE, Amiral1);
 		partie.initBateau(Position.getPosition(2, 0), Orientation.SE, Fregate1);
-		partie.initBateau(Position.getPosition(19, 9), Orientation.NO, Amiral2);
-		partie.initBateau(Position.getPosition(18, 10), Orientation.NO, Fregate2);
+		partie.initBateau(Position.getPosition(nX - 2, nY - 1 - (int)nX/2 ), Orientation.NO, Amiral2);
+		partie.initBateau(Position.getPosition(nX - 3, nY  - (int)nX/2), Orientation.NO, Fregate2);
 		
 		partie.initTour();
     }
