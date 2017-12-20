@@ -1,6 +1,7 @@
 package partie;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.*;
 
 import etat.Apte;
@@ -10,7 +11,7 @@ import etat.EtatDeplacement;
 /**
  * 
  */
-public class Navire extends Observable{	
+public class Navire extends Observable implements Serializable {	
 	
 	public static void main (String [] args) {
 		Position.initTabPosition(10, 10);

@@ -2,12 +2,13 @@ package partie;
 
 import java.awt.Color;
 import java.awt.Polygon;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public class Rocher extends Case {
+public class Rocher extends Case implements Serializable {
 
 	public static final Color couleurVide = new Color(150, 100, 0);
 	public static final Color couleurTir = Color.GRAY;

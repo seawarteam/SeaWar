@@ -1,9 +1,10 @@
 package partie;
 
 import java.awt.Polygon;
+import java.io.Serializable;
 import java.util.*;
 
-public class Plateau {
+public class Plateau implements Serializable {
 
 	private Case cases[][];
 	private Set<Phare> phares;

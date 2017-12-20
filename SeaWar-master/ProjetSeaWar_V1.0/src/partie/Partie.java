@@ -1,5 +1,6 @@
 package partie;
 
+import java.io.*;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +17,7 @@ import List.*;
 /**
  * 
  */
-public class Partie extends Observable {
+public class Partie extends Observable implements Serializable {
 	public static void main(String[] args) {
 
 	}
@@ -218,6 +219,52 @@ public class Partie extends Observable {
 			}
 		}
 		return false;
+	}
+	
+	public void sauvegarder ( String nomFichier ) {
+		String path = "./../../Sauvegardes/" + nomFichier;
+		ObjectOutputStream oos = null;
+		try {
+			final FileOutputStream fichier = new FileOutputStream(path);
+			oos = new ObjectOutputStream(fichier);
+			oos.writeObject(this);
+			oos.flush();
+		} catch (final java.io.IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (oos != null) {
+					oos.flush();
+					oos.close();
+				}
+			} catch (final IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public Partie charger ( String nomFichier ) {
+		String path = "./../../Sauvegardes/" + nomFichier;
+		Partie partie = null;
+		ObjectInputStream ois = null;
+		try {
+			final FileInputStream fichier = new FileInputStream(path);
+			ois = new ObjectInputStream(fichier);
+			partie = (Partie) ois.readObject();
+		} catch (final java.io.IOException e) {
+			e.printStackTrace();
+		} catch (final ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ois != null) {
+					ois.close();
+				}
+			} catch (final IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return partie;
 	}
 
 }

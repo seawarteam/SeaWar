@@ -24,7 +24,7 @@ public class EtatTirS implements EtatAction {
 				cible.toucher(degats);
 			}
 		} else {
-			//tps de recharge ou case non atteignable
+			System.out.println("tps de recharge ou case non atteignable");
 		}
 		
 		c.setEtat(EtatInit.getEtat());

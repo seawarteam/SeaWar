@@ -1,5 +1,6 @@
 package partie;
 
+import java.io.Serializable;
 import java.util.*;
 
 import etat.Courant;
@@ -8,7 +9,7 @@ import etat.Detruit;
 /**
  * 
  */
-public class Joueur {
+public class Joueur implements Serializable {
 	public static void main(String[] args) {
 		Position.initTabPosition(10, 10);
 	}

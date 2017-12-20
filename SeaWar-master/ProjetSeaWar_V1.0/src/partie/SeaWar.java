@@ -86,12 +86,15 @@ public class SeaWar {
 		/*================= Canon ====================*/
 		
 		Canons CAP1 = new Canons("Primaire", 50, 4, ZCAP, Amiral1);
-		Canons CAS1 = new Canons("Secondaire", 30, 2, ZCAS, Fregate1);
-		Canons CFP1 = new Canons("Primaire", 30, 2, ZCFP, Amiral1);
+		Canons CAS1 = new Canons("Secondaire", 30, 2, ZCAS, Amiral1);
+		
+		Canons CFP1 = new Canons("Primaire", 30, 2, ZCFP, Fregate1);
 		Canons CFS1 = new Canons("Secondaire", 10, 1, ZCFS, Fregate1);
+		
 		Canons CAP2 = new Canons("Primaire", 50, 4, ZCAP, Amiral2);
-		Canons CAS2 = new Canons("Secondaire", 30, 2, ZCAS, Fregate2);
-		Canons CFP2 = new Canons("Primaire", 30, 2, ZCFP, Amiral2);
+		Canons CAS2 = new Canons("Secondaire", 30, 2, ZCAS, Amiral2);
+		
+		Canons CFP2 = new Canons("Primaire", 30, 2, ZCFP, Fregate2);
 		Canons CFS2 = new Canons("Secondaire", 10, 1, ZCFS, Fregate2);
 		
 		Amiral1.addCanon(CAP1, CAS1);
@@ -100,6 +103,7 @@ public class SeaWar {
 		Fregate2.addCanon(CFP2, CFS2);
 		
 		/*================ Start ===========================*/
+		
 		partie.initPartie(nX, nY, nbPhares, nbRochers, carte);
 		carte.initFenetrePrincipale();
 		

@@ -1,6 +1,8 @@
 package List;
 
-public class WheelList<E>{
+import java.io.Serializable;
+
+public class WheelList<E> implements Serializable {
 	public static void main(String args []){
 		WheelList<String> w = new WheelList<String>();
 		

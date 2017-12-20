@@ -2,12 +2,13 @@ package partie;
 
 import java.awt.Color;
 import java.awt.Polygon;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public abstract class Case extends Observable{
+public abstract class Case extends Observable implements Serializable {
 
 	public boolean estOccupe;
 	public Navire takePosition;
