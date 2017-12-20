@@ -33,9 +33,9 @@ public class SeaWar {
 		nomJ[0] = "Joueur 1";
 		nomJ[1] = "Joueur 2";
 		int nX = 20;
-		int nY = 10;
-		int nbPhares = 5;
-		int nbRochers = 10;
+		int nY = 14;
+		int nbPhares = 3;
+		int nbRochers = 20;
 		Position.initTabPosition(nX, nY);
 		Partie partie = new Partie(nomJ, nX, nY);
 		
