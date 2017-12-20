@@ -2,9 +2,10 @@ package partie;
 
 import java.awt.Color;
 import java.awt.Polygon;
+import java.io.Serializable;
 import java.util.*;
 
-public class Phare extends Eau {
+public class Phare extends Eau implements Serializable {
 
 	public static final Color couleurVide = Color.WHITE;
 	public static final Color couleurOccupe = Color.RED;

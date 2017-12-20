@@ -1,11 +1,12 @@
 package partie;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 
  */
-public class Position {
+public class Position implements Serializable {
 	
 	private int x;
     private int y;

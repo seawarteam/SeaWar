@@ -1,7 +1,9 @@
 package partie;
 
+import java.io.Serializable;
 
-public enum Orientation {
+
+public enum Orientation implements Serializable {
     N(0),
     NE(1),
     SE(2),
