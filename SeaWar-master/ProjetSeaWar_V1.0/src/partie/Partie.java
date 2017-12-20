@@ -1,6 +1,5 @@
 package partie;
 
-import java.io.*;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 import java.util.Vector;
-
+import java.io.*;
 import etat.Apte;
 import fenetre.FenetrePrincipale;
 
@@ -17,7 +16,7 @@ import List.*;
 /**
  * 
  */
-public class Partie extends Observable implements Serializable {
+public class Partie extends Observable implements Serializable{
 	public static void main(String[] args) {
 
 	}
@@ -29,6 +28,7 @@ public class Partie extends Observable implements Serializable {
 	private Iterator<Joueur> iteratorJ;
 	public Joueur currentJ;
 	public Joueur[] listeJ;
+	public boolean gagne;
 
 	/**
 	 * Default constructor
@@ -38,6 +38,7 @@ public class Partie extends Observable implements Serializable {
 		// if(observeur != null) {addObserver(observeur);}
 		// plateau = new Plateau(nX, nY, nbPhares, nbRochers,observeur);
 		numTour = 1;
+		gagne = false;
 		joueurs = new WheelList<Joueur>();
 		nbJoueurs = nomJ.length;
 		ajoutJoueurs(nomJ, nbJoueurs);
@@ -83,7 +84,6 @@ public class Partie extends Observable implements Serializable {
 		currentJ = iteratorJ.next();
 		boolean hasWinner = false;
 		Joueur jNext;
-		System.out.println("J is Dead ?" + currentJ.isDead() + " stop :");
 		while (currentJ.isDead()) {
 			jNext = iteratorJ.next();
 			if (jNext == currentJ) {
@@ -93,7 +93,10 @@ public class Partie extends Observable implements Serializable {
 			}
 		}
 		if (hasWinner || plateau.hasWinner(currentJ)) {
-			System.out.println("Victory");
+			gagne= true;
+			setChanged();
+			notifyObservers(this);
+			clearChanged();
 			return true;
 		}
 
@@ -220,6 +223,7 @@ public class Partie extends Observable implements Serializable {
 		}
 		return false;
 	}
+	
 	
 	public void sauvegarder ( String nomFichier ) {
 		String path = "./../../Sauvegardes/" + nomFichier;
