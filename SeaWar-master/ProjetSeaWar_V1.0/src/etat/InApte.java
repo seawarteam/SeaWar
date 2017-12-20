@@ -1,11 +1,13 @@
 package etat;
 
+import java.io.Serializable;
+
 import partie.Canons;
 import partie.Navire;
 import partie.Orientation;
 import partie.Position;
 
-public class InApte implements EtatDeplacement {
+public class InApte implements EtatDeplacement, Serializable {
 	private static InApte i = new InApte();
 	
 	private InApte(){

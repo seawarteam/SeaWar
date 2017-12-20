@@ -217,10 +217,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		if(p.currentJ.getNavEtatCourant()==null) {
 			actionsBateau.setVisible(false);
 		}
-		if(p.gagne){
-			Gagne gg = new Gagne();
-			
-		}
 	}
 	
 
@@ -333,13 +329,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 					drawHex(i,j,g2);
 				}
 			}
-		}
-	}
-	
-	class Gagne extends JOptionPane{
-		public Gagne(){
-			super();
-			showMessageDialog(this, "Victoire de "+ partie.currentJ.getNom(), "Bravo !", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	

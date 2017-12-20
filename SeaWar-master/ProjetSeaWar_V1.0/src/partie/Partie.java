@@ -1,5 +1,8 @@
 package partie;
 
+import java.nio.file.*;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 import java.util.Vector;
-import java.io.*;
+
 import etat.Apte;
 import fenetre.FenetrePrincipale;
 
@@ -16,7 +19,7 @@ import List.*;
 /**
  * 
  */
-public class Partie extends Observable implements Serializable{
+public class Partie extends Observable implements Serializable {
 	public static void main(String[] args) {
 
 	}
@@ -28,7 +31,6 @@ public class Partie extends Observable implements Serializable{
 	private Iterator<Joueur> iteratorJ;
 	public Joueur currentJ;
 	public Joueur[] listeJ;
-	public boolean gagne;
 
 	/**
 	 * Default constructor
@@ -38,7 +40,6 @@ public class Partie extends Observable implements Serializable{
 		// if(observeur != null) {addObserver(observeur);}
 		// plateau = new Plateau(nX, nY, nbPhares, nbRochers,observeur);
 		numTour = 1;
-		gagne = false;
 		joueurs = new WheelList<Joueur>();
 		nbJoueurs = nomJ.length;
 		ajoutJoueurs(nomJ, nbJoueurs);
@@ -84,6 +85,7 @@ public class Partie extends Observable implements Serializable{
 		currentJ = iteratorJ.next();
 		boolean hasWinner = false;
 		Joueur jNext;
+		System.out.println("J is Dead ? " + currentJ.isDead() + " stop :");
 		while (currentJ.isDead()) {
 			jNext = iteratorJ.next();
 			if (jNext == currentJ) {
@@ -93,10 +95,7 @@ public class Partie extends Observable implements Serializable{
 			}
 		}
 		if (hasWinner || plateau.hasWinner(currentJ)) {
-			gagne= true;
-			setChanged();
-			notifyObservers(this);
-			clearChanged();
+			System.out.println("Victory");
 			return true;
 		}
 
@@ -224,50 +223,55 @@ public class Partie extends Observable implements Serializable{
 		return false;
 	}
 	
-	
-	public void sauvegarder ( String nomFichier ) {
-		String path = "./../../Sauvegardes/" + nomFichier;
+	public void sauvegarder ( String nomFichier ) { // ex : partie.sauvegarder ( "Test01" );
+		String path = "./Sauvegardes/" + nomFichier;
 		ObjectOutputStream oos = null;
-		try {
-			final FileOutputStream fichier = new FileOutputStream(path);
-			oos = new ObjectOutputStream(fichier);
-			oos.writeObject(this);
-			oos.flush();
-		} catch (final java.io.IOException e) {
-			e.printStackTrace();
-		} finally {
+		File pathF = new File(path);
+		if ( !pathF.exists() ) {
 			try {
-				if (oos != null) {
-					oos.flush();
-					oos.close();
+				final FileOutputStream fichier = new FileOutputStream(path);
+				oos = new ObjectOutputStream(fichier);
+				oos.writeObject(this);
+				oos.flush();
+			} catch (final java.io.IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (oos != null) {
+						oos.flush();
+						oos.close();
+					}
+				} catch (final IOException ex) {
+					ex.printStackTrace();
 				}
-			} catch (final IOException ex) {
-				ex.printStackTrace();
 			}
-		}
+		} else { System.out.println("Fichier déjà existant !"); }
 	}
 	
-	public Partie charger ( String nomFichier ) {
-		String path = "./../../Sauvegardes/" + nomFichier;
+	public Partie charger ( String nomFichier ) { // ex : partie.charger ( "Test01" );
+		String path = "./Sauvegardes/" + nomFichier;
 		Partie partie = null;
-		ObjectInputStream ois = null;
-		try {
-			final FileInputStream fichier = new FileInputStream(path);
-			ois = new ObjectInputStream(fichier);
-			partie = (Partie) ois.readObject();
-		} catch (final java.io.IOException e) {
-			e.printStackTrace();
-		} catch (final ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
+		File pathF = new File(path);
+		if ( pathF.exists() ) {
+			ObjectInputStream ois = null;
 			try {
-				if (ois != null) {
-					ois.close();
+				final FileInputStream fichier = new FileInputStream(path);
+				ois = new ObjectInputStream(fichier);
+				partie = (Partie) ois.readObject();
+			} catch (final java.io.IOException e) {
+				e.printStackTrace();
+			} catch (final ClassNotFoundException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (ois != null) {
+						ois.close();
+					}
+				} catch (final IOException ex) {
+					ex.printStackTrace();
 				}
-			} catch (final IOException ex) {
-				ex.printStackTrace();
 			}
-		}
+		} else { System.out.println("Fichier non existant !"); }
 		return partie;
 	}
 
