@@ -1,6 +1,11 @@
 package partie;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +15,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import etat.Apte;
+import etat.Bloque;
 import fenetre.FenetrePrincipale;
 
 import List.*;
@@ -98,6 +104,7 @@ public class Partie extends Observable implements Serializable {
 		}
 
 		currentJ.initTour();
+		currentJ.RechercheNaviresBloque(plateau.getRochers());
 
 		setChanged();
 		notifyObservers(this);
@@ -214,14 +221,15 @@ public class Partie extends Observable implements Serializable {
 	public boolean existeApteNav() {
 		Navire[] navs = currentJ.getNavires();
 		for (Navire nav : navs) {
-			if(nav.getEtat() == Apte.getEtat()) {
+			if (nav.getEtatCourant() == Apte.getEtat()
+					|| nav.getEtatCourant() == Bloque.getEtat()) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public void sauvegarder ( String nomFichier ) {
+
+	public void sauvegarder(String nomFichier) {
 		String path = "./../../Sauvegardes/" + nomFichier;
 		ObjectOutputStream oos = null;
 		try {
@@ -242,8 +250,8 @@ public class Partie extends Observable implements Serializable {
 			}
 		}
 	}
-	
-	public Partie charger ( String nomFichier ) {
+
+	public Partie charger(String nomFichier) {
 		String path = "./../../Sauvegardes/" + nomFichier;
 		Partie partie = null;
 		ObjectInputStream ois = null;

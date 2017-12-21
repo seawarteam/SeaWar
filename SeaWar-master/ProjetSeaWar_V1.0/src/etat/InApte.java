@@ -41,5 +41,10 @@ public class InApte implements EtatDeplacement {
 		return false;
 	}
 	
+	
+	public String toString() {
+    	return "Inapte";
+    }
+
 
 }

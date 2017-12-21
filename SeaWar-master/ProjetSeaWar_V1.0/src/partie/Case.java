@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * 
  */
-public abstract class Case extends Observable implements Serializable {
+public abstract class Case extends Observable implements Serializable{
 
 	public boolean estOccupe;
 	public Navire takePosition;

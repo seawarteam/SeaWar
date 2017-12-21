@@ -41,5 +41,10 @@ public class Detruit implements EtatDeplacement {
 		System.out.println("Detruit : deplacement");
 		return false;
 	}
+	
+	public String toString() {
+    	return "Détruit";
+    }
+
 
 }
