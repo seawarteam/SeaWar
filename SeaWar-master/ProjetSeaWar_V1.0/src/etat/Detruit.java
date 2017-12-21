@@ -1,11 +1,13 @@
 package etat;
 
+import java.io.Serializable;
+
 import partie.Canons;
 import partie.Navire;
 import partie.Orientation;
 import partie.Position;
 
-public class Detruit implements EtatDeplacement {
+public class Detruit implements EtatDeplacement, Serializable {
 	private static Detruit d = new Detruit();
 	
 	private Detruit(){

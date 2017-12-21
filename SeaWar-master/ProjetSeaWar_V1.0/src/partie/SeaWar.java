@@ -109,6 +109,7 @@ public class SeaWar {
 		partie.initBateau(Position.getPosition(nX - 3, nY  - (int)nX/2), Orientation.NO, Fregate2);
 		
 		partie.initTour();
+		
     }
 
 }
