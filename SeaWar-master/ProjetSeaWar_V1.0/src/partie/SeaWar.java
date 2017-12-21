@@ -10,7 +10,7 @@ import fenetre.FenetrePrincipale;
 public class SeaWar {
 	
 	public static void main (String [] args) {
-		partieRapide();
+		partieRapide("Joueur 1","Joueur 2");
 	}
 
     /**
@@ -25,13 +25,13 @@ public class SeaWar {
     public Partie partie;// utile ???
     
     
-    public static void partieRapide() {
+    public static void partieRapide(String jou1, String jou2) {
     	
     	/*================== Partie ====================*/
 		
 		String []nomJ = new String[2];
-		nomJ[0] = "Joueur 1";
-		nomJ[1] = "Joueur 2";
+		nomJ[0] = jou1;
+		nomJ[1] = jou2;
 		int nX = 20;
 		int nY = 14;
 		int nbPhares = 3;

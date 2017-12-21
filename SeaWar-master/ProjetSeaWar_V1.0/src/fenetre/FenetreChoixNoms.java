@@ -42,7 +42,7 @@ public class FenetreChoixNoms extends JFrame {
 
 	class BoutonValider extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;
-		private final static String nom= "Commencer le partie";
+		private final static String nom= "Commencer la partie";
 
 		public BoutonValider() {
 			super(nom);
@@ -50,7 +50,6 @@ public class FenetreChoixNoms extends JFrame {
 		}
 
 
-		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			String jou1 = j1.getText();
 			String jou2 = j2.getText();
@@ -66,25 +65,25 @@ public class FenetreChoixNoms extends JFrame {
 
 		}
 
-		@Override
+		
 		public void mouseEntered(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 
 		}
 
-		@Override
+		
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 
 		}
 
-		@Override
+		
 		public void mousePressed(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 
 		}
 
-		@Override
+		
 		public void mouseReleased(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 
