@@ -43,5 +43,10 @@ public class InApte implements EtatDeplacement, Serializable {
 		return false;
 	}
 	
+	
+	public String toString() {
+    	return "Inapte";
+    }
+
 
 }

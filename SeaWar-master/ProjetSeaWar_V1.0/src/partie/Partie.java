@@ -1,5 +1,6 @@
 package partie;
 
+
 import java.nio.file.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import etat.Apte;
+import etat.Bloque;
 import fenetre.FenetrePrincipale;
 
 import List.*;
@@ -100,6 +102,7 @@ public class Partie extends Observable implements Serializable {
 		}
 
 		currentJ.initTour();
+		currentJ.RechercheNaviresBloque(plateau.getRochers());
 
 		setChanged();
 		notifyObservers(this);
@@ -216,12 +219,14 @@ public class Partie extends Observable implements Serializable {
 	public boolean existeApteNav() {
 		Navire[] navs = currentJ.getNavires();
 		for (Navire nav : navs) {
-			if(nav.getEtat() == Apte.getEtat()) {
+			if (nav.getEtatCourant() == Apte.getEtat()
+					|| nav.getEtatCourant() == Bloque.getEtat()) {
 				return true;
 			}
 		}
 		return false;
 	}
+
 	
 	public void sauvegarder ( String nomFichier ) { // ex : partie.sauvegarder ( "Test01" );
 		String path = "./Sauvegardes/" + nomFichier;
@@ -247,6 +252,7 @@ public class Partie extends Observable implements Serializable {
 			}
 		} else { System.out.println("Fichier déjà existant !"); }
 	}
+
 	
 	public Partie charger ( String nomFichier ) { // ex : partie.charger ( "Test01" );
 		String path = "./Sauvegardes/" + nomFichier;

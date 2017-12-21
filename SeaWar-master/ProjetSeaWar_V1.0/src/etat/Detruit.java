@@ -43,5 +43,10 @@ public class Detruit implements EtatDeplacement, Serializable {
 		System.out.println("Detruit : deplacement");
 		return false;
 	}
+	
+	public String toString() {
+    	return "Détruit";
+    }
+
 
 }

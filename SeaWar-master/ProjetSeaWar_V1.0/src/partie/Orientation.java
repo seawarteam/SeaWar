@@ -61,4 +61,16 @@ public enum Orientation implements Serializable {
     	
     }
     
+    public static Orientation getDirOppose(Orientation dir)  {
+    	switch(dir) {
+			case S: return N;
+			case N: return S;
+			case SO: return NE;
+			case SE: return NO;
+			case NO: return SE;
+			case NE: return SO;
+    	}
+    	return null;
+    }
+    
 }

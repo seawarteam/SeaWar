@@ -29,10 +29,14 @@ public class Controleur {
 			changerTour = false;
 		} else {
 			Navire nav = partie.currentJ.getNavEtatCourant();
-			if (nav.getaEteDeplace()) {
-				changerTour = true;
+			if(nav != null) {
+				if (nav.getaEteDeplace()) {
+					changerTour = true;
+				} else {
+					changerTour = false;
+				}
 			} else {
-				changerTour = false;
+				changerTour = true;
 			}
 		}
 		if(changerTour) {

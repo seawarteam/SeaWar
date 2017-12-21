@@ -52,5 +52,10 @@ private static Courant c = new Courant();
     	current.setaEteDeplace(true);
     	return true;
     }
+    
+    public String toString() {
+    	return "Courant";
+    }
+
 	
 }

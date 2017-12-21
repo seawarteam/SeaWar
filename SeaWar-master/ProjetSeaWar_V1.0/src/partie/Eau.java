@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * 
  */
-public class Eau extends Case implements Serializable {
+public class Eau extends Case implements Serializable{
 	public static final Color couleurVide = Color.CYAN;
     public static final Color couleurDep = new Color(0, 0, 255, 60);
     public static final Color couleurOri = new Color(150,200,0);

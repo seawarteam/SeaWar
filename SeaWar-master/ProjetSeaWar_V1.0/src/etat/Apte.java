@@ -72,6 +72,8 @@ public class Apte implements EtatDeplacement, Serializable {
     }
     
     
-
+    public String toString() {
+    	return "Apte";
+    }
 
 }
