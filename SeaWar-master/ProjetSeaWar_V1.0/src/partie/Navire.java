@@ -57,12 +57,14 @@ public class Navire extends Observable implements Serializable {
 	 private Canons canonP;
 	 private Canons canonS;
 	 private EtatDeplacement etatCourant;
-	 private boolean aDejaTire =false;
+	 private boolean aDejaTire = false;
 	 private boolean aEteDeplace = false;
 	 private int dep;
 	 private int nb_coup_recu;
+	 private boolean bloque;
+	 
 	 /*TODO: déplacer dans la Classe Plateau ???*/
-	 private static Map<Orientation,List<Vector<Object>>> caseVoisine;
+	 public static Map<Orientation,List<Vector<Object>>> caseVoisine;
 	
     /**
      * Default constructor
@@ -77,6 +79,7 @@ public class Navire extends Observable implements Serializable {
     	addObserver(obs);
     	dep=depMax;
     	etatCourant = Apte.getEtat();
+    	bloque = false;
     	
     	/* affichageCaseAccessible = new HashSet<Position>();
     	 casesVisableCanonP = new HashSet<Position>();
@@ -92,9 +95,9 @@ public class Navire extends Observable implements Serializable {
     	this.canonP = P;
     }
     
-    public EtatDeplacement getEtat(){
+    /*public EtatDeplacement getEtat(){
     	return etatCourant;
-    }
+    }*/
     
     public Position getPos() {
     	return this.pos;
@@ -130,6 +133,7 @@ public class Navire extends Observable implements Serializable {
     	this.aEteDeplace = false;
     	this.dep = this.depMax;
     	this.nb_coup_recu = 0;
+    	this.bloque = false;
     	if(canonP != null) canonP.initTour();
     	if(canonS != null) canonS.initTour();
     }
@@ -217,7 +221,13 @@ public class Navire extends Observable implements Serializable {
     **/
     public Set<Position> afficherCasesAccessibles(Set<Position> obstacle) {
     	Map<Position,Set<Vector<Object>>> MapCases = getCaseAccessible(obstacle);
-    	return MapCases.keySet();
+    	Set<Position> setPos = MapCases.keySet();
+    	if(dep == depMax && setPos.isEmpty()) {
+    		bloque = true;
+    		setPos = new HashSet<Position>();
+    		setPos.add(pos);
+    	}
+    	return setPos;
     }
     
     public Set<Position> afficherCasesVisableCanonP(Set<Position> obstacle){
@@ -271,6 +281,30 @@ public class Navire extends Observable implements Serializable {
     	Set<Vector<Object>> setVectPos = getCaseAccessible(obstacle).get(pos);
     	Set<Position> resultat = new HashSet<Position>();
     	
+    	if(bloque) {
+    		Position p = null;
+    		if(dir == Orientation.S) {
+    			p = Position.getPosition(pos.getX(), pos.getY() - 1);
+    		}
+    		if(dir == Orientation.SE) {
+    			p = Position.getPosition(pos.getX() - 1, pos.getY());
+    		}
+    		if(dir == Orientation.SO) {
+    			p = Position.getPosition(pos.getX() + 1, pos.getY() - 1);
+    		}
+    		if(dir == Orientation.N) {
+    			p = Position.getPosition(pos.getX(), pos.getY() + 1);
+    		}
+    		if(dir == Orientation.NE) {
+    			p = Position.getPosition(pos.getX() - 1, pos.getY() + 1);
+    		}
+    		if(dir == Orientation.NO) {
+    			p = Position.getPosition(pos.getX() + 1, pos.getY());
+    		}
+    		resultat.add(p);
+    		return resultat;
+    	}
+    	
 	    if(setVectPos != null) {
 	    	for(Vector<Object> vect : setVectPos) {
 	    		Orientation dir = (Orientation) vect.get(0);
@@ -311,6 +345,13 @@ public class Navire extends Observable implements Serializable {
      */
     public int getPathLengh(Position pos, Orientation dir, Set<Position> obstacle) {
     	
+    	if(bloque) {
+    		aDejaTire = true;
+    		//aEteDeplace = true;
+    		//return 
+    		
+    	}
+    	
     	Map<Position, Set<Vector<Object>>> mapsCaseAcc = getCaseAccessible(obstacle);
     	
     	Set<Vector<Object>> setCasesAcc = mapsCaseAcc.get(pos);
@@ -325,6 +366,14 @@ public class Navire extends Observable implements Serializable {
     }
     
     public boolean canGoOnPos(Position pos, Orientation dir, Set<Position> obstacle){
+    	
+    	if(bloque) {
+    		if(pos == getPos() && dir == Orientation.getDirOppose(getDir())) {
+    			return true;
+    		}
+    		return false;
+    	}
+    		
     	Set<Vector<Object>> setCasesAcc = getCaseAccessible(obstacle).get(pos);
     	for(Vector<Object> vect : setCasesAcc) {
     		if(vect.get(0) == dir) {

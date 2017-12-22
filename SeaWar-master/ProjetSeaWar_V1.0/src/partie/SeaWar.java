@@ -2,7 +2,6 @@ package partie;
 
 import java.util.*;
 
-import fenetre.FenetreMenuDepart;
 import fenetre.FenetrePrincipale;
 
 /**
@@ -11,7 +10,7 @@ import fenetre.FenetrePrincipale;
 public class SeaWar {
 	
 	public static void main (String [] args) {
-		FenetreMenuDepart f = new FenetreMenuDepart();
+		partieRapide("Joueur 1","Joueur 2");
 	}
 
     /**
@@ -26,13 +25,13 @@ public class SeaWar {
     public Partie partie;// utile ???
     
     
-    public static void partieRapide(String joueur1, String joueur2) {
+    public static void partieRapide(String jou1, String jou2) {
     	
     	/*================== Partie ====================*/
 		
 		String []nomJ = new String[2];
-		nomJ[0] = joueur1;
-		nomJ[1] = joueur2;
+		nomJ[0] = jou1;
+		nomJ[1] = jou2;
 		int nX = 20;
 		int nY = 14;
 		int nbPhares = 3;
@@ -87,12 +86,12 @@ public class SeaWar {
 		/*================= Canon ====================*/
 		
 		Canons CAP1 = new Canons("Primaire", 50, 4, ZCAP, Amiral1);
-		Canons CAS1 = new Canons("Secondaire", 30, 2, ZCAS, Fregate1);
-		Canons CFP1 = new Canons("Primaire", 30, 2, ZCFP, Amiral1);
+		Canons CAS1 = new Canons("Secondaire", 30, 2, ZCAS, Amiral1);
+		Canons CFP1 = new Canons("Primaire", 30, 2, ZCFP, Fregate1);
 		Canons CFS1 = new Canons("Secondaire", 10, 1, ZCFS, Fregate1);
 		Canons CAP2 = new Canons("Primaire", 50, 4, ZCAP, Amiral2);
-		Canons CAS2 = new Canons("Secondaire", 30, 2, ZCAS, Fregate2);
-		Canons CFP2 = new Canons("Primaire", 30, 2, ZCFP, Amiral2);
+		Canons CAS2 = new Canons("Secondaire", 30, 2, ZCAS, Amiral2);
+		Canons CFP2 = new Canons("Primaire", 30, 2, ZCFP, Fregate2);
 		Canons CFS2 = new Canons("Secondaire", 10, 1, ZCFS, Fregate2);
 		
 		Amiral1.addCanon(CAP1, CAS1);
@@ -109,7 +108,8 @@ public class SeaWar {
 		partie.initBateau(Position.getPosition(nX - 2, nY - 1 - (int)nX/2 ), Orientation.NO, Amiral2);
 		partie.initBateau(Position.getPosition(nX - 3, nY  - (int)nX/2), Orientation.NO, Fregate2);
 		
-		partie.currentJ.initTour();
+		partie.initTour();
+		
     }
 
 }

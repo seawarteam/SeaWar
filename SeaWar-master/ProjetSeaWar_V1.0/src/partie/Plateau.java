@@ -153,6 +153,10 @@ public class Plateau implements Serializable {
 		caseO.addAll(caseR);
 		return caseO;
 	}
+	
+	public Set<Position> getRochers() {
+		return caseR;
+	}
 
 	public Case[][] getCases() {
 		return cases;

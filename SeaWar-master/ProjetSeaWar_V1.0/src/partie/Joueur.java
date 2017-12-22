@@ -3,6 +3,7 @@ package partie;
 import java.io.Serializable;
 import java.util.*;
 
+import etat.Bloque;
 import etat.Courant;
 import etat.Detruit;
 
@@ -89,7 +90,7 @@ public class Joueur implements Serializable {
 		Iterator<Navire> i = navires.iterator();
 		while (!stop && i.hasNext()) {
 			n = i.next();
-			if (!n.getEtat().equals(Detruit.getEtat())) {
+			if (!n.getEtatCourant().equals(Detruit.getEtat())) {
 				stop = true;
 			}
 		}
@@ -146,5 +147,26 @@ public class Joueur implements Serializable {
 			i++;
 		}
 		return nav;
+	}
+	
+	public void RechercheNaviresBloque(Set<Position> rochers) {
+		for(Navire nav : navires) {
+			if(nav.getEtatCourant() != Detruit.getEtat()) {
+				List<Vector<Object>> cases = Navire.caseVoisine.get(nav.getDir());
+				boolean libre = false;
+				for(Vector<Object> vect : cases) {
+					Position pos = (Position) vect.get(0);
+					int x = nav.getPos().getX() + pos.getX();
+					int y = nav.getPos().getY() + pos.getY();
+					if(!rochers.contains(Position.getPosition(x, y))){
+						libre = true;
+					}
+				}
+				if(!libre) {
+					nav.setEtat(Bloque.getEtat());
+					nav.setADejaTire(true);
+				}
+			}
+		}
 	}
 }

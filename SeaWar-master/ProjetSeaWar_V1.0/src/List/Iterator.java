@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * 
  */
-public class Iterator<E> implements Serializable {
+public class Iterator<E> implements Serializable{
 	Elements<E> currentElements;
 	protected Iterator(Elements<E> e){
 		super();

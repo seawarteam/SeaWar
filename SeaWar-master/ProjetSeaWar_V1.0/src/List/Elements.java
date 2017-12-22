@@ -1,8 +1,9 @@
 package List;
 
+import java.io.Serializable;
 import java.util.*;
 
-class Elements<E> {
+class Elements<E> implements Serializable {
 	protected E obj;
 	protected Elements<E> next;
 	protected Elements<E> previous;
