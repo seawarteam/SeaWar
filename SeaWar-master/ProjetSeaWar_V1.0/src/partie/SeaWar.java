@@ -2,6 +2,7 @@ package partie;
 
 import java.util.*;
 
+import fenetre.FenetreMenuDepart;
 import fenetre.FenetrePrincipale;
 
 /**
@@ -108,7 +109,7 @@ public class SeaWar {
 		partie.initBateau(Position.getPosition(nX - 2, nY - 1 - (int)nX/2 ), Orientation.NO, Amiral2);
 		partie.initBateau(Position.getPosition(nX - 3, nY  - (int)nX/2), Orientation.NO, Fregate2);
 		
-		partie.initTour();
+		partie.currentJ.initTour();
 		
     }
 

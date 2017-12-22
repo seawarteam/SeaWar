@@ -101,8 +101,12 @@ public class Eau extends Case implements Serializable{
     }
     
     public void takeCase(Navire n){
+    	col = n.couleur;
         estOccupe = true;  
         takePosition = n;
+    	setChanged();
+    	notifyObservers(this);
+    	clearChanged();
     }
 
 	

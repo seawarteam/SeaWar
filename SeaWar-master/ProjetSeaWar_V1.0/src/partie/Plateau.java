@@ -23,7 +23,7 @@ public class Plateau implements Serializable {
 		caseR = new HashSet<Position>();
 		caseN = new HashSet<Position>();
 		phares = new HashSet<Phare>();
-		initTabHex(nbPhares, nbRochers, obs);
+		initTabHexPartieRapide(nbPhares, nbRochers, obs);
 
 		// TO DO : pouvoir retourner un set d'obstacles (tout les obstacles
 		// présents)
@@ -50,7 +50,7 @@ public class Plateau implements Serializable {
 		return new Polygon(cx, cy, 6);
 	}
 
-	private void initTabHex(int nbPhares, int nbRochers, Observer obs) {
+	private void initTabHexPartieRapide(int nbPhares, int nbRochers, Observer obs) {
 		int x, y;
 
 		int nbx, nby;
@@ -60,8 +60,8 @@ public class Plateau implements Serializable {
 		// TODO: à Vérifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		caseN.add(Position.getPosition(1, 1));
-		tabPosUtil.add(Position.getPosition(1, 2));
-		caseN.add(Position.getPosition(1, 2));
+		tabPosUtil.add(Position.getPosition(2,0));
+		caseN.add(Position.getPosition(2,0));
 		tabPosUtil.add(Position.tabPosition[(nCasesX - 2) * (nCasesY) + nCasesY
 				- 2]);
 		caseN.add(Position.tabPosition[(nCasesX - 2) * (nCasesY) + nCasesY - 2]);
@@ -145,6 +145,7 @@ public class Plateau implements Serializable {
 		cases[i][j].takeCase(N);
 		cases[i][j].estOccupe = true;
 		caseN.add(p);
+		
 	}
 
 	public Set<Position> getObstacle() {

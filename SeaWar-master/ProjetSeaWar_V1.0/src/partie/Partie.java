@@ -118,28 +118,17 @@ public class Partie extends Observable implements Serializable {
 	public void initBateau(Position p, Orientation o, Navire n) {
 		n.setDir(o);
 		n.setPos(p);
-		int x = p.getX();
+		/*int x = p.getX();
 		int y = p.getY() + (int) (p.getX() / 2);
 		plateau.getCases()[x][y].setEstOccupe(true);
 		plateau.getCases()[x][y].setTakePosition(n);
-		plateau.getCases()[x][y].col = n.couleur;
+		plateau.getCases()[x][y].col = n.couleur;*/
+		plateau.takeCase(p, n);
+		setChanged();
+		notifyObservers(this);
+		clearChanged();
 	}
 
-	private void initNavires() { // Seulement pour 2 navires � 2 joueurs
-		Joueur[] jou = getJoueurs();
-
-		Navire[] navs = jou[0].getNavires();
-		initBateau(Position.getPosition(1, 1), Orientation.SE, navs[0]);
-		initBateau(Position.getPosition(1, 2), Orientation.SE, navs[1]);
-
-		navs = jou[1].getNavires();
-		initBateau(Position.tabPosition[(plateau.getCases().length - 2)
-				* (plateau.getCases()[0].length) + plateau.getCases()[0].length
-				- 2], Orientation.NO, navs[0]);
-		initBateau(Position.tabPosition[(plateau.getCases().length - 3)
-				* (plateau.getCases()[0].length) + plateau.getCases()[0].length
-				- 2], Orientation.NO, navs[1]);
-	}
 
 	public Plateau getPlateau() {
 		return plateau;

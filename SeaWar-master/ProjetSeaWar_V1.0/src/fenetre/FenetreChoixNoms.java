@@ -54,9 +54,9 @@ public class FenetreChoixNoms extends JFrame {
 			String jou1 = j1.getText();
 			String jou2 = j2.getText();
 
-			if(jou1=="" || jou2==""){
+			if(jou1.equals("") || jou2.equals("")){
 				// TODO afficher à l'utilisateur qu'il ne faut pas un nom vide
-			} else if(j1==j2){
+			} else if(jou1.equals(jou2)){
 				// TODO dire qu'il faut pas les memes noms
 			} else {
 				SeaWar.partieRapide(jou1, jou2);
