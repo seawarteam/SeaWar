@@ -33,8 +33,8 @@ public class SeaWar {
 		String []nomJ = new String[2];
 		nomJ[0] = jou1;
 		nomJ[1] = jou2;
-		int nX = 20;
-		int nY = 14;
+		int nX = 21;
+		int nY = 15;
 		int nbPhares = 3;
 		int nbRochers = 20;
 		Position.initTabPosition(nX, nY);
@@ -106,8 +106,8 @@ public class SeaWar {
 		
 		partie.initBateau(Position.getPosition(1, 1), Orientation.SE, Amiral1);
 		partie.initBateau(Position.getPosition(2, 0), Orientation.SE, Fregate1);
-		partie.initBateau(Position.getPosition(nX - 2, nY - 1 - (int)nX/2 ), Orientation.NO, Amiral2);
-		partie.initBateau(Position.getPosition(nX - 3, nY  - (int)nX/2), Orientation.NO, Fregate2);
+		partie.initBateau(Position.tabPosition[(nX - 2) * (nY) + nY - 2], Orientation.NO, Amiral2);
+		partie.initBateau(Position.tabPosition[(nX - 3) * (nY) + nY - 2], Orientation.NO, Fregate2);
 		
 		partie.currentJ.initTour();
 		
