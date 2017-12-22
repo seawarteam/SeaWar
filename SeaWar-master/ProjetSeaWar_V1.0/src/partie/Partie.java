@@ -33,7 +33,8 @@ public class Partie extends Observable implements Serializable {
 	private Iterator<Joueur> iteratorJ;
 	public Joueur currentJ;
 	public Joueur[] listeJ;
-
+	public boolean gagne;
+	
 	/**
 	 * Default constructor
 	 */
@@ -46,11 +47,8 @@ public class Partie extends Observable implements Serializable {
 		nbJoueurs = nomJ.length;
 		ajoutJoueurs(nomJ, nbJoueurs);
 		iteratorJ = joueurs.getIterator();
-		currentJ = iteratorJ.present();/*
-										 * initDefNavires(getJoueurs(),observeur)
-										 * ; initNavires();
-										 */
-
+		currentJ = iteratorJ.present();
+		gagne = false;
 	}
 
 	public void initPartie(int nX, int nY, int nbPhares, int nbRochers,
@@ -97,7 +95,10 @@ public class Partie extends Observable implements Serializable {
 			}
 		}
 		if (hasWinner || plateau.hasWinner(currentJ)) {
-			System.out.println("Victory");
+			gagne= true;
+			setChanged();
+			notifyObservers(this);
+			clearChanged();
 			return true;
 		}
 
