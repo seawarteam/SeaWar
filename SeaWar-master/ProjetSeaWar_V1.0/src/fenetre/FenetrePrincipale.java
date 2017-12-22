@@ -335,6 +335,13 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 	}
 	
+	class Gagne extends JOptionPane{
+		public Gagne(){
+			super();
+			showMessageDialog(this, "Victoire de "+ partie.currentJ.getNom(), "Bravo !", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
 	class InfoCase extends JPanel{
 		private static final long serialVersionUID = -8644027093047733015L;
 		private JLabel typeCase;
