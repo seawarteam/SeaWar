@@ -10,7 +10,7 @@ import fenetre.FenetrePrincipale;
 public class SeaWar {
 	
 	public static void main (String [] args) {
-		partieRapide("Joueur 1","Joueur 2");
+		FenetreMenuDepart f = new FenetreMenuDepart();
 	}
 
     /**
