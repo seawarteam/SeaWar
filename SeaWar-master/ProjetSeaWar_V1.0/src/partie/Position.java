@@ -90,5 +90,59 @@ public class Position implements Serializable {
     		
     	}
     }
+	
+	public static Position[] peutTirer(Position ori, Position dest) {
+		int ax, ay, az, bx, by, bz;
+		int N;
+		ax = ori.getX();
+		ay = ori.getY() + (int) ax / 2;
+		az = -ax - ay;
+		bx = dest.getX();
+		by = dest.getY() + (int) bx / 2;
+		bz = -by - bx;
+		int[] a = { ax, ay, az };
+		int[] b = { bx, by, bz };
+		N = (Math.abs(ax - bx) + Math.abs(ay - by) + Math.abs(az - bz)) / 2;
+		Position[] resultat = new Position[N + 1];
+		for (int i = 0 ; i <= N ; i++) {
+			float[] result = cube_round(cube_lerp(a, b, (float) (1.0 / N * i)));
+			int x = (int) result[0];
+			int y = (int) (result[1] - x / 2);
+			resultat[i] = new Position(x, y);
+		}
+		return resultat;
+	}
+
+	public static float lerp(float a, float b, float t) {
+		return a + (b - a) * t;
+	}
+
+	public static float[] cube_lerp(int[] a, int[] b, float t) {
+		float[] tab = new float[3];
+		tab[0] = lerp(a[0], b[0], t);
+		tab[1] = lerp(a[1], b[1], t);
+		tab[2] = lerp(a[2], b[2], t);
+		return tab;
+	}
+
+	private static float[] cube_round(float[] cube) {
+		float rx = (float) cube[0];
+		float ry = (float) cube[1];
+		float rz = (float) cube[2];
+
+		float x_diff = Math.abs(rx - cube[0]);
+		float y_diff = Math.abs(ry - cube[1]);
+		float z_diff = Math.abs(rz - cube[2]);
+
+		if (x_diff > y_diff && x_diff > z_diff) {
+			rx = -ry - rz;
+		} else if (y_diff > z_diff) {
+			ry = -rx - rz;
+		} else {
+			rz = -rx - ry;
+		}
+
+		return new float[] { rx, ry, rz };
+	}
     
 }
