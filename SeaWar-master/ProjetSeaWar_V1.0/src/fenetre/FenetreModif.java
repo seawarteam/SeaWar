@@ -241,6 +241,7 @@ public class FenetreModif extends JFrame implements Observer{
 			revalidate();
 		}
 	
+	
 }
 	
 	
