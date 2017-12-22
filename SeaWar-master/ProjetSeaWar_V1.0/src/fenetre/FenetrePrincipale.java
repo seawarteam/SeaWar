@@ -217,6 +217,9 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		if(p.currentJ.getNavEtatCourant()==null) {
 			actionsBateau.setVisible(false);
 		}
+		if(p.gagne){
+			Gagne gg = new Gagne();	
+		}
 	}
 	
 
