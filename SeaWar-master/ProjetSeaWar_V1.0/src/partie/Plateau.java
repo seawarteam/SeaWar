@@ -65,8 +65,7 @@ public class Plateau implements Serializable {
 		tabPosUtil.add(Position.tabPosition[(nCasesX - 2) * (nCasesY) + nCasesY
 				- 2]);
 		caseN.add(Position.tabPosition[(nCasesX - 2) * (nCasesY) + nCasesY - 2]);
-		tabPosUtil.add(Position.tabPosition[(nCasesX - 3) * (nCasesY) + nCasesY
-				- 2]);
+		tabPosUtil.add(Position.tabPosition[(nCasesX - 3) * (nCasesY) + nCasesY - 2]);
 		caseN.add(Position.tabPosition[(nCasesX - 3) * (nCasesY) + nCasesY - 2]);
 
 		boolean ok = false;
