@@ -364,15 +364,17 @@ public class FenetrePrincipale extends JFrame implements Observer{
 				sBat += "<table><tr><td>Proprietaire : </td><td>"+nav.getNomJ()+"</td></tr>";
 				sBat += "<tr><td>Nom du bateau : </td><td>"+nav.getNom()+"</td></tr>";
 				sBat += "<tr><td>PV restants : </td><td>"+nav.getPV()+"</td></tr>";
+				sBat += "<tr><td>Dep restants : </td><td>"+nav.getDep()+"</td></tr>";
+				sBat += "<tr><td>Etat: </td><td>"+nav.getEtatCourant()+"</td></tr>";
 				sBat += "<tr><td>Orientation : </td><td>"+nav.getOrientation()+"</td></tr></table><br>";
 				sBat += "<table><tr><td>Canon Principal : </td><td>"+nav.getCanonP().getNom()+"</td></tr>";
 				sBat += "<tr><td>Degats : </td><td>"+nav.getCanonP().getDegat()+"</td></tr>";
-				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonP().getTpsRech()+1)+"</td></tr>";
-				sBat += "<tr><td>Prochain Tir : </td><td>"+(nav.getCanonP().getTpsRest()+1)+"</td></tr></table><br>";
+				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonP().getTpsRech())+"</td></tr>";
+				sBat += "<tr><td>Prochain Tir : </td><td>"+(nav.getCanonP().getTpsRest())+"</td></tr></table><br>";
 				sBat += "<table><tr><td>Canon Secondaire : </td><td>"+nav.getCanonS().getNom()+"</td></tr>";
 				sBat += "<tr><td>Degats : </td><td>"+nav.getCanonS().getDegat()+"</td></tr>";
-				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonS().getTpsRech()+1)+"</td></tr>";
-				sBat += "</tr></td>Prochain Tir : </td><td>"+(nav.getCanonS().getTpsRest()+1)+"</td></tr></table>";
+				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonS().getTpsRech())+"</td></tr>";
+				sBat += "</tr></td>Prochain Tir : </td><td>"+(nav.getCanonS().getTpsRest())+"</td></tr></table>";
 				
 				
 				

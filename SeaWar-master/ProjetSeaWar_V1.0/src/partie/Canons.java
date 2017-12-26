@@ -95,9 +95,9 @@ public class Canons implements Serializable {
      * @param pos 
      * @return boolean
      */
-    public boolean tire(Position pos) {
+    public boolean tire(Position pos, Set<Position> rochers) {
         if(this.tpsRest == 0) {
-        	List<Position> posVisable = posCanShoot(monNavire.getDir(), monNavire.getPos());
+        	List<Position> posVisable = posCanShoot(monNavire.getDir(), monNavire.getPos(), rochers);
         	if(posVisable.contains(pos)) {
         		this.tpsRest=this.tpsRech;
 	        	monNavire.setADejaTire(true);
@@ -116,7 +116,7 @@ public class Canons implements Serializable {
      * 
      * @return La Liste des positions sur lequelles le canon peut tirer
      */
-	public List<Position> posCanShoot(Orientation dir, Position posi) {
+	public List<Position> posCanShoot(Orientation dir, Position posi, Set<Position> rochers) {
 		
 		/*Orientation dir = monNavire.getOrientation();
 		Position myPosition = monNavire.getPos();*/
@@ -126,8 +126,17 @@ public class Canons implements Serializable {
 		int y = posi.getY();
 		for(Position pos : posRela) {
 			Position reel = Position.getPosition(x+pos.getX(),y+pos.getY());
-			//TODO: Checker si la ligne de vue est d�gag�e
-			if(reel != null) posReel.add(reel);
+			if(reel != null) {
+				Position[] tab = Position.peutTirer(posi, reel);
+				boolean can = true;
+				for(Position p : tab) {
+					if (rochers.contains(p)) {
+						can = false;
+						//break;
+					}
+				}
+				if (can) posReel.add(reel);
+			}
 		}
 		return posReel;
 	}

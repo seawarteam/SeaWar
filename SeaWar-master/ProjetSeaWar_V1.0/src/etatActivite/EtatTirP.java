@@ -1,5 +1,7 @@
 package etatActivite;
 
+import java.util.Set;
+
 import partie.Controleur;
 import partie.Navire;
 import partie.Position;
@@ -15,7 +17,8 @@ public class EtatTirP implements EtatAction {
 		
 		Navire nav = c.getPartie().currentJ.getCurrentN();
 		Navire navC = c.getPartie().currentJ.getNavEtatCourant();
-		boolean succes = nav.tir(nav.getCanonP(), pos, navC);
+		Set<Position> rochers = c.getPartie().getPlateau().getRochers();
+		boolean succes = nav.tir(nav.getCanonP(), pos, navC, rochers);
 		if(succes) {
 			int degats = nav.getCanonP().getDegat();
 			Navire cible = c.getPartie().getNavOnPos(pos);
@@ -23,7 +26,7 @@ public class EtatTirP implements EtatAction {
 				cible.toucher(degats);
 			}
 		} else {
-			System.out.println("tps de recharge ou case non atteignable");
+			//System.out.println("tps de recharge ou case non atteignable");
 		}
 		c.getPartie().ResetCouleur();
 		c.setEtat(EtatInit.getEtat());

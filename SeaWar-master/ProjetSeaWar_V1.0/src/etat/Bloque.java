@@ -1,6 +1,7 @@
 package etat;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import partie.Canons;
 import partie.Navire;
@@ -25,7 +26,7 @@ public class Bloque implements EtatDeplacement, Serializable{
 		
 	}
 
-	public boolean tir(Canons canon, Position pos, Navire previous,	Navire current) {
+	public boolean tir(Canons canon, Position pos, Navire previous,	Navire current, Set<Position> rochers) {
 		System.err.println("Bloqué ! => le navire ne peux pas tirer");
 		return false;
 	}
