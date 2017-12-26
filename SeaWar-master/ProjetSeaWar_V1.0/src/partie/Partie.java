@@ -1,21 +1,12 @@
 package partie;
 
 
-import java.nio.file.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-import java.util.Vector;
-
 import etat.Apte;
 import etat.Bloque;
-import fenetre.FenetrePrincipale;
-
 import List.*;
 
 /**
@@ -85,7 +76,7 @@ public class Partie extends Observable implements Serializable {
 		currentJ = iteratorJ.next();
 		boolean hasWinner = false;
 		Joueur jNext;
-		System.out.println("J is Dead ? " + currentJ.isDead() + " stop :");
+		//System.out.println("J is Dead ? " + currentJ.isDead() + " stop :");
 		while (currentJ.isDead()) {
 			jNext = iteratorJ.next();
 			if (jNext == currentJ) {

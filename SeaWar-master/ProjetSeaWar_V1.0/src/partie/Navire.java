@@ -167,9 +167,9 @@ public class Navire extends Observable implements Serializable {
      * @param pos : position de la case visée
      * @return succès/echec
      */
-    public boolean tir(Canons canon, Position pos, Navire current) {
+    public boolean tir(Canons canon, Position pos, Navire current, Set<Position> rochers) {
     	
-    	return etatCourant.tir(canon, pos, current, this);
+    	return etatCourant.tir(canon, pos, current, this, rochers);
     	
     }
     
@@ -230,7 +230,7 @@ public class Navire extends Observable implements Serializable {
     	return setPos;
     }
     
-    public Set<Position> afficherCasesVisableCanonP(Set<Position> obstacle){
+    public Set<Position> afficherCasesVisableCanonP(Set<Position> obstacle, Set<Position> rochers){
     	Map<Position,Set<Vector<Object>>> mapCasesAcc = getCaseAccessible(obstacle);
     	Set<Position> resultat = new HashSet<Position>();
     	
@@ -239,7 +239,7 @@ public class Navire extends Observable implements Serializable {
     		Set<Vector<Object>> SetVect = mapCasesAcc.get(pos);
     		for(Vector<Object> vect : SetVect) {
     			Orientation dir = (Orientation) vect.get(0);
-    			List<Position> cellCible = this.canonP.posCanShoot(dir, pos);
+    			List<Position> cellCible = this.canonP.posCanShoot(dir, pos, rochers);
     			for(Position cell : cellCible){
     				resultat.add(cell);
     			}
@@ -247,14 +247,14 @@ public class Navire extends Observable implements Serializable {
     	}
     	//	Ajout des cases que l'on peux toucher sans se déplacer
     	if(canonP==null) {System.out.println("null");}
-    	List<Position> cellCible = this.canonP.posCanShoot(this.getDir(), this.getPos());
+    	List<Position> cellCible = this.canonP.posCanShoot(this.getDir(), this.getPos(), rochers);
 		for(Position cell : cellCible){
 			resultat.add(cell);
 		}
     	return resultat;
     }
     
-    public Set<Position> afficherCasesVisableCanonS(Set<Position> obstacle){
+    public Set<Position> afficherCasesVisableCanonS(Set<Position> obstacle, Set<Position> rochers){
     	Map<Position,Set<Vector<Object>>> mapCasesAcc = getCaseAccessible(obstacle);
     	Set<Position> resultat = new HashSet<Position>();
     	
@@ -263,14 +263,14 @@ public class Navire extends Observable implements Serializable {
     		Set<Vector<Object>> SetVect = mapCasesAcc.get(pos);
     		for(Vector<Object> vect : SetVect) {
     			Orientation dir = (Orientation) vect.get(0);
-    			List<Position> cellCible = this.canonS.posCanShoot(dir, pos);
+    			List<Position> cellCible = this.canonS.posCanShoot(dir, pos, rochers);
     			for(Position cell : cellCible){
     				resultat.add(cell);
     			}
     		}
     	}
 //    	Ajout des cases que l'on peux toucher sans se déplacer
-    	List<Position> cellCible = this.canonS.posCanShoot(getDir(), getPos());
+    	List<Position> cellCible = this.canonS.posCanShoot(getDir(), getPos(), rochers);
 		for(Position cell : cellCible){
 			resultat.add(cell);
 		}

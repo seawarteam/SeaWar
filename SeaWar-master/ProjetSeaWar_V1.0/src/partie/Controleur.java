@@ -63,8 +63,9 @@ public class Controleur {
 		Navire nav = partie.getCurrentJ().getCurrentN();
 		if (nav.getCanonP().getTpsRest() == 0 && nav.getADejaTire() == false) {
 			Set<Position> positions = new HashSet<Position>();
+			 Set<Position> rochers = partie.getPlateau().getRochers();
 
-			for (Position pos : (nav.getCanonP().posCanShoot(nav.getDir(), nav.getPos()))) {
+			for (Position pos : (nav.getCanonP().posCanShoot(nav.getDir(), nav.getPos(), rochers))) {
 				positions.add(pos);
 			}
 			partie.surbrillanceT(positions);
@@ -78,7 +79,8 @@ public class Controleur {
 
 		if (nav.getCanonS().getTpsRest() == 0 && nav.getADejaTire() == false) {
 			Set<Position> positions = new HashSet<Position>();
-			for (Position pos : (nav.getCanonS().posCanShoot(nav.getDir(), nav.getPos()))) {
+			 Set<Position> rochers = partie.getPlateau().getRochers();
+			for (Position pos : (nav.getCanonS().posCanShoot(nav.getDir(), nav.getPos(), rochers))) {
 				positions.add(pos);
 			}
 			partie.surbrillanceT(positions);

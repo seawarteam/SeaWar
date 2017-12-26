@@ -33,8 +33,8 @@ public class SeaWar {
 		String []nomJ = new String[2];
 		nomJ[0] = jou1;
 		nomJ[1] = jou2;
-		int nX = 21;
-		int nY = 15;
+		int nX = 20;
+		int nY = 14;
 		int nbPhares = 3;
 		int nbRochers = 20;
 		Position.initTabPosition(nX, nY);

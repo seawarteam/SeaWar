@@ -1,6 +1,7 @@
 package etat;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import partie.Canons;
 import partie.Navire;
@@ -31,12 +32,12 @@ private static Courant c = new Courant();
      * @param pos : position de la case visée
      * @return succès/echec
      */
-	public boolean tir(Canons canon, Position pos, Navire previous, Navire current) {
+	public boolean tir(Canons canon, Position pos, Navire previous, Navire current, Set<Position> rochers) {
 		
 		if(current.getADejaTire()){
 			return false;//TODO: message d'erreur : "le navire à déjà tirer pendant le tour"
 		}
-    	return canon.tire(pos);
+    	return canon.tire(pos, rochers);
     }
 	
 	

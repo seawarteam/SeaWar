@@ -95,10 +95,10 @@ public class Position implements Serializable {
 		int ax, ay, az, bx, by, bz;
 		int N;
 		ax = ori.getX();
-		ay = ori.getY() + (int) ax / 2;
+		ay = ori.getY() ;//+ (int) ax / 2;
 		az = -ax - ay;
 		bx = dest.getX();
-		by = dest.getY() + (int) bx / 2;
+		by = dest.getY();// + (int) bx / 2;
 		bz = -by - bx;
 		int[] a = { ax, ay, az };
 		int[] b = { bx, by, bz };
@@ -107,8 +107,8 @@ public class Position implements Serializable {
 		for (int i = 0 ; i <= N ; i++) {
 			float[] result = cube_round(cube_lerp(a, b, (float) (1.0 / N * i)));
 			int x = (int) result[0];
-			int y = (int) (result[1] - x / 2);
-			resultat[i] = new Position(x, y);
+			int y = (int) (result[1]/* - x / 2*/);
+			resultat[i] = getPosition(x, y);
 		}
 		return resultat;
 	}
