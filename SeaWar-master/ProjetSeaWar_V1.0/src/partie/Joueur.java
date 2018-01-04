@@ -1,5 +1,6 @@
 package partie;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.*;
 
@@ -14,17 +15,18 @@ public class Joueur implements Serializable {
 	public static void main(String[] args) {
 		Position.initTabPosition(10, 10);
 	}
-
+	private Color couleur;
 	private String nom;
 	private List<Navire> navires;
-	private Navire currentN;// Navire selectionné dans l'interface
+	private Navire currentN;// Navire selectionnÃ© dans l'interface
 
 	/**
 	 * Default constructor
 	 */
-	public Joueur(String s) {
+	public Joueur(String s, Color couleurPerso) {
 		this.nom = s;
 		navires = new ArrayList<Navire>();
+		couleur = couleurPerso;
 	}
 
 	public Vector<Navire> ajoutDefaultNavire(Observer obs) {
@@ -149,6 +151,9 @@ public class Joueur implements Serializable {
 		return nav;
 	}
 	
+	public Color getCol() {
+		return couleur;
+	}
 	public void RechercheNaviresBloque(Set<Position> rochers) {
 		for(Navire nav : navires) {
 			if(nav.getEtatCourant() != Detruit.getEtat()) {
