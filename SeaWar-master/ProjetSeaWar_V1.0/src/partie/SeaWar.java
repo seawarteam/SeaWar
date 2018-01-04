@@ -1,5 +1,6 @@
 package partie;
 
+import java.awt.Color;
 import java.util.*;
 
 import fenetre.FenetreMenuDepart;
@@ -33,12 +34,13 @@ public class SeaWar {
 		String []nomJ = new String[2];
 		nomJ[0] = jou1;
 		nomJ[1] = jou2;
-		int nX = 20;
-		int nY = 14;
+		int nX = 21;
+		int nY = 15;
 		int nbPhares = 3;
 		int nbRochers = 20;
+		Color[] couleurs = {Color.BLUE,Color.RED};
 		Position.initTabPosition(nX, nY);
-		Partie partie = new Partie(nomJ, nX, nY);
+		Partie partie = new Partie(nomJ,couleurs, nX, nY);
 		
 		/*================== Controleur ==================*/
 		
@@ -104,10 +106,10 @@ public class SeaWar {
 		partie.initPartie(nX, nY, nbPhares, nbRochers, carte);
 		carte.initFenetrePrincipale();
 		
-		partie.initBateau(Position.getPosition(1, 1), Orientation.SE, Amiral1);
-		partie.initBateau(Position.getPosition(2, 0), Orientation.SE, Fregate1);
-		partie.initBateau(Position.tabPosition[(nX - 2) * (nY) + nY - 2], Orientation.NO, Amiral2);
-		partie.initBateau(Position.tabPosition[(nX - 3) * (nY) + nY - 2], Orientation.NO, Fregate2);
+		partie.initBateau(Position.getPosition(1, 1), Orientation.SE, Amiral1, j1.getCol());
+		partie.initBateau(Position.getPosition(2, 0), Orientation.SE, Fregate1, j1.getCol());
+		partie.initBateau(Position.tabPosition[(nX - 2) * (nY) + nY - 2], Orientation.NO, Amiral2, j2.getCol());
+		partie.initBateau(Position.tabPosition[(nX - 3) * (nY) + nY - 2], Orientation.NO, Fregate2, j2.getCol());
 		
 		partie.currentJ.initTour();
 		
