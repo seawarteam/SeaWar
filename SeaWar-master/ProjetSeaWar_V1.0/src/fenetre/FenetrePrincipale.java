@@ -183,30 +183,21 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	
 	
 	private void updateCase(Case c) {	
-	/*	La case c a change ses caracteristiques donc il faut afficher les changements:
-	 * 		-Sa couleur a change
-	 * 		-???
-	 * 
-	 */
-
 		actionsBateau.setVisible(false);
-		infoCase.setNomCase(c.toString());
+		infoCase.setNomCase(c);
 		infoCase.revalidate();
 		repaint();
 		revalidate();
 	}
 	
 	private void updateNavire(Navire n) {
-		/*	Le bateau n a change, c'est par ailleurs celui qui est clique
-		 * 
-		 */
 		Navire navireCourant = partie.currentJ.getCurrentN();
 		if(n.equals(navireCourant)) {
 			actionsBateau.setVisible(true);
 		} else {
 			actionsBateau.setVisible(false);
 		}
-		infoCase.setNomCase(partie.plateau.getCases()[posHextoHex(n.getPos()).x][posHextoHex(n.getPos()).y].toString());
+		infoCase.setNomCase(partie.plateau.getCases()[posHextoHex(n.getPos()).x][posHextoHex(n.getPos()).y]);
 		infoCase.setBateau(n,partie.getCaseOnPos(n.getPos()));
 		infoCase.revalidate();
 		plateau.repaint();
@@ -323,7 +314,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 
 
-		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement ÃƒÆ’  l'autre
+		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement ÃƒÆ’Ã†â€™  l'autre
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'eviter des effets de bords moches
 			cg = g2;
@@ -346,6 +337,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	class InfoCase extends JPanel{
 		private static final long serialVersionUID = -8644027093047733015L;
 		private JLabel typeCase;
+		private String txtCase;
 		
 		public InfoCase() {
 			super(new GridLayout(1,1));
@@ -353,28 +345,41 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			this.add(typeCase);
 		}
 		
-		public void setNomCase(String type) {
+		public void setNomCase(Case type) {
 			typeCase.setText("Case de type "+type);
+			txtCase = "Case de type "+type;
+			if(type instanceof Phare) {
+				infoCase.setNomPhare(type.toString(), ((Phare) type).occupeeDefinitivementPar);
+			}
+		}
+		
+		private void setNomPhare(String type, Navire proprio) {
+			String sPh = ("Case de type "+type);
+			if(proprio==null) {
+				sPh += " pas occupee";
+			} else {
+				sPh += " occupee par " + proprio.getNomJ();
+			}
+			typeCase.setText(sPh);
+			txtCase = sPh;
 		}
 		
 		public void setBateau(Navire nav,Case cas) {
-			String sBat = ("<html>Case de type "+cas);
+			String sBat = ("<html>" + txtCase);
 			if(nav!=(null)) {
 				sBat += "<br><br>";
 				sBat += "<table><tr><td>Proprietaire : </td><td>"+nav.getNomJ()+"</td></tr>";
 				sBat += "<tr><td>Nom du bateau : </td><td>"+nav.getNom()+"</td></tr>";
 				sBat += "<tr><td>PV restants : </td><td>"+nav.getPV()+"</td></tr>";
-				sBat += "<tr><td>Dep restants : </td><td>"+nav.getDep()+"</td></tr>";
-				sBat += "<tr><td>Etat: </td><td>"+nav.getEtatCourant()+"</td></tr>";
 				sBat += "<tr><td>Orientation : </td><td>"+nav.getOrientation()+"</td></tr></table><br>";
 				sBat += "<table><tr><td>Canon Principal : </td><td>"+nav.getCanonP().getNom()+"</td></tr>";
 				sBat += "<tr><td>Degats : </td><td>"+nav.getCanonP().getDegat()+"</td></tr>";
-				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonP().getTpsRech())+"</td></tr>";
-				sBat += "<tr><td>Prochain Tir : </td><td>"+(nav.getCanonP().getTpsRest())+"</td></tr></table><br>";
+				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonP().getTpsRech()+1)+"</td></tr>";
+				sBat += "<tr><td>Prochain Tir : </td><td>"+(nav.getCanonP().getTpsRest()+1)+"</td></tr></table><br>";
 				sBat += "<table><tr><td>Canon Secondaire : </td><td>"+nav.getCanonS().getNom()+"</td></tr>";
 				sBat += "<tr><td>Degats : </td><td>"+nav.getCanonS().getDegat()+"</td></tr>";
-				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonS().getTpsRech())+"</td></tr>";
-				sBat += "</tr></td>Prochain Tir : </td><td>"+(nav.getCanonS().getTpsRest())+"</td></tr></table>";
+				sBat += "<tr><td>Temps rechargement : </td><td>"+(nav.getCanonS().getTpsRech()+1)+"</td></tr>";
+				sBat += "</tr></td>Prochain Tir : </td><td>"+(nav.getCanonS().getTpsRest()+1)+"</td></tr></table>";
 				
 				
 				
