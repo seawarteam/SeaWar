@@ -1,12 +1,22 @@
 package partie;
 
 
+import java.nio.file.*;
+import java.awt.Color;
 import java.io.*;
+import java.nio.file.Files;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
+import java.util.Vector;
+
 import etat.Apte;
 import etat.Bloque;
+import fenetre.FenetrePrincipale;
+
 import List.*;
 
 /**
@@ -29,14 +39,14 @@ public class Partie extends Observable implements Serializable {
 	/**
 	 * Default constructor
 	 */
-	public Partie(String[] nomJ, int nX, int nY) {
+	public Partie(String[] nomJ, Color[] colJ, int nX, int nY) {
 		// Position.initTabPosition(nX, nY);
 		// if(observeur != null) {addObserver(observeur);}
 		// plateau = new Plateau(nX, nY, nbPhares, nbRochers,observeur);
 		numTour = 1;
 		joueurs = new WheelList<Joueur>();
 		nbJoueurs = nomJ.length;
-		ajoutJoueurs(nomJ, nbJoueurs);
+		ajoutJoueurs(nomJ, nbJoueurs, colJ);
 		iteratorJ = joueurs.getIterator();
 		currentJ = iteratorJ.present();
 		gagne = false;
@@ -53,18 +63,18 @@ public class Partie extends Observable implements Serializable {
 		return listeJ;
 	}
 
-	private void ajoutJoueurs(String[] nomJ, int nbJoueurs) {
+	private void ajoutJoueurs(String[] nomJ, int nbJoueurs, Color[] couleursJ) {
 		Joueur newJ = null;
 		listeJ = new Joueur[nbJoueurs];
 		for (int i = 0; i < nbJoueurs; i++) {
-			newJ = new Joueur(nomJ[i]);
+			newJ = new Joueur(nomJ[i],couleursJ[i]);
 			joueurs.add(newJ);
 			listeJ[i] = newJ;
 		}
 	}
 
 	public String toString() {
-		return "Partie de " + nbJoueurs + " joueurs et de caractéristiques :\n"
+		return "Partie de " + nbJoueurs + " joueurs et de caractÃ©ristiques :\n"
 				+ joueurs.toString();
 	}
 
@@ -76,13 +86,19 @@ public class Partie extends Observable implements Serializable {
 		currentJ = iteratorJ.next();
 		boolean hasWinner = false;
 		Joueur jNext;
-		//System.out.println("J is Dead ? " + currentJ.isDead() + " stop :");
 		while (currentJ.isDead()) {
 			jNext = iteratorJ.next();
 			if (jNext == currentJ) {
 				hasWinner = true;
 			} else {
 				currentJ = jNext;
+			}
+		}
+		for(Phare p : plateau.getPhares()) {
+			for(Navire n : currentJ.getNavires()){
+				if(p.takePosition != null && p.takePosition.equals(n)) {
+					p.occupeeDefinitivementPar = n;
+				}
 			}
 		}
 		if (hasWinner || plateau.hasWinner(currentJ)) {
@@ -106,7 +122,9 @@ public class Partie extends Observable implements Serializable {
 		return plateau.hasWinner(currentJ);
 	}
 
-	public void initBateau(Position p, Orientation o, Navire n) {
+	public void initBateau(Position p, Orientation o, Navire n, Color c) {
+		n.setColEnVie(c);
+		n.setColAsColEnVie();
 		n.setDir(o);
 		n.setPos(p);
 		/*int x = p.getX();
@@ -231,7 +249,7 @@ public class Partie extends Observable implements Serializable {
 					ex.printStackTrace();
 				}
 			}
-		} else { System.out.println("Fichier déjà existant !"); }
+		} else { System.out.println("Fichier dÃ©jÃ  existant !"); }
 	}
 
 	
