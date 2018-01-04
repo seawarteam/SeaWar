@@ -8,10 +8,12 @@ import java.util.*;
 public class Phare extends Eau implements Serializable {
 
 	public static final Color couleurVide = Color.WHITE;
-	public static final Color couleurOccupe = Color.RED;
+	public Color couleurOccupeDef = Color.RED;
 	public static final Color couleurOri = new Color(0, 255, 0);
-	public static final Color couleurDep = new Color(0, 150, 255);
-
+	public static final Color couleurDep = new Color(20, 170, 255);
+	public Navire occupeeDefinitivementPar = null;
+	
+	
 	public Phare(Polygon p, int i, int j, Observer obs) {
 		super(p, i, j, obs);
 		poly = p;
@@ -24,9 +26,11 @@ public class Phare extends Eau implements Serializable {
 	public void getInfo() {
 		setChanged();
 		notifyObservers(this);
-		clearChanged();
+		clearChanged();		
 	}
 
+	
+	
 	public void ResetCouleur() {
 		if (!estOccupe) {
 			/*
@@ -37,16 +41,20 @@ public class Phare extends Eau implements Serializable {
 			 * clearChanged(); }
 			 */
 			col = couleurVide;
+			if(occupeeDefinitivementPar!=null) {
+				col = couleurOccupeDef;
+			}
 			setChanged();
 			notifyObservers(this);
 			clearChanged();
 		} else {
-			col = takePosition.couleur;
+				col = takePosition.couleur;
+
+			}
 			setChanged();
 			notifyObservers(this);
 			clearChanged();
 		}
-	}
 
 	public void surbrillanceDeptemp() {
 		col = Color.black;
@@ -76,11 +84,13 @@ public class Phare extends Eau implements Serializable {
 	public void takeCase(Navire n) {
 		estOccupe = true;
 		takePosition = n;
-		col = couleurOccupe;
+		couleurOccupeDef = new Color((int) (n.couleur.getRed() + 2*couleurVide.getRed())/3, (int) (n.couleur.getGreen() + 2*couleurVide.getGreen())/3, (int) (n.couleur.getBlue() + 2*couleurVide.getBlue())/3);
+		col = couleurOccupeDef;
 	}
 
 	public void freeCase() {
-		estOccupe = false;
+		takePosition = null;
+		col = couleurVide;
 		// On conserve le dernier bateau
 	}
 }
