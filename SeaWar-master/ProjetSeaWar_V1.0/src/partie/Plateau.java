@@ -26,20 +26,20 @@ public class Plateau implements Serializable {
 		initTabHexPartieRapide(nbPhares, nbRochers, obs);
 
 		// TO DO : pouvoir retourner un set d'obstacles (tout les obstacles
-		// présents)
+		// prÃ©sents)
 		// --> faire une liste "fixe" avec les rochers et une autre "changeante"
 		// avec les bateaux.
 
 	}
 
-	// crée un hexagone au coordonnées pixel x0,y0 (!!! pour l'insant, x0 et y0
-	// sont les coordonnées en pixels)
+	// crÃ©e un hexagone au coordonnÃ©es pixel x0,y0 (!!! pour l'insant, x0 et y0
+	// sont les coordonnÃ©es en pixels)
 	public static Polygon hexagone(int x0, int y0) {
 		int x = x0;
 		int y = y0;
 
-		int[] cx, cy; // tableau de coordonnées x et y de tous les points d'un
-						// hexagone en commencant par le point en haut à gauche
+		int[] cx, cy; // tableau de coordonnÃ©es x et y de tous les points d'un
+						// hexagone en commencant par le point en haut Ã  gauche
 
 		cx = new int[] { x + resteX, x + longueurCote + resteX,
 				x + longueurCote + resteX + resteX, x + longueurCote + resteX,
@@ -57,7 +57,7 @@ public class Plateau implements Serializable {
 		ArrayList<Position> tabPosUtil = new ArrayList<Position>();
 
 		// Positions obstacles ou il y a les bateaux au debut
-		// TODO: à Vérifier !
+		// TODO: Ã  VÃ©rifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		caseN.add(Position.getPosition(1, 1));
 		tabPosUtil.add(Position.getPosition(2,0));
@@ -86,7 +86,7 @@ public class Plateau implements Serializable {
 			}
 		}
 		Phare ph;
-		// On vient positionner les entiés (Phares, Rochers)
+		// On vient positionner les entiÃ©s (Phares, Rochers)
 		for (int i = 1; i <= nbPhares; i++) {
 			Position p;
 			ok = false;
@@ -168,8 +168,8 @@ public class Plateau implements Serializable {
 		Phare ph;
 		while (i.hasNext() && !stop) {
 			ph = i.next();
-			if (ph.getTakePosition() != null) {
-				if (!currentJ.getListNavires().contains(ph.getTakePosition())) {
+			if (ph.occupeeDefinitivementPar != null) {
+				if (!currentJ.getListNavires().contains(ph.occupeeDefinitivementPar)) {
 					stop = true;
 				}
 			} else {
@@ -178,6 +178,8 @@ public class Plateau implements Serializable {
 		}
 		return (!stop);
 	}
+	
+
 
 	public void surbrillanceO(Set<Position> s) {
 		for (Position p : s) {
@@ -204,6 +206,16 @@ public class Plateau implements Serializable {
 			}
 		}
 
+	}
+	
+	public Phare[] getPhares() {
+		Phare[] ph = new Phare[phares.size()];
+		int i = 0;
+		for (Phare n : phares) {
+			ph[i] = n;
+			i++;
+		}
+		return ph;
 	}
 
 }
