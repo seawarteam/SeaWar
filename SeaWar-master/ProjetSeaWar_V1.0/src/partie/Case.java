@@ -52,7 +52,18 @@ public abstract class Case extends Observable implements Serializable{
     	return takePosition;
     }
     
+    public Polygon getPoly(){
+    	return poly;
+    }
+	
     public void setTakePosition(Navire n) {
     	takePosition = n;
+    }
+	
+    public void setColor(Color colorBase) {
+        col = colorBase;
+        setChanged();
+    	notifyObservers(this);
+    	clearChanged();  
     }
 }
