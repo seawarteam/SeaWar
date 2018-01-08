@@ -15,6 +15,9 @@ public class Plateau implements Serializable {
 	private static int longueurCote;
 	private static int apotheme;
 	private static int resteX;
+	
+	private static Observer obs;
+	private Map<Joueur,List<Position>> bases;
 
 	public Plateau(int l, int L, int nbPhares, int nbRochers, Observer obs) {
 		cases = new Case[l][L];
@@ -23,23 +26,22 @@ public class Plateau implements Serializable {
 		caseR = new HashSet<Position>();
 		caseN = new HashSet<Position>();
 		phares = new HashSet<Phare>();
-		initTabHexPartieRapide(nbPhares, nbRochers, obs);
+		
+		initTabHex(nbPhares, nbRochers, obs);
+		this.obs = obs;
+		bases = new HashMap<Joueur, List<Position>>();
 
-		// TO DO : pouvoir retourner un set d'obstacles (tout les obstacles
-		// prÃ©sents)
-		// --> faire une liste "fixe" avec les rochers et une autre "changeante"
-		// avec les bateaux.
 
 	}
 
-	// crÃ©e un hexagone au coordonnÃ©es pixel x0,y0 (!!! pour l'insant, x0 et y0
-	// sont les coordonnÃ©es en pixels)
+	// cree un hexagone au coordonnÃ©es pixel x0,y0 (!!! pour l'insant, x0 et y0
+	// sont les coordonnees en pixels)
 	public static Polygon hexagone(int x0, int y0) {
 		int x = x0;
 		int y = y0;
 
-		int[] cx, cy; // tableau de coordonnÃ©es x et y de tous les points d'un
-						// hexagone en commencant par le point en haut Ã  gauche
+		int[] cx, cy; // tableau de coordonnees x et y de tous les points d'un
+						// hexagone en commencant par le point en haut a gauche
 
 		cx = new int[] { x + resteX, x + longueurCote + resteX,
 				x + longueurCote + resteX + resteX, x + longueurCote + resteX,
@@ -50,14 +52,14 @@ public class Plateau implements Serializable {
 		return new Polygon(cx, cy, 6);
 	}
 
-	private void initTabHexPartieRapide(int nbPhares, int nbRochers, Observer obs) {
+	private void initTabHex(int nbPhares, int nbRochers, Observer obs) {
 		int x, y;
 
 		int nbx, nby;
 		ArrayList<Position> tabPosUtil = new ArrayList<Position>();
 
 		// Positions obstacles ou il y a les bateaux au debut
-		// TODO: Ã  VÃ©rifier !
+		// TODO: a  Verifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		caseN.add(Position.getPosition(1, 1));
 		tabPosUtil.add(Position.getPosition(2,0));
@@ -86,7 +88,7 @@ public class Plateau implements Serializable {
 			}
 		}
 		Phare ph;
-		// On vient positionner les entiÃ©s (Phares, Rochers)
+		// On vient positionner les enties (Phares, Rochers)
 		for (int i = 1; i <= nbPhares; i++) {
 			Position p;
 			ok = false;
@@ -127,6 +129,48 @@ public class Plateau implements Serializable {
 		}
 
 	}
+	
+		
+	public Case getCase(Position p) {
+		return cases[p.getX()][p.getY() + (int) p.getX() / 2];
+	}
+	
+	public Map getBases() {
+		return bases;
+	}
+	public void addBases(Joueur j, ArrayList<Position>l) {
+		bases.put(j, l);
+	}
+	
+	public void setColorBase(Position p, Joueur j) {
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(j.getColorBase());
+	}
+	
+	public void setColorTire(Position p){
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(Color.YELLOW);
+	}
+	
+	public void setCaseEau(Position p){
+		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
+		Polygon poly = c.getPoly();
+		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Eau(poly, p.getX(), p.getY()+p.getX()/2, obs);
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+	}
+	
+	public void setCaseRocher(Position p){
+		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
+		Polygon poly = c.getPoly();
+		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Rocher(poly, p.getX(), p.getY()+p.getX()/2, obs);
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+	}
+	
+	public void setCasePhare(Position p){
+		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
+		Polygon poly = c.getPoly();
+		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Phare(poly, p.getX(), p.getY()+p.getX()/2, obs);
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+	}
+
 
 	public void freeCase(Position p) {
 		int i, j;
@@ -168,8 +212,8 @@ public class Plateau implements Serializable {
 		Phare ph;
 		while (i.hasNext() && !stop) {
 			ph = i.next();
-			if (ph.occupeeDefinitivementPar != null) {
-				if (!currentJ.getListNavires().contains(ph.occupeeDefinitivementPar)) {
+			if (ph.getTakePosition() != null) {
+				if (!currentJ.getListNavires().contains(ph.getTakePosition())) {
 					stop = true;
 				}
 			} else {
