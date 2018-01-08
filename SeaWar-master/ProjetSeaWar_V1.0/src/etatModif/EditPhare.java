@@ -1,7 +1,7 @@
 package etatModif;
 
 import partie.ControleurModif;
-import partie.EditCanonS;
+//import partie.EditCanonS;
 import partie.Position;
 
 public class EditPhare implements EtatModif {
@@ -22,19 +22,19 @@ public class EditPhare implements EtatModif {
 		c.setEtat(Init.getEtat());
 	}
 
-	@Override
+	
 	public void setCurrentJ(String str) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void modifCanonP(ControleurModif c) {
 		c.setEtat(EditCanonP.getEtat());
 		
 	}
 
-	@Override
+	
 	public void modifCanonS(ControleurModif c) {
 		c.setEtat(EditCanonS.getEtat());
 		
