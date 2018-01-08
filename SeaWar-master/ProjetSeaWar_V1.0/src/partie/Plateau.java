@@ -1,5 +1,6 @@
 package partie;
 
+import java.awt.Color;
 import java.awt.Polygon;
 import java.io.Serializable;
 import java.util.*;
@@ -143,7 +144,7 @@ public class Plateau implements Serializable {
 	}
 	
 	public void setColorBase(Position p, Joueur j) {
-		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(j.getColorBase());
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(j.getCol());
 	}
 	
 	public void setColorTire(Position p){

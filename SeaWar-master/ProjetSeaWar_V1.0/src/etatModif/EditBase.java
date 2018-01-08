@@ -1,16 +1,11 @@
 package etatModif;
 
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import java.util.List;
-
 import partie.Case;
 import partie.ControleurModif;
-import partie.EditCanonS;
+//import partie.EditCanonS;
 import partie.Joueur;
-import partie.Orientation;
 import partie.Phare;
 import partie.Position;
 import partie.Rocher;
@@ -26,13 +21,18 @@ public class EditBase implements EtatModif {
 	private EditBase(){
 		super();
 		nbPosition = 0;
-		currentJ = new Joueur("Joueur1");
+		currentJ = new Joueur("Joueur1", couleur(0));
 		positions = new ArrayList<Position>();
 		initJoueurs();
 		
 		
 	}
 	
+	
+	private Color couleur(int i) {
+		Color[] tab = {Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.GRAY, Color.DARK_GRAY};
+		return tab[i];
+	}
 	
 	public static EtatModif getEtat(){
 		return etat;
@@ -41,8 +41,8 @@ public class EditBase implements EtatModif {
 		joueurs = new ArrayList<Joueur>();
 		Joueur j;
 		for(int i=1; i<=6; i++) {
-			j = new Joueur("Joueur"+i);
-			j.setColorBase(255, 100, 30*i);
+			j = new Joueur("Joueur"+i, couleur(i-1));
+			//j.setColorBase(255, 100, 30*i);
 			joueurs.add(j);
 		}
 	}
@@ -93,14 +93,14 @@ public class EditBase implements EtatModif {
 	}
 
 
-	@Override
+	
 	public void modifCanonP(ControleurModif c) {
 		c.setEtat(EditCanonP.getEtat());
 		
 	}
 
 
-	@Override
+	
 	public void modifCanonS(ControleurModif c) {
 		c.setEtat(EditCanonS.getEtat());
 		

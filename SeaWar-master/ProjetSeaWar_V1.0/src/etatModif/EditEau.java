@@ -1,7 +1,7 @@
 package etatModif;
 
 import partie.ControleurModif;
-import partie.EditCanonS;
+//import partie.EditCanonS;
 import partie.Position;
 
 public class EditEau implements EtatModif{
@@ -24,7 +24,7 @@ public class EditEau implements EtatModif{
 		c.setEtat(Init.getEtat());
 	}
 
-	@Override
+	
 	public void setCurrentJ(String str) {
 		// TODO Auto-generated method stub
 		

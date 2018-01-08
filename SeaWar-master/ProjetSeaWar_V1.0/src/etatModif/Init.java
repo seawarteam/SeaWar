@@ -5,7 +5,7 @@ import javax.swing.ListModel;
 
 import partie.Controleur;
 import partie.ControleurModif;
-import partie.EditCanonS;
+//import partie.EditCanonS;
 import partie.Position;
 
 public class Init implements EtatModif {
@@ -37,14 +37,14 @@ public class Init implements EtatModif {
 	}
 
 
-	@Override
+	
 	public void setCurrentJ(String nomJ) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	@Override
+	
 	public void modifCanonS(ControleurModif c) {
 		c.setEtat(EditCanonS.getEtat());
 		
