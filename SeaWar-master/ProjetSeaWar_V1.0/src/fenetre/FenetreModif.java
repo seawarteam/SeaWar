@@ -1,31 +1,45 @@
 package fenetre;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+ 
+import fenetre.FenetrePrincipale.ActionBateau;
+import fenetre.FenetrePrincipale.BoutonFinTour;
 import fenetre.FenetrePrincipale.DrawingPanel;
+import fenetre.FenetrePrincipale.InfoCase;
+import fenetre.FenetrePrincipale.InfoJoueur;
 import fenetre.FenetrePrincipale.MenuGauche;
+import fenetre.FenetrePrincipale.SliderTaille;
 import fenetre.FenetrePrincipale.DrawingPanel.MyMouseListener;
-
+ 
 import partie.Case;
 import partie.Controleur;
 import partie.ControleurModif;
 import partie.Editeur;
+import partie.Joueur;
 import partie.Navire;
 import partie.Partie;
 import partie.Plateau;
@@ -57,9 +71,11 @@ public class FenetreModif extends JFrame implements Observer{
 	
 	private JButton valider;
 	
+	private EditCarte editCarte;
+ 	private EditCanon editCanon;
 	private static Editeur editeur;
 	private static ControleurModif controleur;
-	public JPanel panPrincipal;//TODO: New
+	public JPanel panPrincipal;
 	public GridBagConstraints gbc;
 	
 	public Graphics2D cg;
@@ -104,8 +120,8 @@ public class FenetreModif extends JFrame implements Observer{
 		gbc.weighty = 100;
 		gbc.gridx = nBoutonsHaut;
 		gbc.gridheight = 2;
-		//MenuGauche menuGauche = new MenuGauche();
-		//panPrincipal.add(menuGauche, gbc);
+		MenuDroite menuDroite = new MenuDroite();
+		panPrincipal.add(menuDroite, gbc);
 		
 		gbc.weightx = 100-largeurMenuGauche;
 		gbc.weighty = 100-largeurMenuHaut;
@@ -212,7 +228,8 @@ public class FenetreModif extends JFrame implements Observer{
 			public void mouseClicked(MouseEvent e) { 
 				Position pos = pxtoPosHex(e.getX(),e.getY());
 				if(pos != null) {
-					
+					System.out.println("Position sélectionnée :"+pos.toString());
+					controleur.hexClique(pos);
 				}
 			}		
 		}
@@ -242,6 +259,216 @@ public class FenetreModif extends JFrame implements Observer{
 		}
 	
 	
+class EditCarte extends JPanel{
+		private static final long serialVersionUID = 448318553800706885L;
+		private ButtonEdit editButton;
+		private JButton ajoutRocher;
+		private JButton ajoutEau;
+		private JButton ajoutPhare;
+		private GridLayout grid;
+		private JButton ajoutBases;
+		JList<String> listBase;
+		String[] data = {"Joueur1", "Joueur2", "Joueur3", "Joueur4", "Joueur5", "Joueur6"};
+		public EditCarte(){
+			grid = new GridLayout(4, 1);
+			
+			listBase = new JList<String>(data);
+			listBase.addMouseListener(new MouseListener() {
+				public void mouseClicked(MouseEvent arg0) {
+					System.out.println(listBase.getAnchorSelectionIndex());
+					String str = null;
+					switch(listBase.getAnchorSelectionIndex()) {
+					case 0:
+						str = "Joueur";
+						break;
+					case 1:
+						str="Joueur2";
+						break;
+					case 2:
+						str = "Joueur3";
+						break;
+					case 3:
+						str = "Joueur4";
+						break;
+					case 4:
+						str = "Joueur5";
+						break;
+					case 5:
+						str = "Joueur6";
+						break;
+					}
+					controleur.demandeAjoutBase(str);
+				}
+				public void mouseEntered(MouseEvent arg0) {
+				}
+				public void mouseExited(MouseEvent arg0) {
+				}
+				public void mousePressed(MouseEvent arg0) {	
+				}
+				public void mouseReleased(MouseEvent arg0) {
+				}
+				
+					
+			});
+			ajoutRocher = new JButton("Ajouter rochers");
+			ajoutRocher.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controleur.demandeAjoutRocher();
+				}
+			});
+			
+			ajoutEau = new JButton("Ajouter eau");
+			ajoutEau.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controleur.demandeAjoutEau();
+				}
+			});
+			ajoutPhare = new JButton("Ajout phares");
+			ajoutPhare.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controleur.demandeAjoutPhare();
+				}
+			});
+			editButton = new ButtonEdit("Editer carte", "Valider");
+			editButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controleur.demandeModifMap();
+				}
+			});
+			JPanel j = new JPanel();
+			j.setLayout(grid);
+			j.add(editButton);
+			j.add(ajoutEau);
+			j.add(ajoutRocher);
+			j.add(ajoutPhare);
+			//j.add(ajoutBases);
+			j.add(listBase);
+			add(j);
+		}
+	}
+ 	
+ 	
+
+	class EditCanon extends JPanel{
+		private static final long serialVersionUID = 448318553800706885L;
+		private ButtonEdit editButtonP;
+		private ButtonEdit editButtonS;
+		private GridLayout grid;
+		
+		public EditCanon(){
+			grid = new GridLayout(4, 1);
+			editButtonP = new ButtonEdit("Editer Canon Primaire", "Valider");
+			editButtonP.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controleur.demandeModifCanonP();
+				}
+			});
+			editButtonS = new ButtonEdit("Editer Canon Secondaire", "Valider");
+			editButtonS.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					controleur.demandeModifCanonS();
+				}
+			});
+			JPanel j = new JPanel();
+			j.setLayout(grid);
+			j.add(editButtonP);
+			j.add(editButtonS);
+			add(j);
+		}
+	}
+ 	
+	class ButtonEdit extends JButton implements MouseListener{
+		private static final long serialVersionUID = 9161144644862571496L;
+		private String label1;
+		private String label2;
+		private String label;
+		public ButtonEdit(String l1, String l2) {
+			super(l1);
+			label1 = l1;
+			label2 = l2;
+			label = label1;
+			setBackground(Color.WHITE);
+			this.addMouseListener(this);
+			setFont(new Font(Font.SERIF,Font.BOLD,15));
+		}
+		
+		private void commuteLabel(){
+			if(label.equals(label1)){
+				label = label2;
+				setText(label2);
+			}else{
+				label = label1;
+				setText(label1);
+			}
+		}
+		public void mouseClicked(MouseEvent arg0) {
+			commuteLabel();
+			
+		}
+
+		public void mouseEntered(MouseEvent arg0) {
+			setBackground(Color.GRAY);
+			
+		}
+
+		public void mouseExited(MouseEvent arg0) {
+			setBackground(Color.WHITE);
+			
+		}
+
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Stub de la méthode généré automatiquement
+			
+		}
+
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Stub de la méthode généré automatiquement
+			
+		}
+
+	}
+		
+	
+	
+	
+	class MenuDroite extends JPanel{
+		private static final long serialVersionUID = 1L;
+		
+		public MenuDroite() {
+			super(new GridBagLayout());
+			GridBagConstraints g = new GridBagConstraints();
+			editCarte = new EditCarte();
+			editCanon = new EditCanon();
+			
+
+
+			g.weightx = 100;
+			g.weighty = 10;
+			g.fill = GridBagConstraints.BOTH;
+			g.gridx = 0;
+			g.gridy = 0;
+			add(editCarte, g);
+			
+			g.gridy = 1;
+			g.weighty = 50;
+			add(editCanon,g);
+			
+			g.gridy = 2;
+			g.weighty = 30;
+			//add(actionsBateau,g);
+			//actionsBateau.setVisible(false);
+			
+			g.gridy = 3;
+			g.weighty = 5;
+			//add(new SliderTaille(), g);
+			
+			g.gridy = 4;
+			g.weighty = 5;
+			//add(finTour,g);
+			
+			
+		}
+	}
 }
 	
 	
