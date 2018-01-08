@@ -87,8 +87,10 @@ public class Canons implements Serializable {
     public int getDegat() {
         return this.degat;
     }
-    
-
+	
+    public void addZoneTire(Position p){
+    	zoneTire.add(p);
+    }
 
     /**
      * tire() renvoie true si le tire est possible et false sinon
