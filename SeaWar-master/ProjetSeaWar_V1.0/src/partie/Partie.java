@@ -35,6 +35,7 @@ public class Partie extends Observable implements Serializable {
 	public Joueur currentJ;
 	public Joueur[] listeJ;
 	public boolean gagne;
+	public Joueur jGagnant = null;
 	
 	/**
 	 * Default constructor
@@ -78,9 +79,16 @@ public class Partie extends Observable implements Serializable {
 				+ joueurs.toString();
 	}
 
-	/**
-     * 
-     */
+	public int nbJoueursRestant(){
+		Joueur[] listeJ = getJoueurs();
+		int nbJAlive = 0;
+		for(Joueur j : listeJ){
+			if(!j.isDead()){
+				nbJAlive++;
+			}
+		}
+	return nbJAlive;	
+	}
 	public boolean initTour() {
 		numTour++;
 		currentJ = iteratorJ.next();
@@ -102,10 +110,7 @@ public class Partie extends Observable implements Serializable {
 			}
 		}
 		if (hasWinner || plateau.hasWinner(currentJ)) {
-			gagne= true;
-			setChanged();
-			notifyObservers(this);
-			clearChanged();
+			finPartie(currentJ);
 			return true;
 		}
 
@@ -116,6 +121,14 @@ public class Partie extends Observable implements Serializable {
 		notifyObservers(this);
 		clearChanged();
 		return false;
+	}
+	
+	public void finPartie(Joueur joueurGagnant){
+		jGagnant = joueurGagnant;
+		gagne= true;
+		setChanged();
+		notifyObservers(this);
+		clearChanged();
 	}
 
 	public boolean hasWinner(Joueur currentJ) {
@@ -249,7 +262,7 @@ public class Partie extends Observable implements Serializable {
 					ex.printStackTrace();
 				}
 			}
-		} else { System.out.println("Fichier dÃ©jÃ  existant !"); }
+		} else { System.out.println("Fichier deja  existant !"); }
 	}
 
 	
