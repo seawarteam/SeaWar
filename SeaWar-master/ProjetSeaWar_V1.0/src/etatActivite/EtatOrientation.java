@@ -23,8 +23,6 @@ public class EtatOrientation implements EtatAction {
 			Set<Position> obstacle = c.getPartie().getObstacle();
 			if(nav.canGoOnPos(position, dir, obstacle)) {
 				int nbCase = nav.getPathLengh(position, dir, obstacle);
-				if (nbCase == -1)
-					System.err.println(" EtatOrientation : nbCase = -1");
 				Position posNavInit = nav.getPos();
 				boolean ok = nav.deplacement(position, dir, nbCase, navCourant);
 				if (ok) {
