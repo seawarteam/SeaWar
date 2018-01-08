@@ -209,7 +209,10 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			actionsBateau.setVisible(false);
 		}
 		if(p.gagne){
-			Gagne gg = new Gagne();
+			int clic = JOptionPane.showOptionDialog(this, "Victoire de "+ partie.jGagnant.getNom(), "Bravo !", JOptionPane.DEFAULT_OPTION	, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+			FenetreMenuDepart f = new FenetreMenuDepart();
+			this.dispose();
+
 		}
 		plateau.repaint();
 	}
@@ -327,12 +330,6 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		}
 	}
 	
-	class Gagne extends JOptionPane{
-		public Gagne(){
-			super();
-			showMessageDialog(this, "Victoire de "+ partie.currentJ.getNom(), "Bravo !", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
 	
 	class InfoCase extends JPanel{
 		private static final long serialVersionUID = -8644027093047733015L;
@@ -371,6 +368,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 				sBat += "<table><tr><td>Proprietaire : </td><td>"+nav.getNomJ()+"</td></tr>";
 				sBat += "<tr><td>Nom du bateau : </td><td>"+nav.getNom()+"</td></tr>";
 				sBat += "<tr><td>PV restants : </td><td>"+nav.getPV()+"</td></tr>";
+				sBat += "<tr><td>Etat : </td><td>"+nav.getEtatCourant()+"</td></tr>";
 				sBat += "<tr><td>Orientation : </td><td>"+nav.getOrientation()+"</td></tr></table><br>";
 				sBat += "<table><tr><td>Canon Principal : </td><td>"+nav.getCanonP().getNom()+"</td></tr>";
 				sBat += "<tr><td>Degats : </td><td>"+nav.getCanonP().getDegat()+"</td></tr>";
