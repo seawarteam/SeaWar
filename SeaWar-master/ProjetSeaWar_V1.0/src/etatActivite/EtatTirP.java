@@ -24,6 +24,9 @@ public class EtatTirP implements EtatAction {
 			Navire cible = c.getPartie().getNavOnPos(pos);
 			if(cible != null) {
 				cible.toucher(degats);
+				if(c.getPartie().nbJoueursRestant() == 1){
+					c.getPartie().finPartie(c.getPartie().currentJ);
+				}
 			}
 		} else {
 			//System.out.println("tps de recharge ou case non atteignable");
