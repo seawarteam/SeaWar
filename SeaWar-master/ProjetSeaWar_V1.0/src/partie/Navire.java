@@ -224,9 +224,9 @@ public class Navire extends Observable implements Serializable {
     }
 
     
-    /*TODO: Stocker dans une variable d'instance le rÃ©sultat de la fonction : "getCaseAccessible(obstacle)"
-    *	+ crÃ©er un boolÃ©en pour savoir si le rÃ©sultat est Ã  jour
-    *	=> but : limitÃ© l'appel de la fonction dans les 4 fonctions ci-dessous
+    /*TODO: Stocker dans une variable d'instance le resultat de la fonction : "getCaseAccessible(obstacle)"
+    *	+ creer un booleen pour savoir si le resultat est a jour
+    *	=> but : limiter l'appel de la fonction dans les 4 fonctions ci-dessous
     **/
     public Set<Position> afficherCasesAccessibles(Set<Position> obstacle) {
     	Map<Position,Set<Vector<Object>>> MapCases = getCaseAccessible(obstacle);
@@ -235,6 +235,8 @@ public class Navire extends Observable implements Serializable {
     		bloque = true;
     		setPos = new HashSet<Position>();
     		setPos.add(pos);
+    	} else {
+    		bloque = false;
     	}
     	return setPos;
     }
@@ -370,7 +372,7 @@ public class Navire extends Observable implements Serializable {
 	    			return ((Integer) vect.get(1)).intValue();
 	    		}
 	    	}
-    	} else System.err.println("la position n'est pas accessible ???");
+    	}
     	return -1;
     }
     
