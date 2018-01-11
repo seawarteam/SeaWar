@@ -64,19 +64,19 @@ public class EditCanonP implements EtatModif {
 		
 	}
 
-	@Override
+	
 	public void modifRocher(ControleurModif c) {
 	}
 
-	@Override
+	
 	public void modifEau(ControleurModif c) {
 	}
 
-	@Override
+	
 	public void modifPhare(ControleurModif c) {
 	}
 
-	@Override
+	
 	public void modifBase(ControleurModif c, String str) {
 		// TODO Auto-generated method stub
 		
