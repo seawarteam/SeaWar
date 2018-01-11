@@ -1,6 +1,5 @@
 package fenetre;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,14 +20,14 @@ import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
  
-import etatModif.EditNavire;
-import etatModif.Init;
 import fenetre.FenetrePrincipale.ActionBateau;
 import fenetre.FenetrePrincipale.BoutonFinTour;
 import fenetre.FenetrePrincipale.DrawingPanel;
@@ -56,12 +55,11 @@ public class FenetreModif extends JFrame implements Observer{
 		FenetreModif f = new FenetreModif();
 	}
 	
-	
 	private static final long serialVersionUID = 1L;
 	public final static String titreFenetre = "Sea War"; //titre de la fenetre de jeu
 	public final static int nBoutonsHaut = 3; //different de zero, nombre de boutons en haut
 	public final static int largeurMenuHaut = 2; //approximativement la largeur du menu en haut en pourcentage
-	public final static int largeurMenuGauche = 10; //approximativement la largeur du menu a gauche en pourcentage
+	public final static int largeurMenuGauche = 30; //approximativement la largeur du menu a gauche en pourcentage
 	public static int nCasesX;
 	public static int nCasesY;
 
@@ -77,9 +75,6 @@ public class FenetreModif extends JFrame implements Observer{
 	
 	private EditCarte editCarte;
  	private EditCanon editCanon;
- 	private EditNavire editNavire;
- 	private EditInit editInit;
- 	
 	private static Editeur editeur;
 	private static ControleurModif controleur;
 	public JPanel panPrincipal;
@@ -88,8 +83,6 @@ public class FenetreModif extends JFrame implements Observer{
 	public Graphics2D cg;
 	
 	public FenetreModif() {
-		
-		
 		Position.initTabPosition(20,20);
 		this.setTitle(titreFenetre);
 		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est cree en plein ecran
@@ -152,7 +145,10 @@ public class FenetreModif extends JFrame implements Observer{
 
 	}
 	
-	
+	public void initFenetrePrincipale() {
+
+		this.setVisible(true);
+	}
 	
 	
 	public static void drawHex(int i, int j, Graphics2D g2) { //Cree un hexagone en (i,j)
@@ -267,24 +263,24 @@ public class FenetreModif extends JFrame implements Observer{
 	
 class EditCarte extends JPanel{
 		private static final long serialVersionUID = 448318553800706885L;
-		private MenuDroite menu;
-		private ButtonEdit editButton;
+		private JButton sauvegarder;
+		private JButton charger;
+		JLabel editLabel;
+		JTextField nomMap; 
+		
 		private JButton ajoutRocher;
 		private JButton ajoutEau;
 		private JButton ajoutPhare;
-		private JButton retour;
 		private GridLayout grid;
 		private JButton ajoutBases;
 		JList<String> listBase;
 		String[] data = {"Joueur1", "Joueur2", "Joueur3", "Joueur4", "Joueur5", "Joueur6"};
-		public EditCarte(MenuDroite m){
-			menu = m;
-			grid = new GridLayout(5, 1);
+		public EditCarte(){
+			grid = new GridLayout(4, 1);
 			
 			listBase = new JList<String>(data);
 			listBase.addMouseListener(new MouseListener() {
 				public void mouseClicked(MouseEvent arg0) {
-					System.out.println(listBase.getAnchorSelectionIndex());
 					String str = null;
 					switch(listBase.getAnchorSelectionIndex()) {
 					case 0:
@@ -338,35 +334,35 @@ class EditCarte extends JPanel{
 					controleur.demandeAjoutPhare();
 				}
 			});
-			editButton = new ButtonEdit("Editer carte", "Valider");
-			editButton.addActionListener(new ActionListener() {
+			sauvegarder = new JButton("Sauvegarder");
+			sauvegarder.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controleur.demandeModifMap();
+					String nom = null;
+					nom = nomMap.getText();
+					controleur.demandeSauvegardeMap(nom);
 				}
 			});
-			
-			retour = new JButton("Retour");
-			retour.addActionListener(new ActionListener() {
+			charger = new JButton("Charger");
+			charger.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					menu.changeEditInit();
+					String nom = null;
+					nom = nomMap.getText();
+					controleur.demandeCharger(nom);
 				}
 			});
-			
-			JPanel pan = new JPanel();
-			JPanel pan2 = new JPanel();
+			nomMap = new JTextField ();
+			editLabel = new JLabel ("Nom : ");
 			JPanel j = new JPanel();
 			j.setLayout(grid);
-			pan.setLayout(grid);
-			pan.add(retour);
-			pan.add(editButton);
-			pan.add(ajoutEau);
-			pan.add(ajoutRocher);
-			pan.add(ajoutPhare);
-			
+			j.add(sauvegarder);
+			j.add(charger);
+			j.add(editLabel);
+			j.add(nomMap);
+			j.add(ajoutEau);
+			j.add(ajoutRocher);
+			j.add(ajoutPhare);
 			//j.add(ajoutBases);
-			pan2.add(listBase);
-			j.add(pan);
-			j.add(pan2);
+			j.add(listBase);
 			add(j);
 		}
 	}
@@ -376,12 +372,10 @@ class EditCarte extends JPanel{
 	class EditCanon extends JPanel{
 		private static final long serialVersionUID = 448318553800706885L;
 		private ButtonEdit editButtonP;
+		private ButtonEdit editButtonS;
 		private GridLayout grid;
-		private JButton retour;
-		private MenuDroite menu;
 		
-		public EditCanon(MenuDroite m){
-			menu = m;
+		public EditCanon(){
 			grid = new GridLayout(4, 1);
 			editButtonP = new ButtonEdit("Editer Canon Primaire", "Valider");
 			editButtonP.addActionListener(new ActionListener() {
@@ -389,100 +383,18 @@ class EditCarte extends JPanel{
 					controleur.demandeModifCanonP();
 				}
 			});
-			
-			retour = new JButton("Retour");
-			retour.addActionListener(new ActionListener() {
+			editButtonS = new ButtonEdit("Editer Canon Secondaire", "Valider");
+			editButtonS.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					menu.changeEditInit();
+					controleur.demandeModifCanonS();
 				}
 			});
-			
-			
 			JPanel j = new JPanel();
 			j.setLayout(grid);
 			j.add(editButtonP);
-			j.add(retour);
+			j.add(editButtonS);
 			add(j);
 		}
-	}
-	
-	class EditInit extends JPanel {
-		private JButton editMap;
-		private JButton editNavire;
-		private JButton editCanon;
-		private JButton retour;
-		private MenuDroite menu;
-		
-		private static final long serialVersionUID = 1L;
-
-		//TODO:
-		public EditInit(MenuDroite m){
-			menu = m;
-			GridLayout grid = new GridLayout(4, 1);
-			
-			editMap = new JButton("Editer une carte");
-			editMap.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					menu.changeEditMap();
-				}
-			});
-			
-			editNavire = new JButton("Editer un navire");
-			editNavire.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					menu.changeEditNavire();
-				}
-			});
-			
-			editCanon = new JButton("Editer un canon");
-			editCanon.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					menu.changeEditCanon();
-				}
-			});
-			
-			retour = new JButton("Retour au Menu Principal");
-			retour.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					dispose();
-					new FenetreMenuDepart();
-				}
-			});
-			
-			JPanel j = new JPanel();
-			j.setLayout(grid);
-			j.add(editMap);
-			j.add(editNavire);
-			j.add(editCanon);
-			j.add(retour);
-			add(j);
-			
-		}
-	}
-	
-	class EditNavire extends JPanel{
-		private JButton retour;
-		private MenuDroite menu;
-		private static final long serialVersionUID = 1L;
-
-		//TODO
-		public EditNavire(MenuDroite m){
-			
-			menu = m;
-			GridLayout grid = new GridLayout(4, 1);
-			retour = new JButton("Retour");
-			retour.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					menu.changeEditInit();
-				}
-			});
-			
-			JPanel j = new JPanel();
-			j.setLayout(grid);
-			j.add(retour);
-			add(j);
-		}
-		
 	}
  	
 	class ButtonEdit extends JButton implements MouseListener{
@@ -543,77 +455,37 @@ class EditCarte extends JPanel{
 		private static final long serialVersionUID = 1L;
 		
 		public MenuDroite() {
-			
 			super(new GridBagLayout());
-			
 			GridBagConstraints g = new GridBagConstraints();
-			editCarte = new EditCarte(this);
-			editCanon = new EditCanon(this);
-			editNavire = new EditNavire(this);
-			editInit = new EditInit(this);
+			editCarte = new EditCarte();
+			editCanon = new EditCanon();
 			
-			add(editInit,g);
-			
-			
-		}
-		
-		public void changeEditCanon() {
-			
-			this.removeAll();
-			GridBagConstraints g = new GridBagConstraints();
-			g.weightx = 100;
-			g.weighty = 10;
-			g.fill = GridBagConstraints.BOTH;
-			
-			g.gridy = 1;
-			g.weighty = 50;
-			
-			add(editCanon,g);
-			validate();
-			
-		}
 
-		public void changeEditNavire() {
-			
-			this.removeAll();
-			GridBagConstraints g = new GridBagConstraints();
-			g.weightx = 100;
-			g.weighty = 10;
-			g.fill = GridBagConstraints.BOTH;
-			
-			g.gridy = 0;
-			g.weighty = 0;
-			add(editNavire,g);
-			validate();
-		}
 
-		public void changeEditMap() {
-			
-			this.removeAll();
-			GridBagConstraints g = new GridBagConstraints();
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
-			
 			g.gridx = 0;
 			g.gridy = 0;
 			add(editCarte, g);
-			validate();
 			
-		}
-		
-		public void changeEditInit() {
+			g.gridy = 1;
+			g.weighty = 50;
+			add(editCanon,g);
 			
-			this.removeAll();
-			GridBagConstraints g = new GridBagConstraints();
-			g.weightx = 100;
-			g.weighty = 10;
-			g.fill = GridBagConstraints.BOTH;
+			g.gridy = 2;
+			g.weighty = 30;
+			//add(actionsBateau,g);
+			//actionsBateau.setVisible(false);
 			
-			g.gridx = 0;
-			g.gridy = 0;
-			add(editInit, g);
-			validate();
+			g.gridy = 3;
+			g.weighty = 5;
+			//add(new SliderTaille(), g);
+			
+			g.gridy = 4;
+			g.weighty = 5;
+			//add(finTour,g);
+			
 			
 		}
 	}

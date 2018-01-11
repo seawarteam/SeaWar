@@ -46,11 +46,9 @@ public class FenetreMenuDepart extends JFrame {
 		
 		JPanel pan1 = new JPanel();
 		JPanel pan2 = new JPanel();
-		pan1.setLayout(new GridLayout(5, 1));
+		pan1.setLayout(new GridLayout(3, 1));
 		pan1.add(new BoutonPartieRapide());
 		pan1.add(new BoutonPartiePersonalisee());
-		pan1.add(new BoutonCharger());
-		pan1.add(new BoutonEditer());
 		pan1.add(new BoutonOptions());
 		/*pan2.add(pan1);
 		imagePanel.add(pan2);*/
@@ -76,11 +74,30 @@ public class FenetreMenuDepart extends JFrame {
 			dispose();
 			
 		}
+
 		
-		public void mouseEntered(MouseEvent arg0) {}		
-		public void mouseExited(MouseEvent arg0) {}		
-		public void mousePressed(MouseEvent arg0) {}		
-		public void mouseReleased(MouseEvent arg0) {}
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 	
@@ -96,61 +113,33 @@ public class FenetreMenuDepart extends JFrame {
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			/*FenetreModif f = new FenetreModif();
-			dispose();*/
+			// TODO Auto-generated method stub
 			
 		}
 
 		
-		public void mouseEntered(MouseEvent arg0) {}		
-		public void mouseExited(MouseEvent arg0) {}		
-		public void mousePressed(MouseEvent arg0) {}		
-		public void mouseReleased(MouseEvent arg0) {}
-		
-	}
-	
-	class BoutonCharger extends JButton implements MouseListener{
-		private static final long serialVersionUID = 1L;
-		private final static String titre = "Charger une Partie (non disponible)"; 
-		
-		public BoutonCharger() {
-			super(titre);
-			addMouseListener(this);
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 
 		
-		public void mouseClicked(MouseEvent arg0) {
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
 			
-			
-		}
-		
-		public void mouseEntered(MouseEvent arg0) {}		
-		public void mouseExited(MouseEvent arg0) {}		
-		public void mousePressed(MouseEvent arg0) {}		
-		public void mouseReleased(MouseEvent arg0) {}
-		
-	}
-	
-	class BoutonEditer extends JButton implements MouseListener{
-		private static final long serialVersionUID = 1L;
-		private final static String titre = "Editeur"; 
-		
-		public BoutonEditer() {
-			super(titre);
-			addMouseListener(this);
 		}
 
 		
-		public void mouseClicked(MouseEvent arg0) {
-			FenetreModif f = new FenetreModif();
-			dispose();
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
 			
 		}
+
 		
-		public void mouseEntered(MouseEvent arg0) {}		
-		public void mouseExited(MouseEvent arg0) {}		
-		public void mousePressed(MouseEvent arg0) {}		
-		public void mouseReleased(MouseEvent arg0) {}
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 	
@@ -172,10 +161,28 @@ public class FenetreMenuDepart extends JFrame {
 		}
 
 		
-		public void mouseEntered(MouseEvent arg0) {}		
-		public void mouseExited(MouseEvent arg0) {}		
-		public void mousePressed(MouseEvent arg0) {}		
-		public void mouseReleased(MouseEvent arg0) {}
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 

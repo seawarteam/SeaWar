@@ -9,7 +9,7 @@ import javax.swing.ListModel;
 import etatModif.*;
 
 public class ControleurModif {
-	private EtatModif etat = Init.getEtat();
+	private EtatModif etat = EditCarte.getEtat();
 	private Editeur editeur;
 	
 	public ControleurModif(Editeur e) {
@@ -25,12 +25,6 @@ public class ControleurModif {
 		etat.clique(pos, this);
 	}
 	
-	public void demandeModifMap(){
-		//Sauvegarder la carte
-		getEditeur().resetPlateau();
-		//Débloquer les boutons (eau, phare, rocher)
-		etat.modifMap(this);
-	}
 	
 	public Editeur getEditeur(){
 		return editeur;
@@ -50,7 +44,6 @@ public class ControleurModif {
 
 	public void demandeModifCanonP() {
 		getEditeur().resetPlateau();
-		System.out.println("1111");
 		etat.modifCanonP(this);
 		
 	}
@@ -64,6 +57,18 @@ public class ControleurModif {
 	public void demandeAjoutBase(String str) {
 		etat.modifBase(this, str);
 		
+	}
+
+	public void demandeSauvegardeMap(String nom) {
+		if(nom != null || nom!="" || nom!=" ") {
+			editeur.sauvegarderMap(nom);
+		}
+	}
+
+	public void demandeCharger(String nom) {
+		if(nom != null || nom!="" || nom!=" ") {
+			editeur.chargerMap(nom);
+		}
 	}
 
 	

@@ -17,10 +17,6 @@ public class EditRocher implements EtatModif {
 		c.getEditeur().getMap().setCaseRocher(p);
 	}
 	
-	public void modifMap(ControleurModif c) {
-		//Sauvegarde carte
-		c.setEtat(Init.getEtat());
-	}
 
 	
 	public void modifCanonP(ControleurModif c) {
@@ -30,26 +26,26 @@ public class EditRocher implements EtatModif {
 	public void modifCanonS(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifRocher(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifEau(ControleurModif c) {
 		c.setEtat(EditEau.getEtat());
 	}
 
-	
+	@Override
 	public void modifPhare(ControleurModif c) {
 		c.setEtat(EditPhare.getEtat());
 	}
 
 	
 
-	
+	@Override
 	public void modifBase(ControleurModif c, String str) {
-		// TODO Auto-generated method stub
-		
+		c.setEtat(EditBase.getEtat());
+		EditBase.getEtat().modifBase(c, str);
 	}
 
 	

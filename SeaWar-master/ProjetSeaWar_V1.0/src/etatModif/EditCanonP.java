@@ -3,17 +3,11 @@ package etatModif;
 import partie.ControleurModif;
 //import partie.EditCanonS;
 import partie.Position;
-import java.util.List;
 
 public class EditCanonP implements EtatModif {
 	private static EditCanonP etat = new EditCanonP();
-	private Position posRef = new Position(10,5);
 	private EditCanonP(){
 		super();
-	}
-	
-	public Position getRefPos() {
-		return posRef;
 	}
 	
 	public static EtatModif getEtat(){
@@ -21,28 +15,9 @@ public class EditCanonP implements EtatModif {
 	}
 	
 	public void clique(Position pos, ControleurModif c) {
-		if(!pos.equals(posRef)) { // on peut pas tirer sur soi
-			Position posRelative = new Position(pos.getX()- posRef.getX(),pos.getY() - posRef.getY());
-			List<Position> zoneTire = c.getEditeur().getCanonP().getZoneTire();
-			boolean present = false;
-			for (Position p : zoneTire) {
-				if(p.equals(posRelative)) {
-					present = true;
-					posRelative = p;
-					break;
-				}
-			}
-			
-			
-			if (!present) {
-				c.getEditeur().getCanonP().addZoneTire(posRelative);
-				c.getEditeur().getMap().setColorTire(pos);
-			} else {
-				zoneTire.remove(posRelative);
-				c.getEditeur().getMap().getCase(pos).ResetCouleur();
-			}
-			System.out.println(zoneTire);
-		}
+		c.getEditeur().getCanonP().addZoneTire(pos);
+		System.out.println("okkkk");
+		c.getEditeur().getMap().setColorTire(pos); 
 	}
 
 	
@@ -64,19 +39,19 @@ public class EditCanonP implements EtatModif {
 		
 	}
 
-	
+	@Override
 	public void modifRocher(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifEau(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifPhare(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifBase(ControleurModif c, String str) {
 		// TODO Auto-generated method stub
 		
