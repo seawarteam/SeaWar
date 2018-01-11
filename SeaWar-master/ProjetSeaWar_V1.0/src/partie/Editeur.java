@@ -9,14 +9,14 @@ import java.util.Observer;
 public class Editeur extends Observable{
 	Plateau map;
 	Canons canonP;
-	Canons canonS;
+	//Canons canonS;
 	Navire navire;
 	private int nX, nY;
 	private Observer obs;
 	public Editeur(int nX, int nY, Observer obs){
 		navire = new Navire("", 0, 0, "", Orientation.N, new Position(0, 0), obs);
 		canonP = new Canons("", 0, 0, new LinkedList<Position>(), navire);
-		canonS = new Canons("", 0, 0, new LinkedList<Position>(), navire);
+		//canonS = new Canons("", 0, 0, new LinkedList<Position>(), navire);
 		addObserver(obs);
 		map = new Plateau(nX, nY, 0, 0, obs);
 		this.nX = nX;
@@ -32,9 +32,9 @@ public class Editeur extends Observable{
 		return canonP;
 	}
 	
-	public Canons getCanonS(){
+	/*public Canons getCanonS(){
 		return canonS;
-	}
+	}*/
 	
 	public void resetPlateau(){
 		map = new Plateau(nX, nY, 0, 0, obs);

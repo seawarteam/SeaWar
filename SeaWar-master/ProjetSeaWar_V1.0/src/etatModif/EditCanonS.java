@@ -1,5 +1,5 @@
 package etatModif;
-
+/*
 import partie.ControleurModif;
 import partie.Position;
 
@@ -51,4 +51,4 @@ public class EditCanonS implements EtatModif {
 		
 	}
 
-}
+}*/

@@ -114,17 +114,6 @@ public class FenetreModif extends JFrame implements Observer{
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		/*JButton b1 = new JButton("Bouton1");
-		panPrincipal.add(b1, gbc);
-
-
-		gbc.gridx = 1;
-		JButton b2 = new JButton("Bouton2");
-		panPrincipal.add(b2,  gbc);
-
-		gbc.gridx = 2;
-		JButton b3 = new JButton("Bouton3");
-		panPrincipal.add(b3, gbc);*/
 
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = largeurMenuGauche;
@@ -377,20 +366,21 @@ class EditCarte extends JPanel{
 
 	class EditCanon extends JPanel{
 		private static final long serialVersionUID = 448318553800706885L;
-		private ButtonEdit editButtonP;
 		private GridLayout grid;
+		
+		
+		private JTextField Tnom;
+		private JTextField Tdegat;
+		private JTextField Trecharge;
+		
 		private JButton retour;
+		private JButton sauvegarde;
 		private MenuDroite menu;
 		
 		public EditCanon(MenuDroite m){
 			menu = m;
 			grid = new GridLayout(4, 1);
-			editButtonP = new ButtonEdit("Editer Canon Primaire", "Valider");
-			editButtonP.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					controleur.demandeModifCanonP();
-				}
-			});
+			
 			
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
@@ -399,11 +389,61 @@ class EditCarte extends JPanel{
 				}
 			});
 			
+			sauvegarde = new JButton("Sauvegarder");
+			sauvegarde.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//TODO: Sauvegarder
+				}
+			});
+			
+			JPanel Ptitre = new JPanel();
+			JLabel titre = new JLabel("Création d'un nouveau Canon");
+			Ptitre.add(titre);
+			
+			JPanel Pcommentaire = new JPanel();/*
+			Pcommentaire.setLayout(new GridLayout(2,1));
+			JLabel commentaire1 = new JLabel("Selectionner la zone de tire sur la carte.\n");
+			JLabel commentaire2 = new JLabel("Le bateau (en bleu est orienté vers le Nord)");
+			Pcommentaire.add(commentaire1);
+			Pcommentaire.add(commentaire2);*/
+			
+			String text = ("<html>");
+			text += "<tr><td>Selectionner la zone de tire sur la carte.</td></tr>";
+			text += "<tr><td>Le bateau (en bleu) est orienté vers le Nord.</td></tr>";
+			text += "</html>";
+			JLabel commentaire = new JLabel(text);
+			Pcommentaire.add(commentaire);
+			
+			
+			JLabel Lnom = new JLabel("Nom : ");
+			JLabel Ldegat = new JLabel("Dommage : ");
+			JLabel Lrecharge = new JLabel("Rechargement : ");
+			
+			Tnom = new JTextField();
+			Tdegat = new JTextField();
+			Trecharge = new JTextField();
 			
 			JPanel j = new JPanel();
 			j.setLayout(grid);
-			j.add(editButtonP);
-			j.add(retour);
+			JPanel caracteristiques = new JPanel();
+			caracteristiques.setLayout(new GridLayout(3, 2));
+			caracteristiques.add(Lnom);
+			caracteristiques.add(Tnom);
+			caracteristiques.add(Ldegat);
+			caracteristiques.add(Tdegat);
+			caracteristiques.add(Lrecharge);
+			caracteristiques.add(Trecharge);
+			
+			JPanel bouton = new JPanel();
+			bouton.setLayout(new GridLayout(1, 2));
+			bouton.add(sauvegarde);
+			bouton.add(retour);
+			
+			
+			j.add(Ptitre);
+			j.add(Pcommentaire);
+			j.add(caracteristiques);
+			j.add(bouton);
 			add(j);
 		}
 	}
@@ -477,7 +517,7 @@ class EditCarte extends JPanel{
 		public EditNavire(MenuDroite m){
 			
 			menu = m;
-			GridLayout grid = new GridLayout(4, 1);
+			GridLayout grid = new GridLayout(5, 1);
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -492,8 +532,11 @@ class EditCarte extends JPanel{
 			});
 			
 			
-			JLabel Titre = new JLabel("Création d'un nouveau Navire");
+			JPanel Ptitre = new JPanel();
+			JLabel titre = new JLabel("Création d'un nouveau Navire");
+			Ptitre.add(titre);
 			
+						
 			JLabel Lnom = new JLabel("nom : ");
 			JLabel Ldeplacement = new JLabel("Déplacement : ");
 			JLabel LpointsDeVie = new JLabel("Points de vie : ");
@@ -518,7 +561,7 @@ class EditCarte extends JPanel{
 			bouton.add(sauvegarde);
 			bouton.add(retour);
 			
-			j.add(Titre);
+			j.add(Ptitre);
 			j.add(caracteristiques);
 			j.add(bouton);
 			add(j);
@@ -601,7 +644,14 @@ class EditCarte extends JPanel{
 		public void changeEditCanon() {
 			
 			this.removeAll();
+			
 			GridBagConstraints g = new GridBagConstraints();
+			/*g.weightx = largeurMenuGauche;
+			g.weighty = 100;
+			g.gridx = nBoutonsHaut;
+			g.gridheight = 2;*/
+			
+			
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
@@ -610,6 +660,7 @@ class EditCarte extends JPanel{
 			g.weighty = 50;
 			
 			add(editCanon,g);
+			controleur.demandeModifCanonP();
 			validate();
 			
 		}

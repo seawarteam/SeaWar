@@ -1,5 +1,6 @@
 package partie;
 
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,17 +50,18 @@ public class ControleurModif {
 	}
 
 	public void demandeModifCanonP() {
+		
 		getEditeur().resetPlateau();
-		System.out.println("1111");
-		etat.modifCanonP(this);
+		etat = EditCanonP.getEtat();
+		getEditeur().map.setColor(((EditCanonP) EditCanonP.getEtat()).getRefPos(), Color.blue);
 		
 	}
-	
+	/*
 	public void demandeModifCanonS() {
 		getEditeur().resetPlateau();
 		etat.modifCanonS(this);
 		
-	}
+	}*/
 
 	public void demandeAjoutBase(String str) {
 		etat.modifBase(this, str);
