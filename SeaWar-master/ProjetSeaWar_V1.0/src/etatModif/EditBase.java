@@ -98,30 +98,30 @@ public class EditBase implements EtatModif {
 	}
 
 
-	@Override
+	
 	public void modifRocher(ControleurModif c) {
 		c.setEtat(EditRocher.getEtat());
 	}
 
 
-	@Override
+	
 	public void modifEau(ControleurModif c) {
 		c.setEtat(EditEau.getEtat());
 	}
 
 
-	@Override
+	
 	public void modifPhare(ControleurModif c) {
 		c.setEtat(EditPhare.getEtat());
 	}
 
 
-	@Override
+	
 	public void modifBase(ControleurModif c, String str) {
 		c.getEditeur().getMap().addBases(currentJ, positions);
 		nbPosition = 0;
 		positions = new ArrayList<Position>();
-		//Si le joueur est déjà présent dans la map alors réinitialiser ses positions
+		//Si le joueur est dï¿½jï¿½ prï¿½sent dans la map alors rï¿½initialiser ses positions
 		currentJ = (Joueur)(getJoueur(str));
 		c.getEditeur().getMap().ResetCouleurBaseJoueur(currentJ);
 	}

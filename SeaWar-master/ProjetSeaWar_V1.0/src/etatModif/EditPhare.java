@@ -31,23 +31,23 @@ public class EditPhare implements EtatModif {
 	public void modifCanonS(ControleurModif c) {
 	}
 
-	@Override
+	
 	public void modifRocher(ControleurModif c) {
 		c.setEtat(EditRocher.getEtat());
 	}
 
-	@Override
+	
 	public void modifEau(ControleurModif c) {
 		c.setEtat(EditEau.getEtat());
 	}
 
-	@Override
+	
 	public void modifPhare(ControleurModif c) {
 	}
 
 
 
-	@Override
+	
 	public void modifBase(ControleurModif c, String str) {
 		// TODO Auto-generated method stub
 		

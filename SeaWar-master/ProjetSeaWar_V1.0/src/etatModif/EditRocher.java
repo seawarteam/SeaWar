@@ -30,23 +30,23 @@ public class EditRocher implements EtatModif {
 	public void modifCanonS(ControleurModif c) {
 	}
 
-	@Override
+	
 	public void modifRocher(ControleurModif c) {
 	}
 
-	@Override
+	
 	public void modifEau(ControleurModif c) {
 		c.setEtat(EditEau.getEtat());
 	}
 
-	@Override
+	
 	public void modifPhare(ControleurModif c) {
 		c.setEtat(EditPhare.getEtat());
 	}
 
 	
 
-	@Override
+	
 	public void modifBase(ControleurModif c, String str) {
 		// TODO Auto-generated method stub
 		
