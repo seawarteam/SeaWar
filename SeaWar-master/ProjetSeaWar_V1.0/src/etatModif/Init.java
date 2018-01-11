@@ -35,9 +35,10 @@ public class Init implements EtatModif {
 		c.setEtat(EditCanonP.getEtat());
 	}
 
+	/*
 	public void modifCanonS(ControleurModif c) {
 		c.setEtat(EditCanonS.getEtat());
-	}
+	}*/
 
 
 

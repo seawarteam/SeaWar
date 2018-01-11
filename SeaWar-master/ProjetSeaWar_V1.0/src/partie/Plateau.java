@@ -152,6 +152,11 @@ public class Plateau implements Serializable {
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(Color.YELLOW);
 	}
 	
+	public void setColor(Position p, Color c) {
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(c);
+		
+	}
+	
 	public void setCaseEau(Position p){
 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
 		Polygon poly = c.getPoly();
@@ -276,5 +281,7 @@ public class Plateau implements Serializable {
 		}
 		return ph;
 	}
+
+	
 
 }
