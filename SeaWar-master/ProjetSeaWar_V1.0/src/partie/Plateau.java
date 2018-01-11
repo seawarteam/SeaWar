@@ -139,6 +139,7 @@ public class Plateau implements Serializable {
 	public Map getBases() {
 		return bases;
 	}
+	
 	public void addBases(Joueur j, ArrayList<Position>l) {
 		bases.put(j, l);
 	}
@@ -250,7 +251,20 @@ public class Plateau implements Serializable {
 				cases[i][j].ResetCouleur();
 			}
 		}
-
+	}
+	
+	public void ResetCouleurBaseJoueur(Joueur j) {
+		System.out.println(bases.containsKey(j));
+		if(bases.containsKey(j)) {
+			ArrayList<Position> a = (ArrayList<Position>) bases.get(j);
+			Iterator<Position> i = a.iterator();
+			Position p;
+			while(i.hasNext()) {
+				p = i.next();
+				cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+			}
+		}
+		
 	}
 	
 	public Phare[] getPhares() {

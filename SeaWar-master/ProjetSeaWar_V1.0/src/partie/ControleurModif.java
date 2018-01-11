@@ -37,33 +37,33 @@ public class ControleurModif {
 	}
 
 	public void demandeAjoutEau() {
-		etat.modifMap(this);
+		etat.modifEau(this);
 	}
 	
 	public void demandeAjoutRocher() {
-		etat.modifMap(this);		
+		etat.modifRocher(this);		
 	}
 	
 	public void demandeAjoutPhare() {
-		etat.modifMap(this);		
+		etat.modifPhare(this);		
 	}
 
 	public void demandeModifCanonP() {
 		getEditeur().resetPlateau();
 		System.out.println("1111");
-		etat = EditCanonP.getEtat();
+		etat.modifCanonP(this);
 		
 	}
 	
 	public void demandeModifCanonS() {
 		getEditeur().resetPlateau();
-		etat = EditCanonS.getEtat();
+		etat.modifCanonS(this);
 		
 	}
 
 	public void demandeAjoutBase(String str) {
-		setEtat(EditBase.getEtat());
-		etat.setCurrentJ(str);
+		etat.modifBase(this, str);
+		
 	}
 
 	

@@ -22,14 +22,8 @@ public class EditCanonS implements EtatModif {
 
 	
 	public void modifMap(ControleurModif c) {
-		//c.setEtat(EditRocher.getEtat());
 	}
 
-	
-	public void setCurrentJ(String str) {
-	}
-
-	
 	public void modifCanonS(ControleurModif c) {
 		c.setEtat(Init.getEtat());
 		
@@ -37,7 +31,23 @@ public class EditCanonS implements EtatModif {
 
 	
 	public void modifCanonP(ControleurModif c) {
-		c.setEtat(EditCanonP.getEtat());
+	}
+
+	@Override
+	public void modifRocher(ControleurModif c) {
+	}
+
+	@Override
+	public void modifEau(ControleurModif c) {
+	}
+
+	@Override
+	public void modifPhare(ControleurModif c) {
+	}
+
+	@Override
+	public void modifBase(ControleurModif c, String str) {
+		// TODO Auto-generated method stub
 		
 	}
 

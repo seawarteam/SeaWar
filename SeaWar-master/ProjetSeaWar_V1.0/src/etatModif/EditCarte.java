@@ -1,59 +1,55 @@
 package etatModif;
 
 import partie.ControleurModif;
-//import partie.EditCanonS;
 import partie.Position;
 
-public class EditCanonP implements EtatModif {
-	private static EditCanonP etat = new EditCanonP();
-	private EditCanonP(){
+public class EditCarte implements EtatModif {
+	private static EditCarte etat = new EditCarte();
+	private EditCarte(){
 		super();
 	}
+	
 	
 	public static EtatModif getEtat(){
 		return etat;
 	}
-	
+	@Override
 	public void clique(Position pos, ControleurModif c) {
-		c.getEditeur().getCanonP().addZoneTire(pos);
-		System.out.println("okkkk");
-		c.getEditeur().getMap().setColorTire(pos); 
 	}
 
-	
+	@Override
 	public void modifMap(ControleurModif c) {
 	}
 
-	
-	public void setCurrentJ(String str) {
-	}
-
-	
+	@Override
 	public void modifCanonP(ControleurModif c) {
-		c.setEtat(Init.getEtat());
-		
 	}
 
-	
+	@Override
 	public void modifCanonS(ControleurModif c) {
-		
 	}
 
 	@Override
 	public void modifRocher(ControleurModif c) {
+		c.setEtat(EditRocher.getEtat());
 	}
 
 	@Override
 	public void modifEau(ControleurModif c) {
+		c.setEtat(EditEau.getEtat());
 	}
 
 	@Override
 	public void modifPhare(ControleurModif c) {
+		c.setEtat(EditPhare.getEtat());
 	}
+
+
 
 	@Override
 	public void modifBase(ControleurModif c, String str) {
-		// TODO Auto-generated method stub
+		c.setEtat(EditBase.getEtat());
+		
 		
 	}
 

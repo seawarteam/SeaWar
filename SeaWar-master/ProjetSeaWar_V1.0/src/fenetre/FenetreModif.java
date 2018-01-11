@@ -275,11 +275,10 @@ class EditCarte extends JPanel{
 			listBase = new JList<String>(data);
 			listBase.addMouseListener(new MouseListener() {
 				public void mouseClicked(MouseEvent arg0) {
-					System.out.println(listBase.getAnchorSelectionIndex());
 					String str = null;
 					switch(listBase.getAnchorSelectionIndex()) {
 					case 0:
-						str = "Joueur";
+						str = "Joueur1";
 						break;
 					case 1:
 						str="Joueur2";

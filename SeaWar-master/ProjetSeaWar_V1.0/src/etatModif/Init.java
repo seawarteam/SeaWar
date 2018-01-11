@@ -26,29 +26,42 @@ public class Init implements EtatModif {
 		
 	}
 
-
 	
 	public void modifMap(ControleurModif c) {
-		c.setEtat(EditRocher.getEtat());
+		c.setEtat(EditCarte.getEtat());
 	}
 	
 	public void modifCanonP(ControleurModif c) {
 		c.setEtat(EditCanonP.getEtat());
 	}
 
-
-	
-	public void setCurrentJ(String nomJ) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	
 	public void modifCanonS(ControleurModif c) {
 		c.setEtat(EditCanonS.getEtat());
-		
 	}
+
+
+
+	@Override
+	public void modifRocher(ControleurModif c) {
+	}
+
+
+	@Override
+	public void modifEau(ControleurModif c) {
+	}
+
+
+	@Override
+	public void modifPhare(ControleurModif c) {
+	}
+
+
+	@Override
+	public void modifBase(ControleurModif c, String str) {
+	}
+
+
+	
 
 
 

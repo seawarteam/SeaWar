@@ -21,9 +21,10 @@ public class EditBase implements EtatModif {
 	private EditBase(){
 		super();
 		nbPosition = 0;
-		currentJ = new Joueur("Joueur1", couleur(0));
-		positions = new ArrayList<Position>();
 		initJoueurs();
+		currentJ = getJoueur("Joueur1");
+		positions = new ArrayList<Position>();
+		
 		
 		
 	}
@@ -42,7 +43,6 @@ public class EditBase implements EtatModif {
 		Joueur j;
 		for(int i=1; i<=6; i++) {
 			j = new Joueur("Joueur"+i, couleur(i-1));
-			//j.setColorBase(255, 100, 30*i);
 			joueurs.add(j);
 		}
 	}
@@ -72,12 +72,7 @@ public class EditBase implements EtatModif {
 		c.setEtat(Init.getEtat());
 	}
 
-	public void setCurrentJ(String str) {
-		nbPosition = 0;
-		positions = new ArrayList<Position>();
-		currentJ = (Joueur)(getJoueur(str));
-		
-	}
+
 	
 	private Joueur getJoueur(String str) {
 		Joueur j = null;
@@ -95,16 +90,42 @@ public class EditBase implements EtatModif {
 
 	
 	public void modifCanonP(ControleurModif c) {
-		c.setEtat(EditCanonP.getEtat());
-		
 	}
 
 
 	
 	public void modifCanonS(ControleurModif c) {
-		c.setEtat(EditCanonS.getEtat());
-		
 	}
+
+
+	@Override
+	public void modifRocher(ControleurModif c) {
+		c.setEtat(EditRocher.getEtat());
+	}
+
+
+	@Override
+	public void modifEau(ControleurModif c) {
+		c.setEtat(EditEau.getEtat());
+	}
+
+
+	@Override
+	public void modifPhare(ControleurModif c) {
+		c.setEtat(EditPhare.getEtat());
+	}
+
+
+	@Override
+	public void modifBase(ControleurModif c, String str) {
+		c.getEditeur().getMap().addBases(currentJ, positions);
+		nbPosition = 0;
+		positions = new ArrayList<Position>();
+		//Si le joueur est déjà présent dans la map alors réinitialiser ses positions
+		currentJ = (Joueur)(getJoueur(str));
+		c.getEditeur().getMap().ResetCouleurBaseJoueur(currentJ);
+	}
+	
 
 
 	
