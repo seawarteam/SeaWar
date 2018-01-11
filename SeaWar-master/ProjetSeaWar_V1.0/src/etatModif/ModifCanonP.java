@@ -2,7 +2,7 @@ package etatModif;
 
 import partie.ControleurModif;
 import partie.Position;
-
+/*
 public class ModifCanonP implements EtatModif {
 
 	private static ModifCanonP etat = new ModifCanonP();
@@ -45,27 +45,5 @@ public class ModifCanonP implements EtatModif {
 	}
 
 
-	public void modifRocher(ControleurModif c) {
-		// TODO Auto-generated method stub
-		
-	}
 
-
-	public void modifEau(ControleurModif c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void modifPhare(ControleurModif c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void modifBase(ControleurModif c, String str) {
-		// TODO Auto-generated method stub
-		
-	}
-
-}
+}*/

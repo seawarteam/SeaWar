@@ -49,7 +49,7 @@ public class EditCarte implements EtatModif {
 	
 	public void modifBase(ControleurModif c, String str) {
 		c.setEtat(EditBase.getEtat());
-		
+		EditBase.getEtat().modifBase(c, str);
 		
 	}
 

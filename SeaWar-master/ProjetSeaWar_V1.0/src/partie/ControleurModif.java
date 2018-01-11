@@ -10,9 +10,9 @@ import javax.swing.ListModel;
 import etatModif.*;
 
 public class ControleurModif {
-	private EtatModif etat = Init.getEtat();
+	private EtatModif etat = EditCarte.getEtat();
 	private Editeur editeur;
-	
+
 	public ControleurModif(Editeur e) {
 		super();
 		editeur = e;
@@ -25,57 +25,55 @@ public class ControleurModif {
 	public void hexClique(Position pos) {
 		etat.clique(pos, this);
 	}
-	
-	public void demandeModifMap(){
-		//Sauvegarder la carte
-		getEditeur().resetPlateau();
-		//Débloquer les boutons (eau, phare, rocher)
-		etat.modifMap(this);
-	}
-	
-	public Editeur getEditeur(){
+
+	public Editeur getEditeur() {
 		return editeur;
 	}
 
 	public void demandeAjoutEau() {
 		etat.modifEau(this);
 	}
-	
+
 	public void demandeAjoutRocher() {
-		etat.modifRocher(this);		
+		etat.modifRocher(this);
 	}
-	
+
 	public void demandeAjoutPhare() {
-		etat.modifPhare(this);		
+		etat.modifPhare(this);
 	}
 
 	public void demandeModifCanonP() {
-		
+
 		getEditeur().resetPlateau();
 		etat = EditCanonP.getEtat();
-		getEditeur().map.setColor(((EditCanonP) EditCanonP.getEtat()).getRefPos(), Color.blue);
-		
+		getEditeur().map.setColor(
+				((EditCanonP) EditCanonP.getEtat()).getRefPos(), Color.blue);
+
 	}
+
 	/*
-	public void demandeModifCanonS() {
-		getEditeur().resetPlateau();
-		etat.modifCanonS(this);
-		
-	}*/
+	 * public void demandeModifCanonS() { getEditeur().resetPlateau();
+	 * etat.modifCanonS(this);
+	 * 
+	 * }
+	 */
 
 	public void demandeAjoutBase(String str) {
 		etat.modifBase(this, str);
-		
+
 	}
 
-	
-	
+	public void demandeSauvegardeMap(String nom) {
+		if (nom != null || nom != "" || nom != " ") {
+			editeur.sauvegarderMap(nom);
+		}
+	}
 
-	
-	
+	public void demandeCharger(String nom) {
+		if (nom != null || nom != "" || nom != " ") {
+			editeur.chargerMap(nom);
+		}
 
-	
-
-	
+	}
 
 }
