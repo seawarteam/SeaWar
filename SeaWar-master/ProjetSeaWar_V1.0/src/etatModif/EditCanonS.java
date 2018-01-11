@@ -33,19 +33,19 @@ public class EditCanonS implements EtatModif {
 	public void modifCanonP(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifRocher(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifEau(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifPhare(ControleurModif c) {
 	}
 
-	
+	@Override
 	public void modifBase(ControleurModif c, String str) {
 		// TODO Auto-generated method stub
 		
