@@ -16,9 +16,9 @@ public class Plateau implements Serializable {
 	private static int longueurCote;
 	private static int apotheme;
 	private static int resteX;
-	
+
 	private static Observer obs;
-	private Map<Joueur,List<Position>> bases;
+	private Map<Joueur, List<Position>> bases;
 
 	public Plateau(int l, int L, int nbPhares, int nbRochers, Observer obs) {
 		cases = new Case[l][L];
@@ -27,12 +27,43 @@ public class Plateau implements Serializable {
 		caseR = new HashSet<Position>();
 		caseN = new HashSet<Position>();
 		phares = new HashSet<Phare>();
-		
+
 		initTabHex(nbPhares, nbRochers, obs);
 		this.obs = obs;
 		bases = new HashMap<Joueur, List<Position>>();
+		initJoueursBases();
 
+	}
 
+	public void setObserver(Observer o) {
+		obs = o;
+	}
+
+	public Observer getObserver() {
+		return obs;
+	}
+
+	private Color couleur(int i) {
+		Color[] tab = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE,
+				Color.GRAY, Color.DARK_GRAY };
+		return tab[i];
+	}
+
+	private void initJoueursBases() {
+		Joueur j;
+		for (int i = 1; i <= 6; i++) {
+			j = new Joueur("Joueur" + i, couleur(i - 1));
+			bases.put(j, null);
+		}
+	}
+
+	public Joueur getJoueurFromBases(String str) {
+		for (Joueur j : bases.keySet()) {
+			if (j.getNom().equals(str)) {
+				return j;
+			}
+		}
+		return null;
 	}
 
 	// cree un hexagone au coordonnÃ©es pixel x0,y0 (!!! pour l'insant, x0 et y0
@@ -63,12 +94,13 @@ public class Plateau implements Serializable {
 		// TODO: a  Verifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		caseN.add(Position.getPosition(1, 1));
-		tabPosUtil.add(Position.getPosition(2,0));
-		caseN.add(Position.getPosition(2,0));
+		tabPosUtil.add(Position.getPosition(2, 0));
+		caseN.add(Position.getPosition(2, 0));
 		tabPosUtil.add(Position.tabPosition[(nCasesX - 2) * (nCasesY) + nCasesY
 				- 2]);
 		caseN.add(Position.tabPosition[(nCasesX - 2) * (nCasesY) + nCasesY - 2]);
-		tabPosUtil.add(Position.tabPosition[(nCasesX - 3) * (nCasesY) + nCasesY - 2]);
+		tabPosUtil.add(Position.tabPosition[(nCasesX - 3) * (nCasesY) + nCasesY
+				- 2]);
 		caseN.add(Position.tabPosition[(nCasesX - 3) * (nCasesY) + nCasesY - 2]);
 
 		boolean ok = false;
@@ -130,54 +162,55 @@ public class Plateau implements Serializable {
 		}
 
 	}
-	
-		
+
 	public Case getCase(Position p) {
 		return cases[p.getX()][p.getY() + (int) p.getX() / 2];
 	}
-	
+
 	public Map getBases() {
 		return bases;
 	}
-	
-	public void addBases(Joueur j, ArrayList<Position>l) {
+
+	public void addBases(Joueur j, ArrayList<Position> l) {
 		bases.put(j, l);
 	}
-	
+
 	public void setColorBase(Position p, Joueur j) {
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(j.getCol());
 	}
-	
-	public void setColorTire(Position p){
+
+	public void setColorTire(Position p) {
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(Color.YELLOW);
 	}
-	
+
 	public void setColor(Position p, Color c) {
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(c);
-		
+
 	}
-	
-	public void setCaseEau(Position p){
+
+	public void setCaseEau(Position p) {
 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
 		Polygon poly = c.getPoly();
-		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Eau(poly, p.getX(), p.getY()+p.getX()/2, obs);
-		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
-	}
-	
-	public void setCaseRocher(Position p){
-		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
-		Polygon poly = c.getPoly();
-		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Rocher(poly, p.getX(), p.getY()+p.getX()/2, obs);
-		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
-	}
-	
-	public void setCasePhare(Position p){
-		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
-		Polygon poly = c.getPoly();
-		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Phare(poly, p.getX(), p.getY()+p.getX()/2, obs);
+		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Eau(poly,
+				p.getX(), p.getY() + p.getX() / 2, obs);
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
 	}
 
+	public void setCaseRocher(Position p) {
+		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
+		Polygon poly = c.getPoly();
+		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Rocher(poly,
+				p.getX(), p.getY() + p.getX() / 2, obs);
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+	}
+
+	public void setCasePhare(Position p) {
+		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
+		Polygon poly = c.getPoly();
+		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Phare(poly,
+				p.getX(), p.getY() + p.getX() / 2, obs);
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+	}
 
 	public void freeCase(Position p) {
 		int i, j;
@@ -195,7 +228,7 @@ public class Plateau implements Serializable {
 		cases[i][j].takeCase(N);
 		cases[i][j].estOccupe = true;
 		caseN.add(p);
-		
+
 	}
 
 	public Set<Position> getObstacle() {
@@ -204,7 +237,7 @@ public class Plateau implements Serializable {
 		caseO.addAll(caseR);
 		return caseO;
 	}
-	
+
 	public Set<Position> getRochers() {
 		return caseR;
 	}
@@ -229,8 +262,6 @@ public class Plateau implements Serializable {
 		}
 		return (!stop);
 	}
-	
-
 
 	public void surbrillanceO(Set<Position> s) {
 		for (Position p : s) {
@@ -250,6 +281,15 @@ public class Plateau implements Serializable {
 		}
 	}
 
+	public void surbrillanceBases() {
+		for (Joueur j : bases.keySet()) {
+			for (Position p : bases.get(j)) {
+				cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(j
+						.getCol());
+			}
+		}
+	}
+
 	public void ResetCouleur() {
 		for (int i = 0; i < nCasesX; i++) {
 			for (int j = 0; j < nCasesY; j++) {
@@ -257,21 +297,28 @@ public class Plateau implements Serializable {
 			}
 		}
 	}
-	
+
 	public void ResetCouleurBaseJoueur(Joueur j) {
 		System.out.println(bases.containsKey(j));
-		if(bases.containsKey(j)) {
+		if (bases.containsKey(j)) {
 			ArrayList<Position> a = (ArrayList<Position>) bases.get(j);
-			Iterator<Position> i = a.iterator();
-			Position p;
-			while(i.hasNext()) {
-				p = i.next();
-				cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+			if (a != null) {
+				Iterator<Position> i = a.iterator();
+				Position p;
+				while (i.hasNext()) {
+					p = i.next();
+					cases[p.getX()][p.getY() + (int) p.getX() / 2]
+							.ResetCouleur();
+				}
+
 			}
 		}
-		
 	}
-	
+
+	public void ResetCouleurCase(Position p) {
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+	}
+
 	public Phare[] getPhares() {
 		Phare[] ph = new Phare[phares.size()];
 		int i = 0;
@@ -281,7 +328,5 @@ public class Plateau implements Serializable {
 		}
 		return ph;
 	}
-
-	
 
 }

@@ -16,14 +16,11 @@ public class EditEau implements EtatModif{
 
 
 	public void clique(Position p, ControleurModif c) {
+		c.getEditeur().getMap().ResetCouleur();
 		c.getEditeur().getMap().setCaseEau(p);
 		
 	}
 	
-	public void modifMap(ControleurModif c) {
-		//Sauvegarde carte
-		c.setEtat(Init.getEtat());
-	}
 
 	public void modifCanonP(ControleurModif c) {
 	}
@@ -48,7 +45,8 @@ public class EditEau implements EtatModif{
 
 	
 	public void modifBase(ControleurModif c, String str) {
-		// TODO Auto-generated method stub
+		c.setEtat(EditBase.getEtat());
+		EditBase.getEtat().modifBase(c, str);
 		
 	}
 
