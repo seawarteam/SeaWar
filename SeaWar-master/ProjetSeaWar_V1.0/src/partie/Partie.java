@@ -26,10 +26,10 @@ public class Partie extends Observable implements Serializable {
 
 	}
 
-	final String pathMap = "Sauvegardes/Reglages/Cartes/";
-	final String pathPartie = "Sauvegardes/Parties/";
-	final String pathCanon = "Sauvegardes/Reglages/Canons/";
-	final String pathBateau = "Sauvegardes/Reglages/Bateaux/";
+	final String pathMap = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Cartes/";
+	final String pathPartie = "C:/Users/delaunay/Documents/Sauvegardes/Parties/";
+	final String pathCanon = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Canons/";
+	final String pathBateau = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Bateaux/";
 
 	public WheelList<Joueur> joueurs;
 	private int nbJoueurs;

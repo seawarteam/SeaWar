@@ -69,11 +69,17 @@ public class ControleurModif {
 		}
 	}
 
-	public void demandeCharger(String nom) {
+	public void demandeSauvegardeNavire(String nom) {
 		if (nom != null || nom != "" || nom != " ") {
-			editeur.chargerMap(nom);
+			editeur.sauvegarderNavire(nom);
 		}
-
 	}
+	
+	public void demandeSauvegardeCanon(String nom) {
+		if (nom != null || nom != "" || nom != " ") {
+			editeur.sauvegarderCanon(nom);
+		}
+	}
+	
 
 }

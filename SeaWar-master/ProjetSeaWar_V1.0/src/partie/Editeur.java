@@ -12,10 +12,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Editeur extends Observable {
-	final String path = "Sauvegardes/Reglages/Cartes/";
+	final String pathMap = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Cartes/";
+	final String pathCanon = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Canons/";
+	final String pathBateau = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Bateaux/";
 	Plateau map;
 	Canons canonP;
-	// Canons canonS;
+	
 	Navire navire;
 	private int nX, nY;
 	private Observer obs;
@@ -50,7 +52,7 @@ public class Editeur extends Observable {
 	}
 
 	public void sauvegarderMap(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
-		String name = path + nomFichier;
+		String name = pathMap + nomFichier;
 		ObjectOutputStream oos = null;
 		File pathF = new File(name);
 		if (!pathF.exists()) {
@@ -75,38 +77,63 @@ public class Editeur extends Observable {
 			System.out.println("Fichier dejaÂ  existant !");
 		}
 	}
-
-	public void chargerMap(String nomFichier) { // ex : partie.charger (  "Test01" );
-		String name = path + nomFichier;
+	
+	public void sauvegarderCanon(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
+		String name = pathCanon + nomFichier;
+		ObjectOutputStream oos = null;
 		File pathF = new File(name);
-		if (pathF.exists()) {
-			ObjectInputStream ois = null;
+		if (!pathF.exists()) {
 			try {
-				final FileInputStream fichier = new FileInputStream(name);
-				ois = new ObjectInputStream(fichier);
-				map = (Plateau) ois.readObject();
+				final FileOutputStream fichier = new FileOutputStream(name);
+				oos = new ObjectOutputStream(fichier);
+				oos.writeObject(canonP);
+				oos.flush();
 			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} catch (final ClassNotFoundException e) {
 				e.printStackTrace();
 			} finally {
 				try {
-					if (ois != null) {
-						ois.close();
+					if (oos != null) {
+						oos.flush();
+						oos.close();
 					}
 				} catch (final IOException ex) {
 					ex.printStackTrace();
 				}
 			}
 		} else {
-			System.out.println("Fichier non existant !");
+			System.out.println("Fichier dejaÂ  existant !");
 		}
-		System.out.println(map.getObserver() + "-" + obs + "-"+ obs.equals(map.getObserver()));
-		map.setObserver(obs);
-		map.ResetCouleur();
-		map.surbrillanceBases();
-		resetPlateau();
-		// System.out.println(map.getBases());
 	}
+	
+	public void sauvegarderNavire(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
+		String name = pathBateau + nomFichier;
+		ObjectOutputStream oos = null;
+		File pathF = new File(name);
+		if (!pathF.exists()) {
+			try {
+				final FileOutputStream fichier = new FileOutputStream(name);
+				oos = new ObjectOutputStream(fichier);
+				oos.writeObject(navire);
+				oos.flush();
+			} catch (final java.io.IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (oos != null) {
+						oos.flush();
+						oos.close();
+					}
+				} catch (final IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		} else {
+			System.out.println("Fichier dejaÂ  existant !");
+		}
+	}
+	
+
+
+	
 
 }

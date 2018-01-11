@@ -267,12 +267,15 @@ class EditCarte extends JPanel{
 		private JButton sauvegarde;
 		private GridLayout grid;
 		private JButton ajoutBases;
+		private JTextField nom;
+		JLabel Lnom;
 		JList<String> listBase;
 		String[] data = {"Joueur1", "Joueur2", "Joueur3", "Joueur4", "Joueur5", "Joueur6"};
 		public EditCarte(MenuDroite m){
 			menu = m;
 			grid = new GridLayout(5, 1);
-			
+			Lnom = new JLabel("Nom carte: ");
+			nom = new JTextField();
 			listBase = new JList<String>(data);
 			listBase.addMouseListener(new MouseListener() {
 				public void mouseClicked(MouseEvent arg0) {
@@ -342,7 +345,7 @@ class EditCarte extends JPanel{
 			sauvegarde = new JButton("Sauvegarder");
 			sauvegarde.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//TODO:
+					controleur.demandeSauvegardeMap(nom.getText());
 				}
 			});
 			
@@ -353,6 +356,8 @@ class EditCarte extends JPanel{
 			pan.setLayout(grid);
 			pan.add(retour);
 			pan.add(sauvegarde);
+			pan.add(Lnom);
+			pan.add(nom);
 			pan.add(ajoutEau);
 			pan.add(ajoutRocher);
 			pan.add(ajoutPhare);
@@ -395,12 +400,12 @@ class EditCarte extends JPanel{
 			sauvegarde = new JButton("Sauvegarder");
 			sauvegarde.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//TODO: Sauvegarder
+					controleur.demandeSauvegardeCanon(Tnom.getText());
 				}
 			});
 			
 			JPanel Ptitre = new JPanel();
-			JLabel titre = new JLabel("CrÃ©ation d'un nouveau Canon");
+			JLabel titre = new JLabel("Création d'un nouveau Canon");
 			Ptitre.add(titre);
 			
 			JPanel Pcommentaire = new JPanel();/*
@@ -412,7 +417,7 @@ class EditCarte extends JPanel{
 			
 			String text = ("<html>");
 			text += "<tr><td>Selectionner la zone de tire sur la carte.</td></tr>";
-			text += "<tr><td>Le bateau (en bleu) est orientÃ© vers le Nord.</td></tr>";
+			text += "<tr><td>Le bateau (en bleu) est orienté vers le Nord.</td></tr>";
 			text += "</html>";
 			JLabel commentaire = new JLabel(text);
 			Pcommentaire.add(commentaire);
@@ -530,7 +535,7 @@ class EditCarte extends JPanel{
 			sauvegarde = new JButton("Sauvegarder");
 			sauvegarde.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//TODO: Sauvegarder
+					controleur.demandeSauvegardeNavire(Tnom.getText());
 				}
 			});
 			
