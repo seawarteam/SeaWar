@@ -20,7 +20,11 @@ public class EditEau implements EtatModif{
 		
 	}
 	
-	
+	public void modifMap(ControleurModif c) {
+		//Sauvegarde carte
+		c.setEtat(Init.getEtat());
+	}
+
 	public void modifCanonP(ControleurModif c) {
 	}
 
@@ -28,24 +32,24 @@ public class EditEau implements EtatModif{
 	public void modifCanonS(ControleurModif c) {
 	}
 
-	@Override
+	
 	public void modifRocher(ControleurModif c) {
 		c.setEtat(EditRocher.getEtat());
 	}
 
-	@Override
+	
 	public void modifEau(ControleurModif c) {
 	}
 
-	@Override
+	
 	public void modifPhare(ControleurModif c) {
 		c.setEtat(EditPhare.getEtat());
 	}
 
-	@Override
+	
 	public void modifBase(ControleurModif c, String str) {
-		c.setEtat(EditBase.getEtat());
-		EditBase.getEtat().modifBase(c, str);
+		// TODO Auto-generated method stub
+		
 	}
 
 	

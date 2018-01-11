@@ -26,11 +26,7 @@ public class Partie extends Observable implements Serializable {
 	public static void main(String[] args) {
 
 	}
-	final String pathMap = "C:/Users/delaunay/Documents/Sauvegardes/Réglages/Cartes/";
-	final String pathPartie = "C:/Users/delaunay/Documents/Sauvegardes/Parties/";
-	final String pathCanon = "C:/Users/delaunay/Documents/Sauvegardes/Réglages/Canons/";
-	final String pathBateau = "C:/Users/delaunay/Documents/Sauvegardes/Réglages/Bateaux/";
-	
+
 	public WheelList<Joueur> joueurs;
 	private int nbJoueurs;
 	public int numTour;
@@ -244,13 +240,13 @@ public class Partie extends Observable implements Serializable {
 	}
 
 	
-	public void sauvegarder( String nomFichier ) { // ex : partie.sauvegarder ( "Test01" );
-		String name = pathPartie + nomFichier;
+	public void sauvegarder ( String nomFichier ) { // ex : partie.sauvegarder ( "Test01" );
+		String path = "./Sauvegardes/" + nomFichier;
 		ObjectOutputStream oos = null;
-		File pathF = new File(name);
+		File pathF = new File(path);
 		if ( !pathF.exists() ) {
 			try {
-				final FileOutputStream fichier = new FileOutputStream(name);
+				final FileOutputStream fichier = new FileOutputStream(path);
 				oos = new ObjectOutputStream(fichier);
 				oos.writeObject(this);
 				oos.flush();
@@ -271,13 +267,13 @@ public class Partie extends Observable implements Serializable {
 
 	
 	public Partie charger ( String nomFichier ) { // ex : partie.charger ( "Test01" );
-		String name = pathPartie + nomFichier;
+		String path = "./Sauvegardes/" + nomFichier;
 		Partie partie = null;
-		File pathF = new File(name);
+		File pathF = new File(path);
 		if ( pathF.exists() ) {
 			ObjectInputStream ois = null;
 			try {
-				final FileInputStream fichier = new FileInputStream(name);
+				final FileInputStream fichier = new FileInputStream(path);
 				ois = new ObjectInputStream(fichier);
 				partie = (Partie) ois.readObject();
 			} catch (final java.io.IOException e) {
@@ -295,87 +291,6 @@ public class Partie extends Observable implements Serializable {
 			}
 		} else { System.out.println("Fichier non existant !"); }
 		return partie;
-	}
-	
-	public Plateau chargerMap(String nomFichier) {
-		String name = pathMap + nomFichier;
-		Plateau plateau = null;
-		File pathF = new File(name);
-		if ( pathF.exists() ) {
-			ObjectInputStream ois = null;
-			try {
-				final FileInputStream fichier = new FileInputStream(name);
-				ois = new ObjectInputStream(fichier);
-				plateau = (Plateau) ois.readObject();
-			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (ois != null) {
-						ois.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else { System.out.println("Fichier non existant !"); }
-		return plateau;
-	}
-	
-	public Canons chargerCanon(String nomFichier) {
-		String name = pathCanon + nomFichier;
-		Canons canon = null;
-		File pathF = new File(name);
-		if ( pathF.exists() ) {
-			ObjectInputStream ois = null;
-			try {
-				final FileInputStream fichier = new FileInputStream(name);
-				ois = new ObjectInputStream(fichier);
-				canon = (Canons) ois.readObject();
-			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (ois != null) {
-						ois.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else { System.out.println("Fichier non existant !"); }
-		return canon;
-	}
-	
-	public Navire chargerNavire(String nomFichier) {
-		String name = pathBateau + nomFichier;
-		Navire navire = null;
-		File pathF = new File(name);
-		if ( pathF.exists() ) {
-			ObjectInputStream ois = null;
-			try {
-				final FileInputStream fichier = new FileInputStream(name);
-				ois = new ObjectInputStream(fichier);
-				navire = (Navire) ois.readObject();
-			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (ois != null) {
-						ois.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else { System.out.println("Fichier non existant !"); }
-		return navire;
 	}
 
 }

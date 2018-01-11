@@ -45,4 +45,28 @@ public class ModifCanonS implements EtatModif {
 		
 	}
 
+
+	public void modifRocher(ControleurModif c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void modifEau(ControleurModif c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void modifPhare(ControleurModif c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void modifBase(ControleurModif c, String str) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

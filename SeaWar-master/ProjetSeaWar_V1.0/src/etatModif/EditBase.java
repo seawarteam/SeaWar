@@ -55,9 +55,6 @@ public class EditBase implements EtatModif {
 				positions.add(p);
 				nbPosition++;	
 				c.getEditeur().getMap().setColorBase(p, currentJ);
-				if(nbPosition == 2) {
-					finalizeBases(c);
-				}
 			}
 			
 			
@@ -69,15 +66,12 @@ public class EditBase implements EtatModif {
 	public void finalizeBases(ControleurModif c) {
 		c.getEditeur().getMap().addBases(currentJ, positions);
 	}
-	
-	public void resetInvalidBase(ControleurModif c) {
-		if(nbPosition !=2) {
-			for(Position p : positions) {
-				c.getEditeur().getMap().ResetCouleurCase(p);
-			}
-		}
-	}
 		
+	public void modifMap(ControleurModif c) {
+		finalizeBases(c);
+		c.setEtat(Init.getEtat());
+	}
+
 
 	
 	private Joueur getJoueur(String str) {
@@ -104,33 +98,30 @@ public class EditBase implements EtatModif {
 	}
 
 
-	@Override
+	
 	public void modifRocher(ControleurModif c) {
-		resetInvalidBase(c);
 		c.setEtat(EditRocher.getEtat());
 	}
 
 
-	@Override
+	
 	public void modifEau(ControleurModif c) {
-		resetInvalidBase(c);
 		c.setEtat(EditEau.getEtat());
 	}
 
 
-	@Override
+	
 	public void modifPhare(ControleurModif c) {
-		resetInvalidBase(c);
 		c.setEtat(EditPhare.getEtat());
 	}
 
 
-	@Override
+	
 	public void modifBase(ControleurModif c, String str) {
-		resetInvalidBase(c);
+		c.getEditeur().getMap().addBases(currentJ, positions);
 		nbPosition = 0;
 		positions = new ArrayList<Position>();
-		//Si le joueur est déjà présent dans la map alors réinitialiser ses positions
+		//Si le joueur est dï¿½jï¿½ prï¿½sent dans la map alors rï¿½initialiser ses positions
 		currentJ = (Joueur)(getJoueur(str));
 		c.getEditeur().getMap().ResetCouleurBaseJoueur(currentJ);
 	}

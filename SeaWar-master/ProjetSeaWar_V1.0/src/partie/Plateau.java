@@ -244,14 +244,6 @@ public class Plateau implements Serializable {
 			cases[p.getX()][p.getY() + (int) p.getX() / 2].surbrillanceT();
 		}
 	}
-	
-	public void surbrillanceBases() {
-		for(Joueur j : bases.keySet()) {
-			for(Position p : bases.get(j)) {
-				cases[p.getX()][p.getY() + (int) p.getX() / 2].setColor(j.getCol());
-			}
-		}
-	}
 
 	public void ResetCouleur() {
 		for (int i = 0; i < nCasesX; i++) {
@@ -272,10 +264,7 @@ public class Plateau implements Serializable {
 				cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
 			}
 		}
-	}
-	
-	public void ResetCouleurCase(Position p) {
-		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+		
 	}
 	
 	public Phare[] getPhares() {
