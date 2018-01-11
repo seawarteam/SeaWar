@@ -12,11 +12,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Editeur extends Observable {
-	final String pathMap = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Cartes/";
-	final String pathCanon = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Canons/";
-	final String pathBateau = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Bateaux/";
+	final String pathMap = "/Sauvegardes/Reglages/Cartes/";
+	final String pathCanon = "/Sauvegardes/Reglages/Canons/";
+	final String pathBateau = "/Sauvegardes/Reglages/Bateaux/";
 	Plateau map;
 	Canons canonP;
+	
 	
 	Navire navire;
 	private int nX, nY;
@@ -32,6 +33,7 @@ public class Editeur extends Observable {
 		this.nX = nX;
 		this.nY = nY;
 		this.obs = obs;
+		
 	}
 
 	public Plateau getMap() {
@@ -52,7 +54,7 @@ public class Editeur extends Observable {
 	}
 
 	public void sauvegarderMap(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
-		String name = pathMap + nomFichier;
+		String name = getPath() + pathMap + nomFichier;
 		ObjectOutputStream oos = null;
 		File pathF = new File(name);
 		if (!pathF.exists()) {
@@ -62,10 +64,14 @@ public class Editeur extends Observable {
 				oos.writeObject(map);
 				oos.flush();
 			} catch (final java.io.IOException e) {
-				e.printStackTrace();
+				File path = new File(getPath() + pathMap);
+				boolean ok = path.mkdirs();
 			} finally {
 				try {
+					final FileOutputStream fichier = new FileOutputStream(name);
+					oos = new ObjectOutputStream(fichier);
 					if (oos != null) {
+						oos.writeObject(map);
 						oos.flush();
 						oos.close();
 					}
@@ -79,7 +85,7 @@ public class Editeur extends Observable {
 	}
 	
 	public void sauvegarderCanon(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
-		String name = pathCanon + nomFichier;
+		String name = getPath() + pathCanon + nomFichier;
 		ObjectOutputStream oos = null;
 		File pathF = new File(name);
 		if (!pathF.exists()) {
@@ -89,10 +95,15 @@ public class Editeur extends Observable {
 				oos.writeObject(canonP);
 				oos.flush();
 			} catch (final java.io.IOException e) {
-				e.printStackTrace();
+				File path = new File(getPath() + pathCanon);
+				boolean ok = path.mkdirs();
+				//System.err.println("erreur 1 corrigée : "+ok);
 			} finally {
 				try {
+					final FileOutputStream fichier = new FileOutputStream(name);
+					oos = new ObjectOutputStream(fichier);
 					if (oos != null) {
+						oos.writeObject(canonP);
 						oos.flush();
 						oos.close();
 					}
@@ -106,7 +117,7 @@ public class Editeur extends Observable {
 	}
 	
 	public void sauvegarderNavire(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
-		String name = pathBateau + nomFichier;
+		String name = getPath() + pathBateau + nomFichier;
 		ObjectOutputStream oos = null;
 		File pathF = new File(name);
 		if (!pathF.exists()) {
@@ -116,10 +127,14 @@ public class Editeur extends Observable {
 				oos.writeObject(navire);
 				oos.flush();
 			} catch (final java.io.IOException e) {
-				e.printStackTrace();
+				File path = new File(getPath() + pathBateau);
+				boolean ok = path.mkdirs();
 			} finally {
 				try {
+					final FileOutputStream fichier = new FileOutputStream(name);
+					oos = new ObjectOutputStream(fichier);
 					if (oos != null) {
+						oos.writeObject(navire);
 						oos.flush();
 						oos.close();
 					}
@@ -133,7 +148,9 @@ public class Editeur extends Observable {
 	}
 	
 
-
+	private String getPath() {
+		return System.getProperty("user.dir");
+	}
 	
 
 }
