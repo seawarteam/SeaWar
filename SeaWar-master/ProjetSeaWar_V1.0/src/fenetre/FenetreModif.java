@@ -259,11 +259,12 @@ public class FenetreModif extends JFrame implements Observer{
 class EditCarte extends JPanel{
 		private static final long serialVersionUID = 448318553800706885L;
 		private MenuDroite menu;
-		private ButtonEdit editButton;
+		//private ButtonEdit editButton;
 		private JButton ajoutRocher;
 		private JButton ajoutEau;
 		private JButton ajoutPhare;
 		private JButton retour;
+		private JButton sauvegarde;
 		private GridLayout grid;
 		private JButton ajoutBases;
 		JList<String> listBase;
@@ -329,17 +330,19 @@ class EditCarte extends JPanel{
 					controleur.demandeAjoutPhare();
 				}
 			});
-			editButton = new ButtonEdit("Editer carte", "Valider");
-			editButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					controleur.demandeModifMap();
-				}
-			});
+			
 			
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					menu.changeEditInit();
+				}
+			});
+			
+			sauvegarde = new JButton("Sauvegarder");
+			sauvegarde.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//TODO:
 				}
 			});
 			
@@ -349,7 +352,7 @@ class EditCarte extends JPanel{
 			j.setLayout(grid);
 			pan.setLayout(grid);
 			pan.add(retour);
-			pan.add(editButton);
+			pan.add(sauvegarde);
 			pan.add(ajoutEau);
 			pan.add(ajoutRocher);
 			pan.add(ajoutPhare);
