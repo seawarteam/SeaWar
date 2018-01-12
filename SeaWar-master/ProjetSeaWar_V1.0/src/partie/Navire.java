@@ -64,7 +64,7 @@ public class Navire extends Observable implements Serializable {
 	 private int nb_coup_recu;
 	 private boolean bloque;
 	 
-	 /*TODO: dÃ©placer dans la Classe Plateau ???*/
+	 /*TODO: deplacer dans la Classe Plateau ou Position ???*/
 	 public static Map<Orientation,List<Vector<Object>>> caseVoisine;
 	
     /**
@@ -155,7 +155,7 @@ public class Navire extends Observable implements Serializable {
     		return false;
     	}
     	Navire nav = (Navire) obj;
-    	return (this.nom.equals(nav.nom) && this.nomJ.equals(nav.nomJ));//TODO: DÃ©finir si ok  	
+    	return (this.nom.equals(nav.nom) && this.nomJ.equals(nav.nomJ));
     }
     
     public String toString() {
@@ -205,12 +205,11 @@ public class Navire extends Observable implements Serializable {
 
     public void getInfo() {
     	setChanged();
-    	notifyObservers(this); //TODO:
+    	notifyObservers(this);
     	clearChanged();
     }
     
     public void getPrivateInfo() {
-		// TODO Auto-generated method stub
 		
 	}
     
@@ -559,6 +558,14 @@ public class Navire extends Observable implements Serializable {
 	}
 	public void setNomJ(String nomJ) {
 		this.nomJ = nomJ;
+	}
+	public void setPV(int pointsDeVie) {
+		pv = pointsDeVie;
+		
+	}
+	public void setDepMax(int deplacement) {
+		depMax = deplacement;
+		
 	}
 	
 	

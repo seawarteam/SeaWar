@@ -15,11 +15,11 @@ public class Editeur extends Observable {
 	final String pathMap = "/Sauvegardes/Reglages/Cartes/";
 	final String pathCanon = "/Sauvegardes/Reglages/Canons/";
 	final String pathBateau = "/Sauvegardes/Reglages/Bateaux/";
+	
 	Plateau map;
 	Canons canonP;
-	
-	
 	Navire navire;
+	
 	private int nX, nY;
 	private Observer obs;
 
@@ -43,6 +43,10 @@ public class Editeur extends Observable {
 	public Canons getCanonP() {
 		return canonP;
 	}
+	
+	public Navire getNavire() {
+		return navire;
+	}
 
 	/*
 	 * public Canons getCanonS(){ return canonS; }
@@ -52,7 +56,20 @@ public class Editeur extends Observable {
 		map = new Plateau(nX, nY, 0, 0, obs);
 		map.ResetCouleur();
 	}
+	
+	public void resetCanon() {
+		List<Position> zone = canonP.getZoneTire();
+		zone.clear();
+	}
+	/*
+	public void resetNavire() {
+		String nom = navire.getNom();
+		nom = "";
+		int depMax = navire.getDepMax();
+		depMax = 5;
+	}*/
 
+	
 	public void sauvegarderMap(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
 		String name = getPath() + pathMap + nomFichier;
 		ObjectOutputStream oos = null;
@@ -112,7 +129,7 @@ public class Editeur extends Observable {
 				}
 			}
 		} else {
-			System.out.println("Fichier dejaÂ  existant !");
+			System.out.println("Fichier deja  existant !");
 		}
 	}
 	
@@ -128,7 +145,7 @@ public class Editeur extends Observable {
 				oos.flush();
 			} catch (final java.io.IOException e) {
 				File path = new File(getPath() + pathBateau);
-				boolean ok = path.mkdirs();
+				path.mkdirs();
 			} finally {
 				try {
 					final FileOutputStream fichier = new FileOutputStream(name);
@@ -143,7 +160,7 @@ public class Editeur extends Observable {
 				}
 			}
 		} else {
-			System.out.println("Fichier dejaÂ  existant !");
+			System.out.println("Fichier deja  existant !");
 		}
 	}
 	

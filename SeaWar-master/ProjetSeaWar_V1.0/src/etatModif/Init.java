@@ -22,7 +22,6 @@ public class Init implements EtatModif {
 
 
 	public void clique(Position pos, ControleurModif c) {
-		// TODO Auto-generated method stub
 		
 	}
 

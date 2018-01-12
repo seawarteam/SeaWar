@@ -58,6 +58,8 @@ public class Canons implements Serializable {
     	return "Objet Canons\tnom = "+this.nom+"\ttdegat = "+this.degat+"\ttpsRech = "+this.tpsRech+"\tpsRest = "+this.tpsRest+"\n";
     }
     
+    
+    
     public String getNom() {
     	return this.nom;
     }
@@ -172,4 +174,16 @@ public class Canons implements Serializable {
 		int y = pos.getY();
 		return new Position(-y, x+y);
     }
+
+
+	public void setDegat(int d) {
+		degat = d;
+		
+	}
+
+
+	public void setTpsRech(int recharge) {
+		tpsRech = recharge;
+		
+	}
 }
