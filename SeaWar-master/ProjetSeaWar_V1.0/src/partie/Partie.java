@@ -1,21 +1,12 @@
 package partie;
 
-import java.nio.file.*;
 import java.awt.Color;
 import java.io.*;
-import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-import java.util.Vector;
-
 import etat.Apte;
 import etat.Bloque;
-import fenetre.FenetrePrincipale;
-
 import List.*;
 
 /**
@@ -26,10 +17,10 @@ public class Partie extends Observable implements Serializable {
 
 	}
 
-	final String pathMap = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Cartes/";
-	final String pathPartie = "C:/Users/delaunay/Documents/Sauvegardes/Parties/";
-	final String pathCanon = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Canons/";
-	final String pathBateau = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Bateaux/";
+	//final String pathMap = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Cartes/";
+	final String pathPartie = "/Sauvegardes/Parties/";
+	//final String pathCanon = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Canons/";
+	//final String pathBateau = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Bateaux/";
 
 	public WheelList<Joueur> joueurs;
 	private int nbJoueurs;
@@ -212,12 +203,6 @@ public class Partie extends Observable implements Serializable {
 		addObserver(obs);
 	}
 
-	private void initDefNavires(Joueur[] j, Observer obs) {
-		for (Joueur jou : j) {
-			jou.ajoutDefaultNavire(obs);
-		}
-	}
-
 	public Joueur getProprio(Navire nav) {
 		int i = 0;
 		while ((i < nbJoueurs) && (nav == null)) {
@@ -256,10 +241,14 @@ public class Partie extends Observable implements Serializable {
 				oos.writeObject(this);
 				oos.flush();
 			} catch (final java.io.IOException e) {
-				e.printStackTrace();
+				File path = new File(getPath() + pathPartie);
+				path.mkdirs();
 			} finally {
 				try {
+					final FileOutputStream fichier = new FileOutputStream(name);
+					oos = new ObjectOutputStream(fichier);
 					if (oos != null) {
+						oos.writeObject(this);
 						oos.flush();
 						oos.close();
 					}
@@ -272,9 +261,8 @@ public class Partie extends Observable implements Serializable {
 		}
 	}
 
-	public Partie charger(String nomFichier) { // ex : partie.charger ( "Test01"
-												// );
-		String name = pathPartie + nomFichier;
+	public Partie charger(String nomFichier) { 
+		String name = getPath() + pathPartie + nomFichier;
 		Partie partie = null;
 		File pathF = new File(name);
 		if (pathF.exists()) {
@@ -301,7 +289,11 @@ public class Partie extends Observable implements Serializable {
 		}
 		return partie;
 	}
-
+	
+	private String getPath() {
+		return System.getProperty("user.dir");
+	}
+/*
 	public Plateau chargerMap(String nomFichier) {
 		String name = pathMap + nomFichier;
 		Plateau plateau = null;
@@ -387,5 +379,5 @@ public class Partie extends Observable implements Serializable {
 			System.out.println("Fichier non existant !");
 		}
 		return navire;
-	}
+	}*/
 }

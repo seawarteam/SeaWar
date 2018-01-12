@@ -1,7 +1,6 @@
 package List;
 
 import java.io.Serializable;
-import java.util.*;
 
 class Elements<E> implements Serializable {
 	protected E obj;

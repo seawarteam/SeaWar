@@ -1,15 +1,9 @@
 package fenetre;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,7 +12,7 @@ public class FenetreMenuDepart extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel imagePanel;
+	private ImagePanel imagePanel;
 	private String filePath = "bateau.jpg";
 
 	public FenetreMenuDepart() {
@@ -29,38 +23,28 @@ public class FenetreMenuDepart extends JFrame {
 		setResizable(false);
 		
 		
-		
-		imagePanel = new JPanel() {
-			private static final long serialVersionUID = 1L;
-			public void paint(Graphics g) {
-				try {
-					BufferedImage image = ImageIO.read(new File(filePath));
-					g.drawImage(image, 0, 0, null);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		};
+		imagePanel = new ImagePanel(filePath);
 		imagePanel.setPreferredSize(new Dimension(620, 412));
-		
+			
 		
 		JPanel pan1 = new JPanel();
-		JPanel pan2 = new JPanel();
 		pan1.setLayout(new GridLayout(5, 1));
 		pan1.add(new BoutonPartieRapide());
 		pan1.add(new BoutonPartiePersonalisee());
 		pan1.add(new BoutonCharger());
 		pan1.add(new BoutonEditer());
 		pan1.add(new BoutonOptions());
-		/*pan2.add(pan1);
-		imagePanel.add(pan2);*/
-		imagePanel.add(pan1);
-		setContentPane(imagePanel);
 		
-		pack();
+		
+		setContentPane(imagePanel);
+		getContentPane().add(pan1);
+		
+		
 		setVisible(true);
 	}
 	
+
+
 	class BoutonPartieRapide extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;
 		private final static String titre = "Partie Rapide"; 
@@ -72,7 +56,7 @@ public class FenetreMenuDepart extends JFrame {
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			FenetreChoixNoms f = new FenetreChoixNoms();
+			new FenetreChoixNoms();
 			dispose();
 			
 		}
@@ -142,7 +126,7 @@ public class FenetreMenuDepart extends JFrame {
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			FenetreModif f = new FenetreModif();
+			new FenetreModif();
 			dispose();
 			
 		}
@@ -167,7 +151,6 @@ public class FenetreMenuDepart extends JFrame {
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
@@ -180,6 +163,6 @@ public class FenetreMenuDepart extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		FenetreMenuDepart f = new FenetreMenuDepart();
+		new FenetreMenuDepart();
 	}
 }

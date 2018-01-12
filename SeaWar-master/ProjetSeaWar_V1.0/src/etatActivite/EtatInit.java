@@ -19,7 +19,7 @@ public class EtatInit implements EtatAction{
 
 			if(n.getNomJ().equals(c.getPartie().getCurrentJ().getNom())){
 				c.getPartie().getCurrentJ().setCurrentN(n);
-				n.getPrivateInfo();
+				n.getPrivateInfo();// TODO: la methode ne fait rien c'est normal ???
 			}
 			n.getInfo();
 		}else{

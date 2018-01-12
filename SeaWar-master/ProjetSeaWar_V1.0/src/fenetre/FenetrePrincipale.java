@@ -33,7 +33,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	private ActionBateau actionsBateau;
 	private JButton finTour;
 
-	public JPanel panPrincipal;//TODO: New
+	public JPanel panPrincipal;
 	public GridBagConstraints gbc;
 	
 	public Graphics2D cg;
@@ -209,8 +209,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			actionsBateau.setVisible(false);
 		}
 		if(p.gagne){
-			int clic = JOptionPane.showOptionDialog(this, "Victoire de "+ partie.jGagnant.getNom(), "Bravo !", JOptionPane.DEFAULT_OPTION	, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-			FenetreMenuDepart f = new FenetreMenuDepart();
+			JOptionPane.showOptionDialog(this, "Victoire de "+ partie.jGagnant.getNom(), "Bravo !", JOptionPane.DEFAULT_OPTION	, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+			new FenetreMenuDepart();
 			this.dispose();
 
 		}

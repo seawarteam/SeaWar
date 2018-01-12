@@ -10,7 +10,7 @@ import javax.swing.ListModel;
 import etatModif.*;
 
 public class ControleurModif {
-	private EtatModif etat = EditCarte.getEtat();
+	private EtatModif etat = Init.getEtat();
 	private Editeur editeur;
 
 	public ControleurModif(Editeur e) {
@@ -44,11 +44,27 @@ public class ControleurModif {
 
 	public void demandeModifCanonP() {
 
-		getEditeur().resetPlateau();
+		//getEditeur().resetPlateau();
 		etat = EditCanonP.getEtat();
 		getEditeur().map.setColor(
 				((EditCanonP) EditCanonP.getEtat()).getRefPos(), Color.blue);
 
+	}
+	
+	public void demandeModifCarte() {
+		getEditeur().resetPlateau();//techniquement pas utile mais évite des pb d'affichage
+		etat = EditRocher.getEtat();
+	}
+	
+	public void demandeRetour() {
+		getEditeur().resetPlateau();
+		getEditeur().resetCanon();
+		etat = Init.getEtat();
+	}
+	
+	public void demandeModifNavire() {
+		getEditeur().resetPlateau();//techniquement pas utile mais évite des pb d'affichage
+		etat = EditNavire.getEtat();
 	}
 
 	/*

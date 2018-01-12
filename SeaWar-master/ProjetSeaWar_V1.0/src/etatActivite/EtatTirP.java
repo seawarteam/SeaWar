@@ -2,6 +2,8 @@ package etatActivite;
 
 import java.util.Set;
 
+import etat.Detruit;
+
 import partie.Controleur;
 import partie.Navire;
 import partie.Position;
@@ -24,6 +26,9 @@ public class EtatTirP implements EtatAction {
 			Navire cible = c.getPartie().getNavOnPos(pos);
 			if(cible != null) {
 				cible.toucher(degats);
+				if(cible.getEtatCourant() == Detruit.getEtat()){
+					c.getPartie().getPlateau().freeCase(cible.getPos());
+				}
 				if(c.getPartie().nbJoueursRestant() == 1){
 					c.getPartie().finPartie(c.getPartie().currentJ);
 				}

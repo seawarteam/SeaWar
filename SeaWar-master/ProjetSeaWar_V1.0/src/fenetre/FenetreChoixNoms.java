@@ -1,42 +1,60 @@
 package fenetre;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import partie.SeaWar;
 
 public class FenetreChoixNoms extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	private ImagePanel imagePanel;
+	private String filePath = "bateau.jpg";
+	
 	private JTextField j1;
 	private JTextField j2;
 
 	public FenetreChoixNoms() {
 		setTitle("Selection des Joueurs");
-		setSize(400,500);
+		setSize(600,400);
 		setLocationRelativeTo(null);	
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
+		
+		imagePanel = new ImagePanel(filePath);
+		imagePanel.setPreferredSize(new Dimension(620, 412));
 
-		setLayout(new GridLayout(5,1));
-
-		add(new JLabel(" Nom du joueur 1 :"));
+		JPanel pan = new JPanel();
+		pan.setLayout(new GridLayout(3,1));
+		JPanel pan2 = new JPanel();
+		pan2.add(pan);
+		JPanel pan3 = new JPanel();
+		pan3.setLayout(new GridLayout(2,2));
+		
+		pan3.add(new JLabel(" Nom du joueur 1 :"));
 
 		j1 = new JTextField();
-		add(j1);
+		pan3.add(j1);
 
-		add(new JLabel(" Nom du joueur 2 :"));
+		pan3.add(new JLabel(" Nom du joueur 2 :"));
 
 		j2 = new JTextField();
-		add(j2);
-
-		add(new BoutonValider());
-
+		pan3.add(j2);
+		
+		pan.add(pan3);
+		pan.add(new BoutonValider());
+		pan.add(new BoutonRetour());
+		
+		setContentPane(imagePanel);
+		getContentPane().add(pan);
+		
 		setVisible(true);
 	}
 
@@ -64,35 +82,39 @@ public class FenetreChoixNoms extends JFrame {
 			}
 
 		}
-
 		
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+		public void mouseEntered(MouseEvent arg0) {}
+		public void mouseExited(MouseEvent arg0) {}
+		public void mousePressed(MouseEvent arg0) {}
+		public void mouseReleased(MouseEvent arg0) {}
 
+	}
+	
+	class BoutonRetour extends JButton implements MouseListener{
+		private static final long serialVersionUID = 1L;
+		private final static String nom= "Retour au menu principal";
+
+		public BoutonRetour() {
+			super(nom);
+			addMouseListener(this);
 		}
 
-		
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+
+		public void mouseClicked(MouseEvent arg0) {
+				new FenetreMenuDepart();
+				dispose();
 
 		}
-
 		
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
+		public void mouseEntered(MouseEvent arg0) {}
+		public void mouseExited(MouseEvent arg0) {}
+		public void mousePressed(MouseEvent arg0) {}
+		public void mouseReleased(MouseEvent arg0) {}
 
 	}
 
 	public static void main(String[] args){
-		FenetreChoixNoms f = new FenetreChoixNoms();
+		new FenetreChoixNoms();
 	}
 
 }
