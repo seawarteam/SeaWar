@@ -32,6 +32,9 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	private InfoCase infoCase;
 	private ActionBateau actionsBateau;
 	private JButton finTour;
+	
+	private FenetrePrincipale me;
+	//private 
 
 	public JPanel panPrincipal;
 	public GridBagConstraints gbc;
@@ -39,6 +42,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 	public Graphics2D cg;
 	
 	public FenetrePrincipale(Partie p, Controleur c) {
+		
+		me = this;
 		this.setTitle(titreFenetre);
 		this.setExtendedState(MAXIMIZED_BOTH); // La fenetre est cree en plein ecran
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO Demander a sauvegarder en fermant?
@@ -98,6 +103,8 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		
 		this.setContentPane(panPrincipal);
 		this.setVisible(true);
+		
+		
 
 	}	
 
@@ -442,6 +449,18 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			g.weighty = 5;
 			add(finTour,g);
 			
+			JButton option = new JButton("Option");
+			option.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					new PopupOption(me);
+					me.setEnabled(false);
+				}
+			});
+			
+			g.gridy = 5;
+			g.weighty = 5;
+			add(option,g);
 			
 		}
 	}

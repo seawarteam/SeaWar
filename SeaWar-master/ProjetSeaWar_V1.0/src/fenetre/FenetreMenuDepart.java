@@ -2,6 +2,8 @@ package fenetre;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
@@ -33,7 +35,7 @@ public class FenetreMenuDepart extends JFrame {
 		pan1.add(new BoutonPartiePersonalisee());
 		pan1.add(new BoutonCharger());
 		pan1.add(new BoutonEditer());
-		pan1.add(new BoutonOptions());
+		pan1.add(new BoutonQuitter());
 		
 		
 		setContentPane(imagePanel);
@@ -52,6 +54,24 @@ public class FenetreMenuDepart extends JFrame {
 		public BoutonPartieRapide() {
 			super(titre);
 			addMouseListener(this);
+			addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent key) {
+					switch (key.getKeyCode()) {
+						case KeyEvent.VK_SPACE: {
+							new FenetreChoixNoms();
+							dispose();
+							break;
+						}
+						case KeyEvent.VK_ENTER: {
+							new FenetreChoixNoms();
+							dispose();
+							break;
+						}
+					}
+				}
+				public void keyTyped(KeyEvent arg0) {}
+				public void keyReleased(KeyEvent arg0) {}
+			});
 		}
 
 		
@@ -76,13 +96,27 @@ public class FenetreMenuDepart extends JFrame {
 			super(nom);
 			addMouseListener(this);
 			setEnabled(true);
+			addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent key) {
+					switch (key.getKeyCode()) {
+						case KeyEvent.VK_SPACE: {
+							// TODO : 
+							break;
+						}
+						case KeyEvent.VK_ENTER: {
+							// TODO : 
+							break;
+						}
+					}
+				}
+				public void keyTyped(KeyEvent arg0) {}
+				public void keyReleased(KeyEvent arg0) {}
+			});
 		}
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			/*FenetreModif f = new FenetreModif();
-			dispose();*/
-			
+			// TODO : 			
 		}
 
 		
@@ -100,12 +134,27 @@ public class FenetreMenuDepart extends JFrame {
 		public BoutonCharger() {
 			super(titre);
 			addMouseListener(this);
+			addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent key) {
+					switch (key.getKeyCode()) {
+						case KeyEvent.VK_SPACE: {
+							// TODO : 
+							break;
+						}
+						case KeyEvent.VK_ENTER: {
+							// TODO : 
+							break;
+						}
+					}
+				}
+				public void keyTyped(KeyEvent arg0) {}
+				public void keyReleased(KeyEvent arg0) {}
+			});
 		}
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			
-			
+			//TODO: 
 		}
 		
 		public void mouseEntered(MouseEvent arg0) {}		
@@ -122,6 +171,24 @@ public class FenetreMenuDepart extends JFrame {
 		public BoutonEditer() {
 			super(titre);
 			addMouseListener(this);
+			addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent key) {
+					switch (key.getKeyCode()) {
+						case KeyEvent.VK_SPACE: {
+							new FenetreModif();
+							dispose();
+							break;
+						}
+						case KeyEvent.VK_ENTER: {
+							new FenetreModif();
+							dispose();
+							break;
+						}
+					}
+				}
+				public void keyTyped(KeyEvent arg0) {}
+				public void keyReleased(KeyEvent arg0) {}
+			});
 		}
 
 		
@@ -138,20 +205,35 @@ public class FenetreMenuDepart extends JFrame {
 		
 	}
 	
-	class BoutonOptions extends JButton implements MouseListener{
+	class BoutonQuitter extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;
-		private static final String nom = "Options (non disponible)";
+		private static final String nom = "Quitter";
 		
-		public BoutonOptions() {
+		public BoutonQuitter() {
 			super(nom);
 			addMouseListener(this);
-			setEnabled(true);
+			addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent key) {
+					switch (key.getKeyCode()) {
+						case KeyEvent.VK_SPACE: {
+							System.exit(EXIT_ON_CLOSE);
+							break;
+						}
+						case KeyEvent.VK_ENTER: {
+							System.exit(EXIT_ON_CLOSE);
+							break;
+						}
+					}
+				}
+				public void keyTyped(KeyEvent arg0) {}
+				public void keyReleased(KeyEvent arg0) {}
+			});
 		}
 		
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			
+			System.exit(EXIT_ON_CLOSE);
 		}
 
 		
