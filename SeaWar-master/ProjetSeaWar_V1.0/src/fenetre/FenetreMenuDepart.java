@@ -90,7 +90,7 @@ public class FenetreMenuDepart extends JFrame {
 	
 	class BoutonPartiePersonalisee extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;
-		private final static String nom = "Partie Personnalisee (non disponible)";
+		private final static String nom = "Partie Personnalisee";
 		
 		public BoutonPartiePersonalisee() {
 			super(nom);
@@ -100,11 +100,13 @@ public class FenetreMenuDepart extends JFrame {
 				public void keyPressed(KeyEvent key) {
 					switch (key.getKeyCode()) {
 						case KeyEvent.VK_SPACE: {
-							// TODO : 
+							new FenetreChoixPartie();
+							dispose();
 							break;
 						}
 						case KeyEvent.VK_ENTER: {
-							// TODO : 
+							new FenetreChoixPartie();
+							dispose();
 							break;
 						}
 					}
@@ -116,7 +118,8 @@ public class FenetreMenuDepart extends JFrame {
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			// TODO : 			
+			new FenetreChoixPartie();
+			dispose();		
 		}
 
 		

@@ -2,6 +2,9 @@ package partie;
 
 import java.awt.Color;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -17,10 +20,13 @@ public class Partie extends Observable implements Serializable {
 
 	}
 
-	//final String pathMap = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Cartes/";
+	// final String pathMap =
+	// "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Cartes/";
 	final String pathPartie = "/Sauvegardes/Parties/";
-	//final String pathCanon = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Canons/";
-	//final String pathBateau = "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Bateaux/";
+	// final String pathCanon =
+	// "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Canons/";
+	// final String pathBateau =
+	// "C:/Users/delaunay/Documents/Sauvegardes/Reglages/Bateaux/";
 
 	public WheelList<Joueur> joueurs;
 	private int nbJoueurs;
@@ -48,6 +54,19 @@ public class Partie extends Observable implements Serializable {
 		gagne = false;
 	}
 
+	public Partie(ArrayList<Joueur> lJoueurs, int nX, int nY) {
+		// Position.initTabPosition(nX, nY);
+		// if(observeur != null) {addObserver(observeur);}
+		// plateau = new Plateau(nX, nY, nbPhares, nbRochers,observeur);
+		numTour = 1;
+		joueurs = new WheelList<Joueur>();
+		nbJoueurs = lJoueurs.size();
+		ajoutJoueurs(lJoueurs, nbJoueurs);
+		iteratorJ = joueurs.getIterator();
+		currentJ = iteratorJ.present();
+		gagne = false;
+	}
+
 	public void initPartie(int nX, int nY, int nbPhares, int nbRochers,
 			Observer observeur) {
 		addObserver(observeur);
@@ -66,6 +85,17 @@ public class Partie extends Observable implements Serializable {
 			newJ = new Joueur(nomJ[i], couleursJ[i]);
 			joueurs.add(newJ);
 			listeJ[i] = newJ;
+		}
+	}
+
+	private void ajoutJoueurs(ArrayList<Joueur> lJoueurs, int nbJoueurs) {
+		Joueur newJ = null;
+		listeJ = new Joueur[nbJoueurs];
+		int i = 0;
+		for (Joueur j : lJoueurs) {
+			joueurs.add(j);
+			listeJ[i] = newJ;
+			i++;
 		}
 	}
 
@@ -146,6 +176,47 @@ public class Partie extends Observable implements Serializable {
 		setChanged();
 		notifyObservers(this);
 		clearChanged();
+	}
+
+	public void initBateau() {
+		Map<Joueur, List<Position>> bases = plateau.getBases();
+		Set<Joueur> keys = bases.keySet();
+		Navire n1;
+		Position p1;
+		Position p2;
+		ArrayList<Position> positions = null;
+		ArrayList<Joueur> keyUtilisee = new ArrayList<Joueur>();
+		Joueur currentKey = null;
+		java.util.Iterator<Joueur> i = keys.iterator();
+		java.util.Iterator<Position> p;
+		Navire n2;
+		for (Joueur j : listeJ) {
+			do {
+				currentKey = i.next();
+				positions = (ArrayList<Position>) bases.get(currentKey);
+			} while ((positions == null || keyUtilisee.contains(currentKey))
+					&& i.hasNext());// Ajouter une garde pour sortir
+			keyUtilisee.add(currentKey);
+			p = positions.iterator();
+			p1 = p.next();
+			p2 = p.next();
+			n1 = j.getNavires()[0];
+			n2 = j.getNavires()[1];
+			n1.setColEnVie(j.getCol());
+			n1.setColAsColEnVie();
+			n1.setDir(Orientation.aleatoire());
+			n1.setPos(p1);
+			plateau.takeCase(p1, n1);
+			n2.setColEnVie(j.getCol());
+			n2.setColAsColEnVie();
+			n2.setDir(Orientation.aleatoire());
+			n2.setPos(p2);
+			plateau.takeCase(p2, n2);
+			setChanged();
+			notifyObservers(this);
+			clearChanged();
+
+		}
 	}
 
 	public Plateau getPlateau() {
@@ -261,7 +332,7 @@ public class Partie extends Observable implements Serializable {
 		}
 	}
 
-	public Partie charger(String nomFichier) { 
+	public Partie charger(String nomFichier) {
 		String name = getPath() + pathPartie + nomFichier;
 		Partie partie = null;
 		File pathF = new File(name);
@@ -289,95 +360,42 @@ public class Partie extends Observable implements Serializable {
 		}
 		return partie;
 	}
-	
+
 	private String getPath() {
 		return System.getProperty("user.dir");
 	}
-/*
-	public Plateau chargerMap(String nomFichier) {
-		String name = pathMap + nomFichier;
-		Plateau plateau = null;
-		File pathF = new File(name);
-		if (pathF.exists()) {
-			ObjectInputStream ois = null;
-			try {
-				final FileInputStream fichier = new FileInputStream(name);
-				ois = new ObjectInputStream(fichier);
-				plateau = (Plateau) ois.readObject();
-			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (ois != null) {
-						ois.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else {
-			System.out.println("Fichier non existant !");
-		}
-		return plateau;
-	}
-
-	public Canons chargerCanon(String nomFichier) {
-		String name = pathCanon + nomFichier;
-		Canons canon = null;
-		File pathF = new File(name);
-		if (pathF.exists()) {
-			ObjectInputStream ois = null;
-			try {
-				final FileInputStream fichier = new FileInputStream(name);
-				ois = new ObjectInputStream(fichier);
-				canon = (Canons) ois.readObject();
-			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (ois != null) {
-						ois.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else {
-			System.out.println("Fichier non existant !");
-		}
-		return canon;
-	}
-
-	public Navire chargerNavire(String nomFichier) {
-		String name = pathBateau + nomFichier;
-		Navire navire = null;
-		File pathF = new File(name);
-		if (pathF.exists()) {
-			ObjectInputStream ois = null;
-			try {
-				final FileInputStream fichier = new FileInputStream(name);
-				ois = new ObjectInputStream(fichier);
-				navire = (Navire) ois.readObject();
-			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (ois != null) {
-						ois.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else {
-			System.out.println("Fichier non existant !");
-		}
-		return navire;
-	}*/
+	/*
+	 * public Plateau chargerMap(String nomFichier) { String name = pathMap +
+	 * nomFichier; Plateau plateau = null; File pathF = new File(name); if
+	 * (pathF.exists()) { ObjectInputStream ois = null; try { final
+	 * FileInputStream fichier = new FileInputStream(name); ois = new
+	 * ObjectInputStream(fichier); plateau = (Plateau) ois.readObject(); } catch
+	 * (final java.io.IOException e) { e.printStackTrace(); } catch (final
+	 * ClassNotFoundException e) { e.printStackTrace(); } finally { try { if
+	 * (ois != null) { ois.close(); } } catch (final IOException ex) {
+	 * ex.printStackTrace(); } } } else {
+	 * System.out.println("Fichier non existant !"); } return plateau; }
+	 * 
+	 * public Canons chargerCanon(String nomFichier) { String name = pathCanon +
+	 * nomFichier; Canons canon = null; File pathF = new File(name); if
+	 * (pathF.exists()) { ObjectInputStream ois = null; try { final
+	 * FileInputStream fichier = new FileInputStream(name); ois = new
+	 * ObjectInputStream(fichier); canon = (Canons) ois.readObject(); } catch
+	 * (final java.io.IOException e) { e.printStackTrace(); } catch (final
+	 * ClassNotFoundException e) { e.printStackTrace(); } finally { try { if
+	 * (ois != null) { ois.close(); } } catch (final IOException ex) {
+	 * ex.printStackTrace(); } } } else {
+	 * System.out.println("Fichier non existant !"); } return canon; }
+	 * 
+	 * public Navire chargerNavire(String nomFichier) { String name = pathBateau
+	 * + nomFichier; Navire navire = null; File pathF = new File(name); if
+	 * (pathF.exists()) { ObjectInputStream ois = null; try { final
+	 * FileInputStream fichier = new FileInputStream(name); ois = new
+	 * ObjectInputStream(fichier); navire = (Navire) ois.readObject(); } catch
+	 * (final java.io.IOException e) { e.printStackTrace(); } catch (final
+	 * ClassNotFoundException e) { e.printStackTrace(); } finally { try { if
+	 * (ois != null) { ois.close(); } } catch (final IOException ex) {
+	 * ex.printStackTrace(); } } } else {
+	 * System.out.println("Fichier non existant !"); } return navire; }
+	 */
 }

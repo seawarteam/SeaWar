@@ -7,17 +7,23 @@ import java.util.*;
 
 public class Plateau implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4858885229737937843L;
 	private Case cases[][];
 	private Set<Phare> phares;
 	private Set<Position> caseR;
 	private Set<Position> caseN;
 	private int nCasesX;
 	private int nCasesY;
+	private int nbMaxJoueur;
 	private static int longueurCote;
 	private static int apotheme;
 	private static int resteX;
 
-	private static Observer obs;
+	private Observer obs;
+	//private static Observer obs;
 	private Map<Joueur, List<Position>> bases;
 
 	public Plateau(int l, int L, int nbPhares, int nbRochers, Observer obs) {
@@ -27,7 +33,7 @@ public class Plateau implements Serializable {
 		caseR = new HashSet<Position>();
 		caseN = new HashSet<Position>();
 		phares = new HashSet<Phare>();
-
+		nbMaxJoueur = 0;
 		initTabHex(nbPhares, nbRochers, obs);
 		this.obs = obs;
 		bases = new HashMap<Joueur, List<Position>>();
@@ -167,7 +173,35 @@ public class Plateau implements Serializable {
 		return cases[p.getX()][p.getY() + (int) p.getX() / 2];
 	}
 
-	public Map getBases() {
+	public int getNCasesX() {
+		return nCasesX;
+	}
+
+	public int getNCasesY() {
+		return nCasesY;
+	}
+
+	public int getNbMaxJoueurs() {
+		ArrayList<Position> positions = null;
+		if (nbMaxJoueur == 0) {
+			Set<Joueur> joueurs = bases.keySet();
+			for (Joueur j : joueurs) {
+				positions = null;
+				positions = (ArrayList<Position>) bases.get(j);
+				if (positions != null) {
+					nbMaxJoueur++;
+				}
+
+			}
+		}
+		return nbMaxJoueur;
+	}
+
+	public int getNbPhares() {
+		return phares.size();
+	}
+
+	public Map<Joueur, List<Position>> getBases() {
 		return bases;
 	}
 
@@ -205,11 +239,12 @@ public class Plateau implements Serializable {
 	}
 
 	public void setCasePhare(Position p) {
-		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
-		Polygon poly = c.getPoly();
-		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Phare(poly,
-				p.getX(), p.getY() + p.getX() / 2, obs);
-		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+ 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
+ 		Polygon poly = c.getPoly();
+		Phare ph = new Phare(poly,p.getX(), p.getY() + p.getX() / 2, obs);
+		cases[p.getX()][p.getY() + (int) p.getX() / 2] = ph;
+ 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+		phares.add(ph);
 	}
 
 	public void freeCase(Position p) {
