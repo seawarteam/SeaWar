@@ -9,6 +9,9 @@ import java.util.*;
  */
 public class Canons implements Serializable {
 	
+
+	private static final long serialVersionUID = 6975640370338632951L;
+
 	public static void main(String [] args) {
 		
 		List<Position> liste = new LinkedList<Position>();

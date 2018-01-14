@@ -12,7 +12,7 @@ import fenetre.FenetrePrincipale;
 public class SeaWar {
 	
 	public static void main (String [] args) {
-		FenetreMenuDepart f = new FenetreMenuDepart();
+		 new FenetreMenuDepart();
 	}
 
     /**

@@ -1,13 +1,11 @@
 package partie;
 
 import java.io.Serializable;
-import java.util.*;
 
-/**
- * 
- */
+
 public class Position implements Serializable {
 	
+	private static final long serialVersionUID = -6878600448233644392L;
 	private int x;
     private int y;
     

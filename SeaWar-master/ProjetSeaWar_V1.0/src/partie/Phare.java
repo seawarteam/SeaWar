@@ -7,6 +7,9 @@ import java.util.*;
 
 public class Phare extends Eau implements Serializable {
 
+
+
+	private static final long serialVersionUID = 3548840552347911252L;
 	public static final Color couleurVide = Color.WHITE;
 	public Color couleurOccupeDef = Color.RED;
 	public static final Color couleurOri = new Color(0, 255, 0);

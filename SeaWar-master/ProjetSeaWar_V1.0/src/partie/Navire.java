@@ -12,7 +12,9 @@ import etat.EtatDeplacement;
  * 
  */
 public class Navire extends Observable implements Serializable {	
-	
+
+	private static final long serialVersionUID = 9140929107291498252L;
+
 	public static void main (String [] args) {
 		Position.initTabPosition(10, 10);
 		Navire nav = new Navire("bateau", 20, 1, "Louis", Orientation.S, Position.getPosition(1, 1),null);
