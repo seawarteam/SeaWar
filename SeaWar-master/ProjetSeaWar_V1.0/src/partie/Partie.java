@@ -16,6 +16,11 @@ import List.*;
  * 
  */
 public class Partie extends Observable implements Serializable {
+
+
+
+	private static final long serialVersionUID = -6654834839716177494L;
+
 	public static void main(String[] args) {
 
 	}

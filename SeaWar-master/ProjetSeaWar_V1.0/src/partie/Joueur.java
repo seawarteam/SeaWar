@@ -12,6 +12,9 @@ import etat.Detruit;
  * 
  */
 public class Joueur implements Serializable {
+
+	private static final long serialVersionUID = 5754584580014620245L;
+
 	public static void main(String[] args) {
 		Position.initTabPosition(10, 10);
 	}
