@@ -568,6 +568,10 @@ public class Navire extends Observable implements Serializable {
 		
 	}
 	
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
 	
 	
 	

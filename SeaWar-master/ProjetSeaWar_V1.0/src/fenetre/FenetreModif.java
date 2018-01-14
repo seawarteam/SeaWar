@@ -488,8 +488,8 @@ class EditCarte extends JPanel{
 			retour = new JButton("Retour au Menu Principal");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					dispose();
 					new FenetreMenuDepart();
+					dispose();
 				}
 			});
 			
@@ -663,20 +663,23 @@ class EditCarte extends JPanel{
 			this.removeAll();
 			
 			GridBagConstraints g = new GridBagConstraints();
-			/*g.weightx = largeurMenuGauche;
-			g.weighty = 100;
-			g.gridx = nBoutonsHaut;
-			g.gridheight = 2;*/
 			
 			
+			/*
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
 			
 			g.gridy = 1;
-			g.weighty = 50;
+			g.weighty = 50;*/
 			
-			//add(new EditCanon(this),g);
+			g.weightx = 100;
+			g.weighty = 10;
+			g.fill = GridBagConstraints.BOTH;
+			
+			g.gridy = 0;
+			g.weighty = 0;
+			
 			add(editCanon,g);
 			controleur.demandeModifCanonP();
 			validate();
@@ -693,7 +696,6 @@ class EditCarte extends JPanel{
 			
 			g.gridy = 0;
 			g.weighty = 0;
-			//add(new EditNavire(this),g);
 			add(editNavire,g);
 			controleur.demandeModifNavire();
 			validate();
@@ -709,7 +711,7 @@ class EditCarte extends JPanel{
 			
 			g.gridx = 0;
 			g.gridy = 0;
-			//add(new EditCarte(this), g);
+
 			add(editCarte,g);
 			controleur.demandeModifCarte();
 			validate();
@@ -726,7 +728,6 @@ class EditCarte extends JPanel{
 			
 			g.gridx = 0;
 			g.gridy = 0;
-			//add(new EditInit(this), g);
 			add(editInit,g);
 			
 			validate();

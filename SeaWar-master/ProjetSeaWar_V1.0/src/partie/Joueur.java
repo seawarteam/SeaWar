@@ -28,6 +28,24 @@ public class Joueur implements Serializable {
 		navires = new ArrayList<Navire>();
 		couleur = couleurPerso;
 	}
+	
+	public Joueur(String s, Color couleurPerso, Navire n, Canons canonP, Canons canonS) {
+		this.nom = s;
+		navires = new ArrayList<Navire>();
+		n.addCanon(canonP, canonS);
+		navires.add(n);
+		couleur = couleurPerso;
+			
+	}
+	public Joueur(String s, Color couleurPerso, Navire n, Canons canonP, Canons canonS, Navire n2, Canons canonP2, Canons canonS2) {
+			this.nom = s;
+			navires = new ArrayList<Navire>();
+			n.addCanon(canonP, canonS);
+			n2.addCanon(canonP2,  canonS2);
+			navires.add(n);
+			navires.add(n2);
+			couleur = couleurPerso;
+	}
 
 	public Vector<Navire> ajoutDefaultNavire(Observer obs) {
 		Vector<Navire> navs = new Vector<Navire>(2);
