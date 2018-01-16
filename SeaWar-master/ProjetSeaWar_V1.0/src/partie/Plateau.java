@@ -281,21 +281,20 @@ public class Plateau implements Serializable {
 		return cases;
 	}
 
-	public boolean hasWinner(Joueur currentJ) {
-		Iterator<Phare> i = phares.iterator();
-		boolean stop = false;
-		Phare ph;
-		while (i.hasNext() && !stop) {
-			ph = i.next();
-			if (ph.getTakePosition() != null) {
-				if (!currentJ.getListNavires().contains(ph.getTakePosition())) {
-					stop = true;
-				}
+	public boolean hasWinner(Joueur j) {
+		boolean gagne = true;
+		for(Phare p:this.getPhares()){
+			if(p.occupeeDefinitivementPar == null){
+				gagne = false;
 			} else {
-				stop = true;
+				if(!p.occupeeDefinitivementPar.getNomJ().equals(j.getNom())){
+					gagne = false;
+				}
 			}
 		}
-		return (!stop);
+		
+		
+		return gagne;
 	}
 
 	public void surbrillanceO(Set<Position> s) {
