@@ -7,6 +7,7 @@ import etat.Detruit;
 import partie.Controleur;
 import partie.Navire;
 import partie.Position;
+import son.JouerSon;
 
 public class EtatTirP implements EtatAction {
 
@@ -22,6 +23,7 @@ public class EtatTirP implements EtatAction {
 		Set<Position> rochers = c.getPartie().getPlateau().getRochers();
 		boolean succes = nav.tir(nav.getCanonP(), pos, navC, rochers);
 		if(succes) {
+			JouerSon.TirCanon();
 			int degats = nav.getCanonP().getDegat();
 			Navire cible = c.getPartie().getNavOnPos(pos);
 			if(cible != null) {

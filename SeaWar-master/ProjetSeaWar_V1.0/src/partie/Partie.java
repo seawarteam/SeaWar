@@ -1,5 +1,6 @@
 package partie;
 
+
 import java.awt.Color;
 import java.io.*;
 import java.util.ArrayList;
@@ -187,7 +188,7 @@ public class Partie extends Observable implements Serializable {
 		Map<Joueur, List<Position>> bases = plateau.getBases();
 		Set<Joueur> keys = bases.keySet();
 		System.out.println(keys);
-		int nbJoueursPlacés = 0;
+		int nbJoueursPlaces = 0;
 		Navire n1;
 		Position p1;
 		Position p2;
@@ -201,8 +202,8 @@ public class Partie extends Observable implements Serializable {
 			do {
 				currentKey = i.next();
 				positions = (ArrayList<Position>) bases.get(currentKey);
-			}while((positions == null || keyUtilisee.contains(currentKey))&& i.hasNext()&& nbJoueursPlacés<nbJoueurs);//Ajouter une garde pour sortir
-			nbJoueursPlacés++;
+			}while((positions == null || keyUtilisee.contains(currentKey))&& i.hasNext()&& nbJoueursPlaces<nbJoueurs);//Ajouter une garde pour sortir
+			nbJoueursPlaces++;
 			keyUtilisee.add(currentKey);
 			p = positions.iterator();
 			p1 = p.next();
