@@ -32,16 +32,15 @@ public class ControleurChargerPartie{
 		int nX = map.getNCasesX();
 		int nY = map.getNCasesY();
 		Position.initTabPosition(nX, nY);
-		System.out.println("1");
 		Partie partie = new Partie(lanceur.getJoueurs(), nX, nY);
-		System.out.println("2");
 		Controleur controleur = new Controleur(partie);
-		System.out.println("3");
 		FenetrePrincipale carte = new FenetrePrincipale(partie, controleur);
-		System.out.println("4");
+		
+		partie.initPartie(map, carte);
 		carte.initFenetrePrincipale();
 		partie.initBateau();
 		partie.currentJ.initTour();
+		lanceur.disposeFenetre();
 		
 	}
 
