@@ -63,7 +63,7 @@ public class FenetreModif extends JFrame implements Observer{
 	private static Editeur editeur;
 	private static ControleurModif controleur;
 	public JPanel panPrincipal;
-	public GridBagConstraints gbc;
+
 	
 	public Graphics2D cg;
 	
@@ -85,6 +85,7 @@ public class FenetreModif extends JFrame implements Observer{
 		setTailleHex(30);
 		
 		panPrincipal = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc;
 		gbc = new GridBagConstraints();
 
 		gbc.weightx = (int) (100-largeurMenuGauche)/nBoutonsHaut;
@@ -676,9 +677,10 @@ class EditCarte extends JPanel{
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
-			
+			g.gridx = 0;
 			g.gridy = 0;
 			g.weighty = 0;
+			g.weightx=0;
 			
 			add(editCanon,g);
 			controleur.demandeModifCanonP();
@@ -693,9 +695,10 @@ class EditCarte extends JPanel{
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
-			
+			g.gridx = 0;
 			g.gridy = 0;
 			g.weighty = 0;
+			g.weightx=0;
 			add(editNavire,g);
 			controleur.demandeModifNavire();
 			validate();
@@ -708,7 +711,8 @@ class EditCarte extends JPanel{
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
-			
+			g.weighty = 0;
+			g.weightx=0;
 			g.gridx = 0;
 			g.gridy = 0;
 
@@ -725,7 +729,8 @@ class EditCarte extends JPanel{
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
-			
+			g.weighty = 0;
+			g.weightx=0;
 			g.gridx = 0;
 			g.gridy = 0;
 			add(editInit,g);
