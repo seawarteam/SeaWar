@@ -3,6 +3,8 @@ package List;
 import java.io.Serializable;
 
 public class WheelList<E> implements Serializable{
+
+	private static final long serialVersionUID = 827396534119862988L;
 	public static void main(String args []){
 		WheelList<String> w = new WheelList<String>();
 		

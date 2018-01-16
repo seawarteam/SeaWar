@@ -59,4 +59,10 @@ public class Lanceur extends Observable {
 		
 		
 	}
+
+	public void disposeFenetre() {
+		setChanged();
+		notifyObservers(this);
+		clearChanged();
+	}
 }

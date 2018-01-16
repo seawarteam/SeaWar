@@ -3,6 +3,8 @@ package List;
 import java.io.Serializable;
 
 class Elements<E> implements Serializable {
+
+	private static final long serialVersionUID = 290756041667387833L;
 	protected E obj;
 	protected Elements<E> next;
 	protected Elements<E> previous;

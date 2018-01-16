@@ -28,14 +28,10 @@ import partie.Joueur;
 import partie.Lanceur;
 import partie.Navire;
 import partie.Plateau;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 public class FenetreChoixPartie extends JFrame implements Observer{
-
-	private static final long serialVersionUID = 1L;
-
 	public static void main(String [] args) {
-		new FenetreChoixPartie();
+		FenetreChoixPartie f = new FenetreChoixPartie();
 		
 	}
 	final String pathMap = getPath() + "/Sauvegardes/Reglages/Cartes/";
@@ -371,6 +367,9 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		}
 		if(arg1 instanceof Joueur) {
 			updateJoueur(arg1);
+		}
+		if(arg1 instanceof Lanceur) {
+			dispose();
 		}
 		
 	}

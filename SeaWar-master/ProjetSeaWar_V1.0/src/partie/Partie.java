@@ -186,6 +186,8 @@ public class Partie extends Observable implements Serializable {
 	public void initBateau() {
 		Map<Joueur, List<Position>> bases = plateau.getBases();
 		Set<Joueur> keys = bases.keySet();
+		System.out.println(keys);
+		int nbJoueursPlacés = 0;
 		Navire n1;
 		Position p1;
 		Position p2;
@@ -195,18 +197,24 @@ public class Partie extends Observable implements Serializable {
 		java.util.Iterator<Joueur> i = keys.iterator();
 		java.util.Iterator<Position> p;
 		Navire n2;
-		for (Joueur j : listeJ) {
+		for(Joueur j : listeJ) {
 			do {
 				currentKey = i.next();
 				positions = (ArrayList<Position>) bases.get(currentKey);
-			} while ((positions == null || keyUtilisee.contains(currentKey))
-					&& i.hasNext());// Ajouter une garde pour sortir
+			}while((positions == null || keyUtilisee.contains(currentKey))&& i.hasNext()&& nbJoueursPlacés<nbJoueurs);//Ajouter une garde pour sortir
+			nbJoueursPlacés++;
 			keyUtilisee.add(currentKey);
 			p = positions.iterator();
 			p1 = p.next();
 			p2 = p.next();
+			System.out.println(j);
+			System.out.println(j.getCol());
+			System.out.println(p1);
+			System.out.println(p2);
 			n1 = j.getNavires()[0];
+			n1.setNomJ(j.getNom());
 			n2 = j.getNavires()[1];
+			n2.setNomJ(j.getNom());
 			n1.setColEnVie(j.getCol());
 			n1.setColAsColEnVie();
 			n1.setDir(Orientation.aleatoire());
@@ -220,7 +228,7 @@ public class Partie extends Observable implements Serializable {
 			setChanged();
 			notifyObservers(this);
 			clearChanged();
-
+			
 		}
 	}
 
@@ -293,6 +301,13 @@ public class Partie extends Observable implements Serializable {
 		}
 		return null;
 	}
+	
+	public void initPartie(Plateau map,	Observer observeur) {
+		addObserver(observeur);
+		plateau = map;
+		plateau.ResetCouleur();
+	}
+
 
 	public boolean existeApteNav() {
 		Navire[] navs = currentJ.getNavires();
