@@ -332,17 +332,21 @@ class EditCarte extends JPanel{
 			JPanel j = new JPanel();
 			j.setLayout(grid);
 			pan.setLayout(grid);
-			pan.add(retour);
-			pan.add(sauvegarde);
 			pan.add(Lnom);
 			pan.add(nom);
+			pan.add(sauvegarde);
+			pan.add(retour);
+			pan.add(new JPanel());
+			pan.add(new JPanel());
 			pan.add(ajoutEau);
 			pan.add(ajoutRocher);
 			pan.add(ajoutPhare);
 			
 			//j.add(ajoutBases);
 			pan2.add(listBase);
+			j.add(new JPanel());
 			j.add(pan);
+			j.add(new JPanel());
 			j.add(pan2);
 			add(j);
 		}
