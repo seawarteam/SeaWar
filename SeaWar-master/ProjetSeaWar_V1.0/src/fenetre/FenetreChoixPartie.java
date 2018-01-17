@@ -1,7 +1,6 @@
 package fenetre;
 
 import java.awt.GridLayout;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,20 +8,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -30,7 +24,6 @@ import javax.swing.event.ListDataListener;
 
 //import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
-import fenetre.FenetreChoixNoms.BoutonValider;
 import partie.Canons;
 import partie.ControleurChargerPartie;
 import partie.Joueur;
@@ -43,9 +36,9 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		FenetreChoixPartie f = new FenetreChoixPartie();
 		
 	}
-	final String pathMap = "./Sauvegardes/Reglages/Cartes/";
-	final String pathCanon = "./Sauvegardes/Reglages/Canons/";
-	final String pathBateau = "./Sauvegardes/Reglages/Bateaux/";
+	final String pathMap = getPath()+ "/Sauvegardes/Reglages/Cartes/";
+	final String pathCanon = getPath()+ "/Sauvegardes/Reglages/Canons/";
+	final String pathBateau = getPath()+ "/Sauvegardes/Reglages/Bateaux/";
 	private JButton valider;
 	private ChoixCarte choixCarte;
 	private ChoixJoueur choixJoueur;
@@ -392,6 +385,10 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	private void updateMap(Object arg1) {
 		infoCarte.setInfoCarte();
 		infoCarte.revalidate();
+	}
+	
+	private String getPath() {		
+		return System.getProperty("user.dir");		
 	}
 	
 }
