@@ -17,6 +17,7 @@ public class Bloque implements EtatDeplacement, Serializable{
 	}
 
 	public void setEtatCourant(Navire n) {
+		// TODO Auto-generated method stub
 		
 	}
 

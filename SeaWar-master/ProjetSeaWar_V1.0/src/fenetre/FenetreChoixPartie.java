@@ -1,6 +1,7 @@
 package fenetre;
 
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,22 +9,28 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
 
-//import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
+import fenetre.FenetreChoixNoms.BoutonValider;
 import partie.Canons;
 import partie.ControleurChargerPartie;
 import partie.Joueur;
@@ -36,9 +43,9 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		FenetreChoixPartie f = new FenetreChoixPartie();
 		
 	}
-	final String pathMap = getPath()+ "/Sauvegardes/Reglages/Cartes/";
-	final String pathCanon = getPath()+ "/Sauvegardes/Reglages/Canons/";
-	final String pathBateau = getPath()+ "/Sauvegardes/Reglages/Bateaux/";
+	final String pathMap = "./Sauvegardes/Reglages/Cartes/";
+	final String pathCanon = "./Sauvegardes/Reglages/Canons/";
+	final String pathBateau = "./Sauvegardes/Reglages/Bateaux/";
 	private JButton valider;
 	private ChoixCarte choixCarte;
 	private ChoixJoueur choixJoueur;
@@ -176,42 +183,42 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			listNomCanonS.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)listNomCanonS.getSelectedItem();
-					selectedCanonS1 = (Canons) chargerObject(nom, pathCanon);
+					selectedCanonS1 = Canons.copy((Canons) chargerObject(nom, pathCanon));
 				}
 			});
 			listNomCanonP = new JComboBox<String>(listmodelCanonS);
 			listNomCanonP.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)listNomCanonP.getSelectedItem();
-					selectedCanonP1 = (Canons) chargerObject(nom, pathCanon);
+					selectedCanonP1 = Canons.copy((Canons) chargerObject(nom, pathCanon));
 				}
 			});
 			listNomBateaux = new JComboBox<String>(listmodelBateaux);
 			listNomBateaux.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)listNomBateaux.getSelectedItem();
-					selectedNavire1 = (Navire) chargerObject(nom, pathBateau);
+					selectedNavire1 = Navire.copy((Navire) chargerObject(nom, pathBateau));
 				}
 			});
 			list2NomCanonS = new JComboBox<String>(listmodelCanonS);
 			list2NomCanonS.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)list2NomCanonS.getSelectedItem();
-					selectedCanonS2 = (Canons) chargerObject(nom, pathCanon);
+					selectedCanonS2 = Canons.copy((Canons) chargerObject(nom, pathCanon));
 				}
 			});
 			list2NomCanonP = new JComboBox<String>(listmodelCanonS);
 			list2NomCanonP.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)list2NomCanonP.getSelectedItem();
-					selectedCanonP2 = (Canons) chargerObject(nom, pathCanon);
+					selectedCanonP2 = Canons.copy((Canons) chargerObject(nom, pathCanon));
 				}
 			});
 			list2NomBateaux = new JComboBox<String>(listmodelBateaux);
 			list2NomBateaux.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)list2NomBateaux.getSelectedItem();
-					selectedNavire2 = (Navire) chargerObject(nom, pathBateau);
+					selectedNavire2 = Navire.copy((Navire) chargerObject(nom, pathBateau));
 				}
 			});
 			pan1 = new JPanel();
@@ -349,9 +356,9 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		public void initList(String path) {
 			nomFiles = (ArrayList<E>) findFiles(path);
 			fireIntervalAdded(this, 0, getSize()-1);
-			System.out.println(nomFiles);
+			//System.out.println(nomFiles);
 		}
-		
+		@Override
 		public void setSelectedItem(Object anItem) {
 		    selection = (String) anItem; 
 		}
@@ -362,7 +369,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		  }
 	}
 
-	
+	@Override
 	public void update(Observable arg0, Object arg1) {
 		if(arg1 instanceof Plateau) {
 			updateMap(arg1);
@@ -385,10 +392,6 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	private void updateMap(Object arg1) {
 		infoCarte.setInfoCarte();
 		infoCarte.revalidate();
-	}
-	
-	private String getPath() {		
-		return System.getProperty("user.dir");		
 	}
 	
 }

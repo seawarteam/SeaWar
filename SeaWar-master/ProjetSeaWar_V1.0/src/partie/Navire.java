@@ -12,9 +12,7 @@ import etat.EtatDeplacement;
  * 
  */
 public class Navire extends Observable implements Serializable {	
-
-	private static final long serialVersionUID = 9140929107291498252L;
-
+	
 	public static void main (String [] args) {
 		Position.initTabPosition(10, 10);
 		Navire nav = new Navire("bateau", 20, 1, "Louis", Orientation.S, Position.getPosition(1, 1),null);
@@ -66,7 +64,7 @@ public class Navire extends Observable implements Serializable {
 	 private int nb_coup_recu;
 	 private boolean bloque;
 	 
-	 /*TODO: deplacer dans la Classe Plateau ou Position ???*/
+	 /*TODO: dÃ©placer dans la Classe Plateau ???*/
 	 public static Map<Orientation,List<Vector<Object>>> caseVoisine;
 	
     /**
@@ -93,7 +91,34 @@ public class Navire extends Observable implements Serializable {
     	initCaseVoisine();//TODO: initialiser en dehors de navire => pour le faire qu'une seule fois 
     	
     }
-    public void addCanon(Canons P, Canons S){
+    
+    public Navire(String n, int vie, int depM, String nameJ, Orientation ori, Position posi) {
+    	this.nom = n;
+    	this.pv = vie;
+    	this.depMax = depM;
+    	this.nomJ = nameJ;
+    	this.dir = ori;
+    	this.pos = posi;
+    	
+    	dep=depMax;
+    	etatCourant = Apte.getEtat();
+    	bloque = false;
+    	
+    	/* affichageCaseAccessible = new HashSet<Position>();
+    	 casesVisableCanonP = new HashSet<Position>();
+    	 casesVisableCanonS = new HashSet<Position>();*/
+    	 
+    	 
+    	//this.canons = new HashSet<Canons>();
+    	initCaseVoisine();//TODO: initialiser en dehors de navire => pour le faire qu'une seule fois 
+    	
+    }
+    public static Navire copy(Navire n){
+    	return new Navire(n.getNom(), n.getPV(), n.getDepMax(), n.getNomJ(), n.getOrientation(), n.getPos());
+    }
+    
+
+	public void addCanon(Canons P, Canons S){
     	this.canonS = S;
     	this.canonP = P;
     }
@@ -157,7 +182,7 @@ public class Navire extends Observable implements Serializable {
     		return false;
     	}
     	Navire nav = (Navire) obj;
-    	return (this.nom.equals(nav.nom) && this.nomJ.equals(nav.nomJ));
+    	return (this.nom.equals(nav.nom) && this.nomJ.equals(nav.nomJ));//TODO: DÃ©finir si ok  	
     }
     
     public String toString() {
@@ -207,11 +232,12 @@ public class Navire extends Observable implements Serializable {
 
     public void getInfo() {
     	setChanged();
-    	notifyObservers(this);
+    	notifyObservers(this); //TODO:
     	clearChanged();
     }
     
     public void getPrivateInfo() {
+		// TODO Auto-generated method stub
 		
 	}
     
@@ -561,17 +587,17 @@ public class Navire extends Observable implements Serializable {
 	public void setNomJ(String nomJ) {
 		this.nomJ = nomJ;
 	}
-	public void setPV(int pointsDeVie) {
-		pv = pointsDeVie;
-		
+	public int getPv() {
+		return pv;
 	}
-	public void setDepMax(int deplacement) {
-		depMax = deplacement;
-		
+	public void setPv(int pv) {
+		this.pv = pv;
 	}
-	
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+	public void setDepMax(int depMax) {
+		this.depMax = depMax;
 	}
 	
 	

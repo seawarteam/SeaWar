@@ -1,11 +1,13 @@
 package partie;
 
 import java.io.Serializable;
+import java.util.*;
 
-
+/**
+ * 
+ */
 public class Position implements Serializable {
 	
-	private static final long serialVersionUID = -6878600448233644392L;
 	private int x;
     private int y;
     
@@ -38,6 +40,14 @@ public class Position implements Serializable {
 
     public String toString() {
         return "("+this.x+";"+this.y+")";
+    }
+    
+    public static String toStringTab(){
+    	String str = "";
+    	for(Position p : tabPosition){
+    		str+=p.toString();
+    	}
+    	return str;
     }
     
     public boolean equals(Object obj){

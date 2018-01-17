@@ -10,8 +10,6 @@ import java.util.*;
  */
 public abstract class Case extends Observable implements Serializable{
 
-
-	private static final long serialVersionUID = -6618483486525611426L;
 	public boolean estOccupe;
 	public Navire takePosition;
 	public Polygon poly;
@@ -42,6 +40,10 @@ public abstract class Case extends Observable implements Serializable{
     
     public abstract void getInfo();
     
+    public Position getPosition(){
+    	return position;
+    }
+    
     public boolean getEstOccupe() {
     	return estOccupe;
     }
@@ -57,11 +59,7 @@ public abstract class Case extends Observable implements Serializable{
     public Polygon getPoly(){
     	return poly;
     }
-    
-    public Position getPosition(){
-    	return position;
-    }
-    
+	
     public void setTakePosition(Navire n) {
     	takePosition = n;
     }

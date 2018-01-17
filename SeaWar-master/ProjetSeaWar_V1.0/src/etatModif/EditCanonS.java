@@ -47,6 +47,7 @@ public class EditCanonS implements EtatModif {
 
 	
 	public void modifBase(ControleurModif c, String str) {
+		// TODO Auto-generated method stub
 		
 	}
 

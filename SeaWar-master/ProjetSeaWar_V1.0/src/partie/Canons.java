@@ -9,9 +9,6 @@ import java.util.*;
  */
 public class Canons implements Serializable {
 	
-
-	private static final long serialVersionUID = 6975640370338632951L;
-
 	public static void main(String [] args) {
 		
 		List<Position> liste = new LinkedList<Position>();
@@ -47,7 +44,11 @@ public class Canons implements Serializable {
     	this.monNavire = nav;
     	
     }
-
+   
+    
+    public static Canons copy(Canons c){
+		return new Canons(c.getNom(), c.getDegat(), c.getTpsRech(), c.getZoneTire(), c.getNav());
+    }
     
     public boolean equals(Object obj) {
     	if(this == obj) return true;
@@ -61,8 +62,9 @@ public class Canons implements Serializable {
     	return "Objet Canons\tnom = "+this.nom+"\ttdegat = "+this.degat+"\ttpsRech = "+this.tpsRech+"\tpsRest = "+this.tpsRest+"\n";
     }
     
-    
-    
+    public Navire getNav(){
+    	return monNavire;
+    }
     public String getNom() {
     	return this.nom;
     }
@@ -179,14 +181,17 @@ public class Canons implements Serializable {
     }
 
 
-	public void setDegat(int d) {
-		degat = d;
-		
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 
-	public void setTpsRech(int recharge) {
-		tpsRech = recharge;
-		
+	public void setDegat(int degat) {
+		this.degat = degat;
+	}
+
+
+	public void setTpsRech(int tpsRech) {
+		this.tpsRech = tpsRech;
 	}
 }

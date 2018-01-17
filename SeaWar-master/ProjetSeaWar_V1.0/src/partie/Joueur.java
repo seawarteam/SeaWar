@@ -12,9 +12,6 @@ import etat.Detruit;
  * 
  */
 public class Joueur implements Serializable {
-
-	private static final long serialVersionUID = 5754584580014620245L;
-
 	public static void main(String[] args) {
 		Position.initTabPosition(10, 10);
 	}
@@ -38,16 +35,17 @@ public class Joueur implements Serializable {
 		n.addCanon(canonP, canonS);
 		navires.add(n);
 		couleur = couleurPerso;
-			
+		
 	}
 	public Joueur(String s, Color couleurPerso, Navire n, Canons canonP, Canons canonS, Navire n2, Canons canonP2, Canons canonS2) {
-			this.nom = s;
-			navires = new ArrayList<Navire>();
-			n.addCanon(canonP, canonS);
-			n2.addCanon(canonP2,  canonS2);
-			navires.add(n);
-			navires.add(n2);
-			couleur = couleurPerso;
+		this.nom = s;
+		navires = new ArrayList<Navire>();
+		n.addCanon(canonP, canonS);
+		n2.addCanon(canonP2,  canonS2);
+		navires.add(n);
+		navires.add(n2);
+		couleur = couleurPerso;
+		
 	}
 
 	public Vector<Navire> ajoutDefaultNavire(Observer obs) {

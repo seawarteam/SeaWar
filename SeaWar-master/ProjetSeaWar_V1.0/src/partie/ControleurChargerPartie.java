@@ -39,6 +39,7 @@ public class ControleurChargerPartie{
 		partie.initPartie(map, carte);
 		carte.initFenetrePrincipale();
 		partie.initBateau();
+		partie.initObserver(carte);
 		partie.currentJ.initTour();
 		lanceur.disposeFenetre();
 		

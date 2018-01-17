@@ -38,7 +38,7 @@ public class Lanceur extends Observable {
 		Joueur j = new Joueur(s, couleurJoueur(), n, canonP, canonS, n2, canonP2, canonS2);
 		joueurs.add(j);
 		nbJoueurs++;
-		//VÃ©rifier que le nom de joueur est non prÃ©sent
+		//Vérifier que le nom de joueur est non présent
 		setChanged();
 		notifyObservers(j);
 		clearChanged();

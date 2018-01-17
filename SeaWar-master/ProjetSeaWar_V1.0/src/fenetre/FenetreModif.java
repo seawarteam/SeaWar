@@ -1,6 +1,8 @@
 package fenetre;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -24,9 +26,28 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+ 
+import etatModif.EditNavire;
+import etatModif.Init;
+import fenetre.FenetrePrincipale.ActionBateau;
+import fenetre.FenetrePrincipale.BoutonFinTour;
+import fenetre.FenetrePrincipale.DrawingPanel;
+import fenetre.FenetrePrincipale.InfoCase;
+import fenetre.FenetrePrincipale.InfoJoueur;
+import fenetre.FenetrePrincipale.MenuGauche;
+import fenetre.FenetrePrincipale.SliderTaille;
+import fenetre.FenetrePrincipale.DrawingPanel.MyMouseListener;
+ 
 import partie.Case;
+import partie.Controleur;
 import partie.ControleurModif;
 import partie.Editeur;
+import partie.Joueur;
+import partie.Navire;
+import partie.Partie;
+import partie.Plateau;
 import partie.Position;
 
 
@@ -34,7 +55,7 @@ import partie.Position;
 
 public class FenetreModif extends JFrame implements Observer{
 	public static void main(String [] args){
-		new FenetreModif();
+		FenetreModif f = new FenetreModif();
 	}
 	
 	
@@ -54,6 +75,7 @@ public class FenetreModif extends JFrame implements Observer{
 	private DrawingPanel plateau;
 	private JScrollPane scroll;
 	
+	private JButton valider;
 	
 	private EditCarte editCarte;
  	private EditCanon editCanon;
@@ -63,7 +85,7 @@ public class FenetreModif extends JFrame implements Observer{
 	private static Editeur editeur;
 	private static ControleurModif controleur;
 	public JPanel panPrincipal;
-
+	public GridBagConstraints gbc;
 	
 	public Graphics2D cg;
 	
@@ -85,7 +107,6 @@ public class FenetreModif extends JFrame implements Observer{
 		setTailleHex(30);
 		
 		panPrincipal = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc;
 		gbc = new GridBagConstraints();
 
 		gbc.weightx = (int) (100-largeurMenuGauche)/nBoutonsHaut;
@@ -169,7 +190,7 @@ public class FenetreModif extends JFrame implements Observer{
 		return p;
 	}
 	
-	public static Position pxtoPosHex(int mx, int my) { //on a clique sur le pixel (mx,my) et on renvoie le polygone correspondant
+	public static Position pxtoPosHex(int mx, int my) { //on a clique sur le pixel (mx,my) et on renvoie le polygone correspondan
 		Case elt;
 		for(int i=0;i<nCasesX;i++) {
 			for(int j=0;j<nCasesY;j++) {
@@ -238,12 +259,14 @@ public class FenetreModif extends JFrame implements Observer{
 class EditCarte extends JPanel{
 		private static final long serialVersionUID = 448318553800706885L;
 		private MenuDroite menu;
+		//private ButtonEdit editButton;
 		private JButton ajoutRocher;
 		private JButton ajoutEau;
 		private JButton ajoutPhare;
 		private JButton retour;
 		private JButton sauvegarde;
 		private GridLayout grid;
+		private JButton ajoutBases;
 		private JTextField nom;
 		JLabel Lnom;
 		JList<String> listBase;
@@ -315,7 +338,6 @@ class EditCarte extends JPanel{
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controleur.demandeRetour();
 					menu.changeEditInit();
 				}
 			});
@@ -332,21 +354,17 @@ class EditCarte extends JPanel{
 			JPanel j = new JPanel();
 			j.setLayout(grid);
 			pan.setLayout(grid);
+			pan.add(retour);
+			pan.add(sauvegarde);
 			pan.add(Lnom);
 			pan.add(nom);
-			pan.add(sauvegarde);
-			pan.add(retour);
-			pan.add(new JPanel());
-			pan.add(new JPanel());
 			pan.add(ajoutEau);
 			pan.add(ajoutRocher);
 			pan.add(ajoutPhare);
 			
 			//j.add(ajoutBases);
 			pan2.add(listBase);
-			j.add(new JPanel());
 			j.add(pan);
-			j.add(new JPanel());
 			j.add(pan2);
 			add(j);
 		}
@@ -375,7 +393,6 @@ class EditCarte extends JPanel{
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controleur.demandeRetour();
 					menu.changeEditInit();
 				}
 			});
@@ -383,27 +400,14 @@ class EditCarte extends JPanel{
 			sauvegarde = new JButton("Sauvegarder");
 			sauvegarde.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//TODO: mettre à jour le canon
-					try {
-						int degat = Integer.parseInt(Tdegat.getText());
-						int recharge = Integer.parseInt(Trecharge.getText());
-						if(degat > 0 && recharge > 0) {
-							editeur.getCanonP().setDegat(degat);
-							editeur.getCanonP().setTpsRech(recharge);
-							controleur.demandeSauvegardeCanon(Tnom.getText());
-						} else {
-							System.err.println("degat et recharge doivent etre >0 !");
-							//TODO: popup !
-						}
-					} catch (NumberFormatException nfe) {
-						System.err.println("convertion en int impossible : degat = "+Tdegat.getText()+" recharge = "+Trecharge.getText());
-						//TODO: popup !
-					}
+					int degat = Integer.parseInt(Tdegat.getText());
+					int tpsRech = Integer.parseInt(Trecharge.getText());
+					controleur.demandeSauvegardeCanon(Tnom.getText(), degat, tpsRech);
 				}
 			});
 			
 			JPanel Ptitre = new JPanel();
-			JLabel titre = new JLabel("Création d'un nouveau Canon");
+			JLabel titre = new JLabel("Cr�ation d'un nouveau Canon");
 			Ptitre.add(titre);
 			
 			JPanel Pcommentaire = new JPanel();/*
@@ -415,8 +419,7 @@ class EditCarte extends JPanel{
 			
 			String text = ("<html>");
 			text += "<tr><td>Selectionner la zone de tire sur la carte.</td></tr>";
-			text += "<tr><td>Le bateau (en bleu) est orienté vers le Nord.</td></tr>";
-			text += "<tr><td></td></tr>";
+			text += "<tr><td>Le bateau (en bleu) est orient� vers le Nord.</td></tr>";
 			text += "</html>";
 			JLabel commentaire = new JLabel(text);
 			Pcommentaire.add(commentaire);
@@ -464,7 +467,7 @@ class EditCarte extends JPanel{
 		
 		private static final long serialVersionUID = 1L;
 
-		
+		//TODO:
 		public EditInit(MenuDroite m){
 			menu = m;
 			GridLayout grid = new GridLayout(4, 1);
@@ -493,8 +496,8 @@ class EditCarte extends JPanel{
 			retour = new JButton("Retour au Menu Principal");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new FenetreMenuDepart();
 					dispose();
+					new FenetreMenuDepart();
 				}
 			});
 			
@@ -520,41 +523,8 @@ class EditCarte extends JPanel{
 		
 		private static final long serialVersionUID = 1L;
 
-		
+		//TODO
 		public EditNavire(MenuDroite m){
-			
-			menu = m;
-			GridLayout grid = new GridLayout(5, 1);
-			retour = new JButton("Retour");
-			retour.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					controleur.demandeRetour();
-					menu.changeEditInit();
-				}
-			});
-			sauvegarde = new JButton("Sauvegarder");
-			sauvegarde.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					//TODO: mettre a jour le navire
-					try {
-						int deplacement = Integer.parseInt(Tdeplacement.getText());
-						int pointsDeVie = Integer.parseInt(TpointsDeVie.getText());
-						if(deplacement > 0 && pointsDeVie > 0) {
-							editeur.getNavire().setPV(pointsDeVie);
-							editeur.getNavire().setDepMax(deplacement);
-							controleur.demandeSauvegardeNavire(Tnom.getText());
-						} else {
-							System.err.println("degat et recharge doivent etre >0 !");
-							//TODO: popup !
-						}
-					} catch (NumberFormatException nfe) {
-						System.err.println("convertion en int impossible : pointsDeVie = "+TpointsDeVie.getText()+" deplacement = "+Tdeplacement.getText());
-						//TODO: popup !
-					}
-				}
-			});
-			
-			
 			JPanel Ptitre = new JPanel();
 			JLabel titre = new JLabel("Création d'un nouveau Navire");
 			Ptitre.add(titre);
@@ -563,10 +533,31 @@ class EditCarte extends JPanel{
 			JLabel Lnom = new JLabel("nom : ");
 			JLabel Ldeplacement = new JLabel("Déplacement : ");
 			JLabel LpointsDeVie = new JLabel("Points de vie : ");
-			
 			Tnom = new JTextField();
 			Tdeplacement = new JTextField();
 			TpointsDeVie = new JTextField();
+			menu = m;
+			GridLayout grid = new GridLayout(5, 1);
+			retour = new JButton("Retour");
+			retour.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					menu.changeEditInit();
+				}
+			});
+			sauvegarde = new JButton("Sauvegarder");
+			sauvegarde.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int depMax = Integer.parseInt(Tdeplacement.getText());
+					int pv = Integer.parseInt(TpointsDeVie.getText());
+					String nom = Tnom.getText();
+					controleur.demandeSauvegardeNavire(nom, pv, depMax);
+				}
+			});
+			
+			
+			
+			
+			
 			
 			JPanel j = new JPanel();
 			j.setLayout(grid);
@@ -591,7 +582,7 @@ class EditCarte extends JPanel{
 		}
 		
 	}
- 	/*
+ 	
 	class ButtonEdit extends JButton implements MouseListener{
 		private static final long serialVersionUID = 9161144644862571496L;
 		private String label1;
@@ -632,14 +623,16 @@ class EditCarte extends JPanel{
 		}
 
 		public void mousePressed(MouseEvent arg0) {
+			// TODO Stub de la méthode généré automatiquement
 			
 		}
 
 		public void mouseReleased(MouseEvent arg0) {
+			// TODO Stub de la méthode généré automatiquement
 			
 		}
 
-	}*/
+	}
 		
 	
 	
@@ -652,14 +645,13 @@ class EditCarte extends JPanel{
 			super(new GridBagLayout());
 			
 			GridBagConstraints g = new GridBagConstraints();
-			
 			editCarte = new EditCarte(this);
 			editCanon = new EditCanon(this);
 			editNavire = new EditNavire(this);
 			editInit = new EditInit(this);
 			
-			//add(new EditInit(this),g);
 			add(editInit,g);
+			
 			
 		}
 		
@@ -668,23 +660,18 @@ class EditCarte extends JPanel{
 			this.removeAll();
 			
 			GridBagConstraints g = new GridBagConstraints();
+			/*g.weightx = largeurMenuGauche;
+			g.weighty = 100;
+			g.gridx = nBoutonsHaut;
+			g.gridheight = 2;*/
 			
 			
-			/*
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
 			
 			g.gridy = 1;
-			g.weighty = 50;*/
-			
-			g.weightx = 100;
-			g.weighty = 10;
-			g.fill = GridBagConstraints.BOTH;
-			g.gridx = 0;
-			g.gridy = 0;
-			g.weighty = 0;
-			g.weightx=0;
+			g.weighty = 50;
 			
 			add(editCanon,g);
 			controleur.demandeModifCanonP();
@@ -699,12 +686,10 @@ class EditCarte extends JPanel{
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
-			g.gridx = 0;
+			
 			g.gridy = 0;
 			g.weighty = 0;
-			g.weightx=0;
 			add(editNavire,g);
-			controleur.demandeModifNavire();
 			validate();
 		}
 
@@ -715,13 +700,10 @@ class EditCarte extends JPanel{
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
-			g.weighty = 0;
-			g.weightx=0;
+			
 			g.gridx = 0;
 			g.gridy = 0;
-
-			add(editCarte,g);
-			controleur.demandeModifCarte();
+			add(editCarte, g);
 			validate();
 			
 		}
@@ -733,12 +715,10 @@ class EditCarte extends JPanel{
 			g.weightx = 100;
 			g.weighty = 10;
 			g.fill = GridBagConstraints.BOTH;
-			g.weighty = 0;
-			g.weightx=0;
+			
 			g.gridx = 0;
 			g.gridy = 0;
-			add(editInit,g);
-			
+			add(editInit, g);
 			validate();
 			
 		}

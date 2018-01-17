@@ -1,13 +1,12 @@
 package List;
 
 import java.io.Serializable;
+import java.util.*;
 
 /**
  * 
  */
 public class Iterator<E> implements Serializable{
-	
-	private static final long serialVersionUID = -1187299749324654383L;
 	Elements<E> currentElements;
 	protected Iterator(Elements<E> e){
 		super();

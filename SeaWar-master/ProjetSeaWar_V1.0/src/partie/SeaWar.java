@@ -5,7 +5,6 @@ import java.util.*;
 
 import fenetre.FenetreMenuDepart;
 import fenetre.FenetrePrincipale;
-import son.JouerSon;
 
 /**
  * 
@@ -13,8 +12,7 @@ import son.JouerSon;
 public class SeaWar {
 	
 	public static void main (String [] args) {
-		 new FenetreMenuDepart();
-		// JouerSon.SonEpique2();
+		FenetreMenuDepart f = new FenetreMenuDepart();
 	}
 
     /**

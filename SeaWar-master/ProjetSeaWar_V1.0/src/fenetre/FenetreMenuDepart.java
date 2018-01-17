@@ -1,11 +1,15 @@
 package fenetre;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,7 +18,7 @@ public class FenetreMenuDepart extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ImagePanel imagePanel;
+	private JPanel imagePanel;
 	private String filePath = "bateau.jpg";
 
 	public FenetreMenuDepart() {
@@ -25,28 +29,38 @@ public class FenetreMenuDepart extends JFrame {
 		setResizable(false);
 		
 		
-		imagePanel = new ImagePanel(filePath);
+		
+		imagePanel = new JPanel() {
+			private static final long serialVersionUID = 1L;
+			public void paint(Graphics g) {
+				try {
+					BufferedImage image = ImageIO.read(new File(filePath));
+					g.drawImage(image, 0, 0, null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		};
 		imagePanel.setPreferredSize(new Dimension(620, 412));
-			
+		
 		
 		JPanel pan1 = new JPanel();
+		JPanel pan2 = new JPanel();
 		pan1.setLayout(new GridLayout(5, 1));
 		pan1.add(new BoutonPartieRapide());
 		pan1.add(new BoutonPartiePersonalisee());
 		pan1.add(new BoutonCharger());
 		pan1.add(new BoutonEditer());
-		pan1.add(new BoutonQuitter());
-		
-		
+		pan1.add(new BoutonOptions());
+		/*pan2.add(pan1);
+		imagePanel.add(pan2);*/
+		imagePanel.add(pan1);
 		setContentPane(imagePanel);
-		getContentPane().add(pan1);
 		
-		
+		pack();
 		setVisible(true);
 	}
 	
-
-
 	class BoutonPartieRapide extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;
 		private final static String titre = "Partie Rapide"; 
@@ -54,29 +68,11 @@ public class FenetreMenuDepart extends JFrame {
 		public BoutonPartieRapide() {
 			super(titre);
 			addMouseListener(this);
-			addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent key) {
-					switch (key.getKeyCode()) {
-						case KeyEvent.VK_SPACE: {
-							new FenetreChoixNoms();
-							dispose();
-							break;
-						}
-						case KeyEvent.VK_ENTER: {
-							new FenetreChoixNoms();
-							dispose();
-							break;
-						}
-					}
-				}
-				public void keyTyped(KeyEvent arg0) {}
-				public void keyReleased(KeyEvent arg0) {}
-			});
 		}
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			new FenetreChoixNoms();
+			FenetreChoixNoms f = new FenetreChoixNoms();
 			dispose();
 			
 		}
@@ -96,30 +92,13 @@ public class FenetreMenuDepart extends JFrame {
 			super(nom);
 			addMouseListener(this);
 			setEnabled(true);
-			addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent key) {
-					switch (key.getKeyCode()) {
-						case KeyEvent.VK_SPACE: {
-							new FenetreChoixPartie();
-							dispose();
-							break;
-						}
-						case KeyEvent.VK_ENTER: {
-							new FenetreChoixPartie();
-							dispose();
-							break;
-						}
-					}
-				}
-				public void keyTyped(KeyEvent arg0) {}
-				public void keyReleased(KeyEvent arg0) {}
-			});
 		}
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			new FenetreChoixPartie();
-			dispose();		
+			FenetreChoixPartie f = new FenetreChoixPartie();
+			dispose();
+			
 		}
 
 		
@@ -137,27 +116,12 @@ public class FenetreMenuDepart extends JFrame {
 		public BoutonCharger() {
 			super(titre);
 			addMouseListener(this);
-			addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent key) {
-					switch (key.getKeyCode()) {
-						case KeyEvent.VK_SPACE: {
-							// TODO : 
-							break;
-						}
-						case KeyEvent.VK_ENTER: {
-							// TODO : 
-							break;
-						}
-					}
-				}
-				public void keyTyped(KeyEvent arg0) {}
-				public void keyReleased(KeyEvent arg0) {}
-			});
 		}
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			//TODO: 
+			
+			
 		}
 		
 		public void mouseEntered(MouseEvent arg0) {}		
@@ -174,29 +138,11 @@ public class FenetreMenuDepart extends JFrame {
 		public BoutonEditer() {
 			super(titre);
 			addMouseListener(this);
-			addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent key) {
-					switch (key.getKeyCode()) {
-						case KeyEvent.VK_SPACE: {
-							new FenetreModif();
-							dispose();
-							break;
-						}
-						case KeyEvent.VK_ENTER: {
-							new FenetreModif();
-							dispose();
-							break;
-						}
-					}
-				}
-				public void keyTyped(KeyEvent arg0) {}
-				public void keyReleased(KeyEvent arg0) {}
-			});
 		}
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			new FenetreModif();
+			FenetreModif f = new FenetreModif();
 			dispose();
 			
 		}
@@ -208,35 +154,21 @@ public class FenetreMenuDepart extends JFrame {
 		
 	}
 	
-	class BoutonQuitter extends JButton implements MouseListener{
+	class BoutonOptions extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;
-		private static final String nom = "Quitter";
+		private static final String nom = "Options (non disponible)";
 		
-		public BoutonQuitter() {
+		public BoutonOptions() {
 			super(nom);
 			addMouseListener(this);
-			addKeyListener(new KeyListener() {
-				public void keyPressed(KeyEvent key) {
-					switch (key.getKeyCode()) {
-						case KeyEvent.VK_SPACE: {
-							System.exit(EXIT_ON_CLOSE);
-							break;
-						}
-						case KeyEvent.VK_ENTER: {
-							System.exit(EXIT_ON_CLOSE);
-							break;
-						}
-					}
-				}
-				public void keyTyped(KeyEvent arg0) {}
-				public void keyReleased(KeyEvent arg0) {}
-			});
+			setEnabled(true);
 		}
 		
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			System.exit(EXIT_ON_CLOSE);
+			// TODO Auto-generated method stub
+			
 		}
 
 		
@@ -248,6 +180,6 @@ public class FenetreMenuDepart extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new FenetreMenuDepart();
+		FenetreMenuDepart f = new FenetreMenuDepart();
 	}
 }

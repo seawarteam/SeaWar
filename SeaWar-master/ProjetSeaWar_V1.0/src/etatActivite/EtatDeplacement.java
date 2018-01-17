@@ -16,6 +16,7 @@ public class EtatDeplacement implements EtatAction {
 
 	public void clique(Position pos, Controleur c) {
 		c.getPartie().ResetCouleur();
+		System.out.println(pos);
 		Navire nav = c.getPartie().currentJ.getCurrentN();
 		Set<Position> obstacle = c.getPartie().getObstacle();
 		if(nav.afficherCasesAccessibles(obstacle).contains(pos)) {
