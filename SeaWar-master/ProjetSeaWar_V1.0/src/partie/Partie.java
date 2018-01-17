@@ -79,6 +79,12 @@ public class Partie extends Observable implements Serializable {
 		plateau = new Plateau(nX, nY, nbPhares, nbRochers, observeur);
 
 	}
+	
+	public void initPartie(Plateau map, Observer observeur) {
+		addObserver(observeur);
+		plateau = map;
+		plateau.ResetCouleur();
+	}
 
 	public Joueur[] getJoueurs() {
 		return listeJ;
@@ -302,12 +308,12 @@ public class Partie extends Observable implements Serializable {
 		}
 		return null;
 	}
-	
+	/*
 	public void initPartie(Plateau map,	Observer observeur) {
 		addObserver(observeur);
 		plateau = map;
 		plateau.ResetCouleur();
-	}
+	}*/
 
 
 	public boolean existeApteNav() {
