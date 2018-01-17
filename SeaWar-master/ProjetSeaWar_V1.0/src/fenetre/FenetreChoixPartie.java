@@ -22,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
 
+//import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 import partie.Canons;
 import partie.ControleurChargerPartie;
 import partie.Joueur;
@@ -34,9 +36,9 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		FenetreChoixPartie f = new FenetreChoixPartie();
 		
 	}
-	final String pathMap = getPath() + "/Sauvegardes/Reglages/Cartes/";
-	final String pathCanon = getPath() + "/Sauvegardes/Reglages/Canons/";
-	final String pathBateau = getPath() + "/Sauvegardes/Reglages/Bateaux/";
+	final String pathMap = getPath()+ "/Sauvegardes/Reglages/Cartes/";
+	final String pathCanon = getPath()+ "/Sauvegardes/Reglages/Canons/";
+	final String pathBateau = getPath()+ "/Sauvegardes/Reglages/Bateaux/";
 	private JButton valider;
 	private ChoixCarte choixCarte;
 	private ChoixJoueur choixJoueur;
@@ -258,10 +260,10 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 					for(Navire n : navires) {
 						infos += "<tr><td>Nom du bateau : </td><td>"+n.getNom()+"</td></tr>";
 						infos += "<tr><td>Canon Primaire : </td><td>"+n.getCanonP().getNom()+"</td></tr>";
-						infos += "<tr><td>Dégâts : </td><td>"+n.getCanonP().getDegat()+"</td></tr>";
+						infos += "<tr><td>D�g�ts : </td><td>"+n.getCanonP().getDegat()+"</td></tr>";
 						infos += "<tr><td>Tps Rechargement : </td><td>"+n.getCanonP().getTpsRech()+"</td></tr>";
 						infos += "<tr><td>Canon Secondaire : </td><td>"+n.getCanonS().getNom()+"</td></tr>";
-						infos += "<tr><td>Dégâts : </td><td>"+n.getCanonS().getDegat()+"</td></tr>";
+						infos += "<tr><td>D�g�ts : </td><td>"+n.getCanonS().getDegat()+"</td></tr>";
 						infos += "<tr><td>Tps Rechargement : </td><td>"+n.getCanonS().getTpsRech()+"</td></tr>";
 					}
 				}
@@ -385,8 +387,8 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		infoCarte.revalidate();
 	}
 	
-	private String getPath() {
-		return System.getProperty("user.dir");
+	private String getPath() {		
+		return System.getProperty("user.dir");		
 	}
 	
 }

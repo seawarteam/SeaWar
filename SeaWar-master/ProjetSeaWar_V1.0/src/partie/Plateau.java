@@ -23,7 +23,7 @@ public class Plateau implements Serializable {
 	private static int resteX;
 
 	private Observer obs;
-	//private static Observer obs;
+	// private static Observer obs;
 	private Map<Joueur, List<Position>> bases;
 
 	public Plateau(int l, int L, int nbPhares, int nbRochers, Observer obs) {
@@ -225,6 +225,19 @@ public class Plateau implements Serializable {
 	public void setCaseEau(Position p) {
 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
 		Polygon poly = c.getPoly();
+		if (c instanceof Phare) {
+			phares.remove(c);
+		}
+		if (c instanceof Eau) {
+			if (c.getEstOccupe()) {
+				Position pos = c.getPosition();
+				caseN.remove(p);
+			}
+		}
+		if (c instanceof Rocher) {
+			Position pos = c.getPosition();
+			caseR.remove(p);
+		}
 		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Eau(poly,
 				p.getX(), p.getY() + p.getX() / 2, obs);
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
@@ -233,17 +246,43 @@ public class Plateau implements Serializable {
 	public void setCaseRocher(Position p) {
 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
 		Polygon poly = c.getPoly();
+		if (c instanceof Phare) {
+			phares.remove(c);
+		}
+		if (c instanceof Eau) {
+			if (c.getEstOccupe()) {
+				Position pos = c.getPosition();
+				caseN.remove(p);
+			}
+		}
+		if (c instanceof Rocher) {
+			Position pos = c.getPosition();
+			caseR.remove(p);
+		}
 		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Rocher(poly,
 				p.getX(), p.getY() + p.getX() / 2, obs);
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
 	}
 
 	public void setCasePhare(Position p) {
- 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
- 		Polygon poly = c.getPoly();
-		Phare ph = new Phare(poly,p.getX(), p.getY() + p.getX() / 2, obs);
+		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
+		Polygon poly = c.getPoly();
+		if (c instanceof Phare) {
+			phares.remove(c);
+		}
+		if (c instanceof Eau) {
+			if (c.getEstOccupe()) {
+				Position pos = c.getPosition();
+				caseN.remove(p);
+			}
+		}
+		if (c instanceof Rocher) {
+			Position pos = c.getPosition();
+			caseR.remove(p);
+		}
+		Phare ph = new Phare(poly, p.getX(), p.getY() + p.getX() / 2, obs);
 		cases[p.getX()][p.getY() + (int) p.getX() / 2] = ph;
- 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
 		phares.add(ph);
 	}
 
@@ -283,17 +322,16 @@ public class Plateau implements Serializable {
 
 	public boolean hasWinner(Joueur j) {
 		boolean gagne = true;
-		for(Phare p:this.getPhares()){
-			if(p.occupeeDefinitivementPar == null){
+		for (Phare p : this.getPhares()) {
+			if (p.occupeeDefinitivementPar == null) {
 				gagne = false;
 			} else {
-				if(!p.occupeeDefinitivementPar.getNomJ().equals(j.getNom())){
+				if (!p.occupeeDefinitivementPar.getNomJ().equals(j.getNom())) {
 					gagne = false;
 				}
 			}
 		}
-		
-		
+
 		return gagne;
 	}
 
