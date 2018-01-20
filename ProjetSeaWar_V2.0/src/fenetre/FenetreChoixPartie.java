@@ -274,10 +274,10 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 					for(Navire n : navires) {
 						infos += "<tr><td>Nom du bateau : </td><td>"+n.getNom()+"</td></tr>";
 						infos += "<tr><td>Canon Primaire : </td><td>"+n.getCanonP().getNom()+"</td></tr>";
-						infos += "<tr><td>D�g�ts : </td><td>"+n.getCanonP().getDegat()+"</td></tr>";
+						infos += "<tr><td>Dï¿½gï¿½ts : </td><td>"+n.getCanonP().getDegat()+"</td></tr>";
 						infos += "<tr><td>Tps Rechargement : </td><td>"+n.getCanonP().getTpsRech()+"</td></tr>";
 						infos += "<tr><td>Canon Secondaire : </td><td>"+n.getCanonS().getNom()+"</td></tr>";
-						infos += "<tr><td>D�g�ts : </td><td>"+n.getCanonS().getDegat()+"</td></tr>";
+						infos += "<tr><td>Dï¿½gï¿½ts : </td><td>"+n.getCanonS().getDegat()+"</td></tr>";
 						infos += "<tr><td>Tps Rechargement : </td><td>"+n.getCanonS().getTpsRech()+"</td></tr>";
 					}
 				}
@@ -355,8 +355,10 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			ArrayList<E> nomFiles = new ArrayList<E>();
 			File filePath = new File(path); 
 			File [] files = filePath.listFiles();
-			for(File f : files) {
-				nomFiles.add((E)f.getName());
+			if(files != null) {
+				for(File f : files) {
+					nomFiles.add((E)f.getName());
+				}
 			}
 			return nomFiles;
 		} 
