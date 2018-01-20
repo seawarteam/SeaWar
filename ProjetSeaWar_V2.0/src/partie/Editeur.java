@@ -97,7 +97,7 @@ public class Editeur extends Observable {
 				}
 			}
 		} else {
-			System.out.println("Fichier dejaÂ  existant !");
+			System.out.println("Fichier deja‚  existant !");
 		}
 	}
 	
@@ -114,7 +114,7 @@ public class Editeur extends Observable {
 			} catch (final java.io.IOException e) {
 				File path = new File(getPath() + pathCanon);
 				boolean ok = path.mkdirs();
-				//System.err.println("erreur 1 corrigée : "+ok);
+				//System.err.println("erreur 1 corrigee : "+ok);
 			} finally {
 				try {
 					final FileOutputStream fichier = new FileOutputStream(name);
