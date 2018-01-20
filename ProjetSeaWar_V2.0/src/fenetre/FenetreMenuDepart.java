@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import son.JouerSon;
+
 public class FenetreMenuDepart extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -19,6 +21,7 @@ public class FenetreMenuDepart extends JFrame {
 	private String filePath = "bateau.jpg";
 
 	public FenetreMenuDepart() {
+		JouerSon.SonEpique1();
 		setTitle("Menu Principal");
 		Point p = ImagePanel.getTailleImage(filePath);
 		setSize(p.x, p.y);

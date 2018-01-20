@@ -27,6 +27,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import erreur.FichierExistant;
 import partie.Case;
 import partie.ControleurModif;
 import partie.Editeur;
@@ -249,6 +251,7 @@ class EditCarte extends JPanel{
 		private JButton sauvegarde;
 		private GridLayout grid;
 		private JTextField nom;
+		private JLabel messageErr= new JLabel("");
 		JLabel Lnom;
 		JList<String> listBase;
 		String[] data = {"Joueur1", "Joueur2", "Joueur3", "Joueur4", "Joueur5", "Joueur6"};
@@ -318,6 +321,7 @@ class EditCarte extends JPanel{
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					messageErr.setText("");
 					controleur.demandeRetour();
 					menu.changeEditInit();
 				}
@@ -326,7 +330,12 @@ class EditCarte extends JPanel{
 			sauvegarde = new JButton("Sauvegarder");
 			sauvegarde.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controleur.demandeSauvegardeMap(nom.getText());
+					try {
+						controleur.demandeSauvegardeMap(nom.getText());
+						
+					} catch (FichierExistant e1) {
+						messageErr.setText("Nom invalide");
+					}
 				}
 			});
 			
@@ -339,7 +348,7 @@ class EditCarte extends JPanel{
 			pan.add(nom);
 			pan.add(sauvegarde);
 			pan.add(retour);
-			pan.add(new JPanel());
+			pan.add(messageErr);
 			pan.add(new JPanel());
 			pan.add(ajoutEau);
 			pan.add(ajoutRocher);
@@ -372,14 +381,17 @@ class EditCarte extends JPanel{
 		private JButton sauvegarde;
 		private MenuDroite menu;
 		
+		private JLabel messageErr = new JLabel("");
+		
 		public EditCanon(MenuDroite m){
 			menu = m;
-			grid = new GridLayout(4, 1);
+			grid = new GridLayout(5, 1);
 			
 			
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					messageErr.setText("");
 					controleur.demandeRetour();
 					menu.changeEditInit();
 				}
@@ -388,21 +400,23 @@ class EditCarte extends JPanel{
 			sauvegarde = new JButton("Sauvegarder");
 			sauvegarde.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//TODO: mettre Ã  jour le canon
+					//TODO: mettre a� jour le canon
 					try {
 						int degat = Integer.parseInt(Tdegat.getText());
 						int recharge = Integer.parseInt(Trecharge.getText());
 						if(degat > 0 && recharge > 0) {
 							editeur.getCanonP().setDegat(degat);
 							editeur.getCanonP().setTpsRech(recharge);
-							controleur.demandeSauvegardeCanon(Tnom.getText());
+							try {
+								controleur.demandeSauvegardeCanon(Tnom.getText());
+							} catch (FichierExistant e1) {
+								messageErr.setText("Nom invalide");
+							}
 						} else {
-							System.err.println("degat et recharge doivent etre >0 !");
-							//TODO: popup !
+							messageErr.setText("degat et recharge doivent etre >0 !");
 						}
 					} catch (NumberFormatException nfe) {
-						System.err.println("convertion en int impossible : degat = "+Tdegat.getText()+" recharge = "+Trecharge.getText());
-						//TODO: popup !
+						messageErr.setText("degat et recharge sont des entiers");
 					}
 				}
 			});
@@ -456,6 +470,7 @@ class EditCarte extends JPanel{
 			j.add(Pcommentaire);
 			j.add(caracteristiques);
 			j.add(bouton);
+			j.add(messageErr);
 			add(j);
 		}
 	}
@@ -579,16 +594,19 @@ class EditCarte extends JPanel{
 		private JTextField Tdeplacement;
 		private JTextField TpointsDeVie;
 		
+		private JLabel messageErr = new JLabel("");
+		
 		private static final long serialVersionUID = 1L;
 
 		
 		public EditNavire(MenuDroite m){
 			
 			menu = m;
-			GridLayout grid = new GridLayout(5, 1);
+			GridLayout grid = new GridLayout(6, 1);
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					messageErr.setText("");
 					controleur.demandeRetour();
 					menu.changeEditInit();
 				}
@@ -603,26 +621,28 @@ class EditCarte extends JPanel{
 						if(deplacement > 0 && pointsDeVie > 0) {
 							editeur.getNavire().setPv(pointsDeVie);
 							editeur.getNavire().setDepMax(deplacement);
-							controleur.demandeSauvegardeNavire(Tnom.getText());  
+							try {
+								controleur.demandeSauvegardeNavire(Tnom.getText());
+							} catch (FichierExistant e1) {
+								messageErr.setText("Nom invalide");
+							}  
 						} else {
-							System.err.println("degat et recharge doivent etre >0 !");
-							//TODO: popup !
+							messageErr.setText("degat et recharge doivent etre >0 !");
 						}
 					} catch (NumberFormatException nfe) {
-						System.err.println("convertion en int impossible : pointsDeVie = "+TpointsDeVie.getText()+" deplacement = "+Tdeplacement.getText());
-						//TODO: popup !
+						messageErr.setText("PV et deplacement sont des entiers");
 					}
 				}
 			});
 			
 			
 			JPanel Ptitre = new JPanel();
-			JLabel titre = new JLabel("CrÃ©ation d'un nouveau Navire");
+			JLabel titre = new JLabel("Creation d'un nouveau Navire");
 			Ptitre.add(titre);
 			
 						
 			JLabel Lnom = new JLabel("nom : ");
-			JLabel Ldeplacement = new JLabel("DÃ©placement : ");
+			JLabel Ldeplacement = new JLabel("Deplacement : ");
 			JLabel LpointsDeVie = new JLabel("Points de vie : ");
 			
 			Tnom = new JTextField();
@@ -648,6 +668,7 @@ class EditCarte extends JPanel{
 			j.add(Ptitre);
 			j.add(caracteristiques);
 			j.add(bouton);
+			j.add(messageErr);
 			add(j);
 		}
 		
