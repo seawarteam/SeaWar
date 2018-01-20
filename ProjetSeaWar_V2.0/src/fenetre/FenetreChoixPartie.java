@@ -1,7 +1,6 @@
 package fenetre;
 
 import java.awt.GridLayout;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,28 +8,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
-import fenetre.FenetreChoixNoms.BoutonValider;
 import partie.Canons;
 import partie.ControleurChargerPartie;
 import partie.Joueur;
@@ -39,6 +30,8 @@ import partie.Navire;
 import partie.Plateau;
 
 public class FenetreChoixPartie extends JFrame implements Observer{
+	private static final long serialVersionUID = -133048637330577451L;
+
 	public static void main(String [] args) {
 		FenetreChoixPartie f = new FenetreChoixPartie();
 		
@@ -47,11 +40,12 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	final String pathCanon = getPath()+ "/Sauvegardes/Reglages/Canons/";
 	final String pathBateau = getPath()+ "/Sauvegardes/Reglages/Bateaux/";
 
-	private JButton valider;
+	private JButton jouer;
 	private ChoixCarte choixCarte;
 	private ChoixJoueur choixJoueur;
 	private InfoCarte infoCarte;
 	private InfoJoueur infoJoueurs;
+	private JScrollPane jsp;
 	
 	private Lanceur lanceur;
 	private ControleurChargerPartie controleur;
@@ -72,8 +66,9 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		infoCarte = new InfoCarte();
 		choixJoueur = new ChoixJoueur();
 		infoJoueurs = new InfoJoueur();
-		valider = new JButton("Jouer");
-		valider.addActionListener(new ActionListener() {
+		jsp = new JScrollPane(infoJoueurs);
+		jouer = new JButton("Jouer");
+		jouer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controleur.demandeLancerPartie();
 			}
@@ -82,8 +77,8 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		add(choixCarte);
 		add(infoCarte);
 		add(choixJoueur);
-		add(infoJoueurs);
-		add(valider);
+		add(jsp);
+		add(jouer);
 		setVisible(true);
 	}
 	
@@ -148,6 +143,9 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		MyComboBoxModel<String> listmodelCanonS;
 		MyComboBoxModel<String> listmodelCanonP;
 		MyComboBoxModel<String> listmodelBateaux;
+		MyComboBoxModel<String> listmodelCanonS2;
+		MyComboBoxModel<String> listmodelCanonP2;
+		MyComboBoxModel<String> listmodelBateaux2;
 		JComboBox<String> list2NomCanonS;
 		JComboBox<String> list2NomCanonP;
 		JComboBox<String> list2NomBateaux;
@@ -179,6 +177,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 					selectedCanonS1 = null;
 					selectedCanonP2 = null;
 					selectedCanonS2 = null;
+					validate();
 				}
 			});
 			lNom = new JLabel("Nom joueur:");
@@ -186,6 +185,9 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			listmodelCanonS = new MyComboBoxModel<String>(pathCanon);
 			listmodelCanonP = new MyComboBoxModel<String>(pathCanon);
 			listmodelBateaux = new MyComboBoxModel<String>(pathBateau);
+			listmodelCanonS2 = new MyComboBoxModel<String>(pathCanon);
+			listmodelCanonP2 = new MyComboBoxModel<String>(pathCanon);
+			listmodelBateaux2 = new MyComboBoxModel<String>(pathBateau);
 			listNomCanonS = new JComboBox<String>(listmodelCanonS);
 			listNomCanonS.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -207,21 +209,21 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 					selectedNavire1 = Navire.copy((Navire) chargerObject(nom, pathBateau));
 				}
 			});
-			list2NomCanonS = new JComboBox<String>(listmodelCanonS);
+			list2NomCanonS = new JComboBox<String>(listmodelCanonS2);
 			list2NomCanonS.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)list2NomCanonS.getSelectedItem();
 					selectedCanonS2 = Canons.copy((Canons) chargerObject(nom, pathCanon));
 				}
 			});
-			list2NomCanonP = new JComboBox<String>(listmodelCanonS);
+			list2NomCanonP = new JComboBox<String>(listmodelCanonS2);
 			list2NomCanonP.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)list2NomCanonP.getSelectedItem();
 					selectedCanonP2 = Canons.copy((Canons) chargerObject(nom, pathCanon));
 				}
 			});
-			list2NomBateaux = new JComboBox<String>(listmodelBateaux);
+			list2NomBateaux = new JComboBox<String>(listmodelBateaux2);
 			list2NomBateaux.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)list2NomBateaux.getSelectedItem();
@@ -254,36 +256,33 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		}
 	}
 	
-	class InfoJoueur extends JPanel{
+	class InfoJoueur extends JEditorPane{
 		private static final long serialVersionUID = 1L;
-		JLabel infosLabel;
-		JScrollPane spane;
 		public InfoJoueur() {
-			infosLabel = new JLabel();
-			spane = new JScrollPane (infosLabel);
-			add(spane);
+			super();
+			setEditable(false);
 		}
 		
 		public void setInfoJoueurs() {
 			ArrayList<Joueur> joueurs = lanceur.getJoueurs();
-			String infos = ("<html>" + "");
+			String infos = "";
 			if(joueurs != null) {
 				for(Joueur j : joueurs) {
-					infos += "<table><tr><td>Nom : </td><td>"+j.getNom()+"</td></tr>";
+					infos += "Nom : "+j.getNom()+"\n";
 					ArrayList<Navire> navires = (ArrayList<Navire>) j.getListNavires();
 					for(Navire n : navires) {
-						infos += "<tr><td>Nom du bateau : </td><td>"+n.getNom()+"</td></tr>";
-						infos += "<tr><td>Canon Primaire : </td><td>"+n.getCanonP().getNom()+"</td></tr>";
-						infos += "<tr><td>Dï¿½gï¿½ts : </td><td>"+n.getCanonP().getDegat()+"</td></tr>";
-						infos += "<tr><td>Tps Rechargement : </td><td>"+n.getCanonP().getTpsRech()+"</td></tr>";
-						infos += "<tr><td>Canon Secondaire : </td><td>"+n.getCanonS().getNom()+"</td></tr>";
-						infos += "<tr><td>Dï¿½gï¿½ts : </td><td>"+n.getCanonS().getDegat()+"</td></tr>";
-						infos += "<tr><td>Tps Rechargement : </td><td>"+n.getCanonS().getTpsRech()+"</td></tr>";
+						infos += "Nom du bateau : "+n.getNom()+"\n";
+						infos += "Canon Primaire : "+n.getCanonP().getNom()+"\n";
+						infos += "Degats : "+n.getCanonP().getDegat()+"\n";
+						infos += "Tps Rechargement : "+n.getCanonP().getTpsRech()+"\n";
+						infos += "Canon Secondaire : "+n.getCanonS().getNom()+"\n";
+						infos += "Degats : "+n.getCanonS().getDegat()+"\n";
+						infos += "Tps Rechargement : "+n.getCanonS().getTpsRech()+"\n\n\n";
 					}
 				}
 				
 			}
-			infosLabel.setText(infos);
+			setText(infos);
 		}
 		
 		
@@ -319,7 +318,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	}
 
 	
-	class MyComboBoxModel<E> extends AbstractListModel implements ComboBoxModel {
+	class MyComboBoxModel<E> extends AbstractListModel<E> implements ComboBoxModel<E> {
 		private static final long serialVersionUID = 1L;
 		ListDataListener listListener;
 		ArrayList<E> nomFiles;
@@ -330,7 +329,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			this.path = path;
 			initList(path);
 		}
-		public Object getElementAt(int arg0) {
+		public E getElementAt(int arg0) {
 			int i = 0;
 			String nom = null;
 			Iterator<E> it = nomFiles.iterator();
@@ -338,7 +337,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 				i++;
 				nom = (String) it.next();
 			}
-			return nom;
+			return (E) nom;
 		}
 
 		public int getSize() {
@@ -350,7 +349,6 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			}
 			return i;
 		}
-		@SuppressWarnings("unchecked")
 		public ArrayList<E> findFiles(String path){
 			ArrayList<E> nomFiles = new ArrayList<E>();
 			File filePath = new File(path); 
@@ -396,7 +394,6 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	private void updateJoueur(Object arg1) {
 		infoJoueurs.setInfoJoueurs();
 		infoJoueurs.revalidate();
-		
 	}
 
 	private void updateMap(Object arg1) {
