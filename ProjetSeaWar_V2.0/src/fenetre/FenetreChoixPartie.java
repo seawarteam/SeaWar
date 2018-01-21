@@ -1,6 +1,9 @@
 package fenetre;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -49,6 +52,8 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	
 	private Lanceur lanceur;
 	private ControleurChargerPartie controleur;
+
+	private String filePath = "bateau2.jpg";
 	
 	public FenetreChoixPartie() {
 		lanceur = new Lanceur(this);
@@ -58,10 +63,12 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	
 	private void initFenetre() {
 		setTitle("Choix carte");
-		setSize(400,500);
+		Point p = ImagePanel.getTailleImage(filePath);
+		setSize(p.x, p.y);
+		setResizable(false);
 		setLocationRelativeTo(null);	
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new GridLayout(5,1));
+
 		choixCarte = new ChoixCarte();
 		infoCarte = new InfoCarte();
 		choixJoueur = new ChoixJoueur();
@@ -73,12 +80,33 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 				controleur.demandeLancerPartie();
 			}
 		});
-		setLayout(new GridLayout(5, 1));
-		add(choixCarte);
-		add(infoCarte);
-		add(choixJoueur);
-		add(jsp);
-		add(jouer);
+		
+		ImagePanel imagePanel = new ImagePanel(filePath);
+		JPanel pan = new JPanel();
+		pan.setOpaque(false);
+		pan.setLayout(new GridLayout(4, 1));
+		
+		JPanel panCarte = new JPanel();
+		panCarte.setLayout(new GridLayout(2,1));
+		panCarte.setPreferredSize(new Dimension(300, 50));
+		panCarte.add(choixCarte);
+		panCarte.add(infoCarte);
+		pan.add(panCarte);
+		
+		JPanel panJoueur = new JPanel();
+		panJoueur.add(choixJoueur);
+		pan.add(panJoueur);
+		
+		
+		pan.add(jsp);
+		
+		JPanel panJouer = new JPanel();
+		panJouer.add(jouer);
+		pan.add(panJouer);
+		
+		
+		imagePanel.add(pan);
+		setContentPane(imagePanel);
 		setVisible(true);
 	}
 	
@@ -100,6 +128,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 				}
 			});
 			pan = new JPanel();
+			pan.setLayout(new GridLayout(1,2));
 			pan.add(label);
 			pan.add(listNomCarte);
 			add(pan);
@@ -119,7 +148,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			Plateau map = lanceur.getMap();
 			String infos = ("<html>" + "");
 			if(map != null) {
-				infos += "<table><tr><td>Taille : </td><td>"+map.getNCasesX()+"x"+map.getNCasesY()+"</td></tr>";
+				infos += "<tr><td>Taille : </td><td>"+map.getNCasesX()+"x"+map.getNCasesY()+"</td></tr>";
 				infos += "<tr><td>Nombre de joueurs max : </td><td>"+map.getNbMaxJoueurs()+"</td></tr>";
 				infos += "<tr><td>Nombre de phares : </td><td>"+map.getNbPhares()+"</td></tr>";
 			}
@@ -367,7 +396,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			fireIntervalAdded(this, 0, getSize()-1);
 			//System.out.println(nomFiles);
 		}
-		@Override
+		
 		public void setSelectedItem(Object anItem) {
 		    selection = (String) anItem; 
 		}
@@ -378,7 +407,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		  }
 	}
 
-	@Override
+	
 	public void update(Observable arg0, Object arg1) {
 		if(arg1 instanceof Plateau) {
 			updateMap(arg1);
