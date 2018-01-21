@@ -332,6 +332,8 @@ class EditCarte extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					try {
 						controleur.demandeSauvegardeMap(nom.getText());
+						messageErr.setText("Sauvegarde reussie");
+						nom.setText("");
 						
 					} catch (FichierExistant e1) {
 						messageErr.setText("Nom invalide");
@@ -409,6 +411,10 @@ class EditCarte extends JPanel{
 							editeur.getCanonP().setTpsRech(recharge);
 							try {
 								controleur.demandeSauvegardeCanon(Tnom.getText());
+								messageErr.setText("Sauvegarde reussie");
+								Tnom.setText("");
+								Trecharge.setText("");
+								Tdegat.setText("");
 							} catch (FichierExistant e1) {
 								messageErr.setText("Nom invalide");
 							}
@@ -562,6 +568,7 @@ class EditCarte extends JPanel{
 			editCanon = new JButton("Editer un canon");
 			editCanon.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					setPlateauTaille(20, 20);
 					menu.changeEditCanon();
 				}
 			});
@@ -623,6 +630,10 @@ class EditCarte extends JPanel{
 							editeur.getNavire().setDepMax(deplacement);
 							try {
 								controleur.demandeSauvegardeNavire(Tnom.getText());
+								messageErr.setText("Sauvegarde reussie");
+								Tnom.setText("");
+								Tdeplacement.setText("");
+								TpointsDeVie.setText("");
 							} catch (FichierExistant e1) {
 								messageErr.setText("Nom invalide");
 							}  

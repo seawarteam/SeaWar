@@ -195,7 +195,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 					selectedCanonS1 = Canons.copy((Canons) chargerObject(nom, pathCanon));
 				}
 			});
-			listNomCanonP = new JComboBox<String>(listmodelCanonS);
+			listNomCanonP = new JComboBox<String>(listmodelCanonP);
 			listNomCanonP.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)listNomCanonP.getSelectedItem();
@@ -216,7 +216,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 					selectedCanonS2 = Canons.copy((Canons) chargerObject(nom, pathCanon));
 				}
 			});
-			list2NomCanonP = new JComboBox<String>(listmodelCanonS2);
+			list2NomCanonP = new JComboBox<String>(listmodelCanonP2);
 			list2NomCanonP.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = (String)list2NomCanonP.getSelectedItem();
@@ -272,6 +272,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 					ArrayList<Navire> navires = (ArrayList<Navire>) j.getListNavires();
 					for(Navire n : navires) {
 						infos += "Nom du bateau : "+n.getNom()+"\n";
+						infos += "Deplacement : "+n.getDepMax()+"\n";
 						infos += "Canon Primaire : "+n.getCanonP().getNom()+"\n";
 						infos += "Degats : "+n.getCanonP().getDegat()+"\n";
 						infos += "Tps Rechargement : "+n.getCanonP().getTpsRech()+"\n";

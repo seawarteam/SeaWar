@@ -88,12 +88,14 @@ public class ControleurModif {
 
 	public void demandeSauvegardeNavire(String nom) throws FichierExistant {
 		if (nom != null || nom != "" || nom != " ") {
+			editeur.getNavire().setNom(nom);
 			editeur.sauvegarderNavire(nom);
 		}
 	}
 	
 	public void demandeSauvegardeCanon(String nom) throws FichierExistant {
 		if (nom != null || nom != "" || nom != " ") {
+			editeur.getCanonP().setNom(nom);
 			editeur.sauvegarderCanon(nom);
 		}
 	}
