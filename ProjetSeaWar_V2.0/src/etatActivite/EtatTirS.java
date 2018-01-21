@@ -25,6 +25,9 @@ public class EtatTirS implements EtatAction {
 			
 			if(cible != null) {
 				cible.toucher(degats);
+				if(cible.getEtatCourant() == Detruit.getEtat()) {
+					c.getPartie().getPlateau().freeCase(cible.getPos());
+				}
 				if(c.getPartie().nbJoueursRestant() == 1){
 					c.getPartie().finPartie(c.getPartie().currentJ);
 				}
