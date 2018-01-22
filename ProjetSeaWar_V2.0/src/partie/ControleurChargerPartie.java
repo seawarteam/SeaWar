@@ -1,7 +1,5 @@
 package partie;
 
-import java.util.ArrayList;
-
 import fenetre.FenetrePrincipale;
 
 public class ControleurChargerPartie{
@@ -19,8 +17,7 @@ public class ControleurChargerPartie{
 			if(nbJoueurs<nbMaxJoueur) {
 				lanceur.addJoueur(nom, navire, canonP, canonS, navire2, canonP2, canonS2);
 			}
-		} 
-		
+		}
 	}
 	
 	public void demandeChargerMap(Plateau p) {

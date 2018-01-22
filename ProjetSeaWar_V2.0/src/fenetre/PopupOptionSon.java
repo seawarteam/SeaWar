@@ -74,7 +74,7 @@ public class PopupOptionSon extends JFrame{
 			}
 		});
 		
-		quitter = new JButton("Quitter");
+		quitter = new JButton("Retour");
 		quitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

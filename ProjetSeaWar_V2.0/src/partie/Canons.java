@@ -107,8 +107,6 @@ public class Canons implements Serializable {
     public boolean tire(Position pos, Set<Position> rochers) {
         if(this.tpsRest == 0) {
         	List<Position> posVisable = posCanShoot(monNavire.getDir(), monNavire.getPos(), rochers);
-        	System.out.println("Pos cliqué :"+pos);
-        	System.out.println(posVisable);
         	if(posVisable.contains(pos)) {
         		this.tpsRest=this.tpsRech;
 	        	monNavire.setADejaTire(true);

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.swing.ListModel;
 
+import erreur.FichierExistant;
 import etatModif.*;
 
 public class ControleurModif {
@@ -79,20 +80,20 @@ public class ControleurModif {
 
 	}
 
-	public void demandeSauvegardeMap(String nom) {
+	public void demandeSauvegardeMap(String nom) throws FichierExistant{
 		if (nom != null || nom != "" || nom != " ") {
 			editeur.sauvegarderMap(nom);
 		}
 	}
 
-	public void demandeSauvegardeNavire(String nom) {
+	public void demandeSauvegardeNavire(String nom) throws FichierExistant {
 		if (nom != null || nom != "" || nom != " ") {
 			editeur.getNavire().setNom(nom);
 			editeur.sauvegarderNavire(nom);
 		}
 	}
 	
-	public void demandeSauvegardeCanon(String nom) {
+	public void demandeSauvegardeCanon(String nom) throws FichierExistant {
 		if (nom != null || nom != "" || nom != " ") {
 			editeur.getCanonP().setNom(nom);
 			editeur.sauvegarderCanon(nom);

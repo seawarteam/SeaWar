@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import erreur.FichierExistant;
+
 public class Editeur extends Observable {
 	final String pathMap = "/Sauvegardes/Reglages/Cartes/";
 	final String pathCanon = "/Sauvegardes/Reglages/Canons/";
@@ -70,7 +72,7 @@ public class Editeur extends Observable {
 	}*/
 
 	
-	public void sauvegarderMap(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
+	public void sauvegarderMap(String nomFichier) throws FichierExistant { // ex : partie.sauvegarder ( "Test01" );
 		String name = getPath() + pathMap + nomFichier;
 		ObjectOutputStream oos = null;
 		File pathF = new File(name);
@@ -97,11 +99,11 @@ public class Editeur extends Observable {
 				}
 			}
 		} else {
-			System.out.println("Fichier dejaÂ  existant !");
+			throw new FichierExistant(nomFichier);
 		}
 	}
 	
-	public void sauvegarderCanon(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
+	public void sauvegarderCanon(String nomFichier) throws FichierExistant{ // ex : partie.sauvegarder ( "Test01" );
 		String name = getPath() + pathCanon + nomFichier;
 		ObjectOutputStream oos = null;
 		File pathF = new File(name);
@@ -114,7 +116,7 @@ public class Editeur extends Observable {
 			} catch (final java.io.IOException e) {
 				File path = new File(getPath() + pathCanon);
 				boolean ok = path.mkdirs();
-				//System.err.println("erreur 1 corrigée : "+ok);
+				//System.err.println("erreur 1 corrigee : "+ok);
 			} finally {
 				try {
 					final FileOutputStream fichier = new FileOutputStream(name);
@@ -129,11 +131,11 @@ public class Editeur extends Observable {
 				}
 			}
 		} else {
-			System.out.println("Fichier deja  existant !");
+			throw new FichierExistant(nomFichier);
 		}
 	}
 	
-	public void sauvegarderNavire(String nomFichier) { // ex : partie.sauvegarder ( "Test01" );
+	public void sauvegarderNavire(String nomFichier) throws FichierExistant{ // ex : partie.sauvegarder ( "Test01" );
 		String name = getPath() + pathBateau + nomFichier;
 		ObjectOutputStream oos = null;
 		File pathF = new File(name);
@@ -160,7 +162,7 @@ public class Editeur extends Observable {
 				}
 			}
 		} else {
-			System.out.println("Fichier deja  existant !");
+			throw new FichierExistant(nomFichier);
 		}
 	}
 	

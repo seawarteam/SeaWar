@@ -32,8 +32,8 @@ public class EditBase implements EtatModif {
 	public void clique(Position p, ControleurModif c) {
 		Case ca;
 		if (nbPosition < maxPositions) {
+			ca = c.getEditeur().getMap().getCase(p);
 			if(!positions.contains(p)) {
-				ca = c.getEditeur().getMap().getCase(p);
 				if (!(ca instanceof Rocher) && !(ca instanceof Phare)) {
 					positions.add(p);
 					nbPosition++;

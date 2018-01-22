@@ -33,6 +33,7 @@ private static Courant c = new Courant();
      * @return succès/echec
      */
 	public boolean tir(Canons canon, Position pos, Navire previous, Navire current, Set<Position> rochers) {
+		
 		if(current.getADejaTire()){
 			return false;//TODO: message d'erreur : "le navire à déjà tirer pendant le tour"
 		}

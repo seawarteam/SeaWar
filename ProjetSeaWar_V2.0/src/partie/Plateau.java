@@ -347,9 +347,8 @@ public class Plateau implements Serializable {
 					stop = true;
 				}
 			}
-			return (!stop);
 		}
-		
+		return (!stop);
 	}
 
 	public void surbrillanceO(Set<Position> s) {

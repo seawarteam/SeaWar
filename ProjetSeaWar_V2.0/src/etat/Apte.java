@@ -58,7 +58,6 @@ public class Apte implements EtatDeplacement, Serializable {
     		}
     	} else {
     		ok = canon.tire(pos, rochers);
-    		
 			if(ok) {
 				setEtatCourant(current);
 			}
