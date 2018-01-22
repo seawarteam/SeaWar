@@ -12,8 +12,7 @@ import etat.EtatDeplacement;
  * 
  */
 public class Navire extends Observable implements Serializable {	
-	private static final long serialVersionUID = -8176656521708162457L;
-
+	
 	public static void main (String [] args) {
 		Position.initTabPosition(10, 10);
 		Navire nav = new Navire("bateau", 20, 1, "Louis", Orientation.S, Position.getPosition(1, 1),null);
@@ -65,7 +64,7 @@ public class Navire extends Observable implements Serializable {
 	 private int nb_coup_recu;
 	 private boolean bloque;
 	 
-	 /*TODO: deplacer dans la Classe Plateau ???*/
+	 /*TODO: dÃ©placer dans la Classe Plateau ???*/
 	 public static Map<Orientation,List<Vector<Object>>> caseVoisine;
 	
     /**
@@ -183,7 +182,7 @@ public class Navire extends Observable implements Serializable {
     		return false;
     	}
     	Navire nav = (Navire) obj;
-    	return (this.nom.equals(nav.nom) && this.nomJ.equals(nav.nomJ));//TODO: Definir si ok  	
+    	return (this.nom.equals(nav.nom) && this.nomJ.equals(nav.nomJ));//TODO: DÃ©finir si ok  	
     }
     
     public String toString() {

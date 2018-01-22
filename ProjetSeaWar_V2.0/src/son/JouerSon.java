@@ -58,16 +58,12 @@ public class JouerSon extends Application{
 	
 
 	public static void volumeMusique(double val) {
-		if(musique != null) {
-			musique.setVolume(val);
-		}
+		musique.setVolume(val);
 		volumeM = val;
 	}
 	
 	public static void volumeSon(double val) {
-		if(son != null) {
-			son.setVolume(val);
-		}
+		son.setVolume(val);
 		volumeS = val;
 	}
 	

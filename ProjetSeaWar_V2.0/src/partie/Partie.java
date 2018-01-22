@@ -43,6 +43,7 @@ public class Partie extends Observable implements Serializable {
 	public Joueur[] listeJ;
 	public boolean gagne;
 	public Joueur jGagnant = null;
+	public int nbPhares = 0;
 
 	/**
 	 * Default constructor
@@ -77,6 +78,7 @@ public class Partie extends Observable implements Serializable {
 	public void initPartie(int nX, int nY, int nbPhares, int nbRochers, Observer observeur) {
 		this.addObserver(observeur);
 		plateau = new Plateau(nX, nY, nbPhares, nbRochers, observeur);
+
 
 	}
 	
