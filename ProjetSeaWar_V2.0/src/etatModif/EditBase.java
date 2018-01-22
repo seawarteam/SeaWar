@@ -33,15 +33,16 @@ public class EditBase implements EtatModif {
 		Case ca;
 		if (nbPosition < maxPositions) {
 			ca = c.getEditeur().getMap().getCase(p);
-			if (!(ca instanceof Rocher) && !(ca instanceof Phare)) {
-				positions.add(p);
-				nbPosition++;
-				c.getEditeur().getMap().setColorBase(p, currentJ);
-				if (nbPosition == 2) {
-					finalizeBases(c);
+			if(!positions.contains(p)) {
+				if (!(ca instanceof Rocher) && !(ca instanceof Phare)) {
+					positions.add(p);
+					nbPosition++;
+					c.getEditeur().getMap().setColorBase(p, currentJ);
+					if (nbPosition == 2) {
+						finalizeBases(c);
+					}
 				}
 			}
-
 		}
 
 	}

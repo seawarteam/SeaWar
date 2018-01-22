@@ -256,6 +256,7 @@ public class Plateau implements Serializable {
 		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Rocher(poly,
 				p.getX(), p.getY() + p.getX() / 2, obs);
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
+		caseR.add(p);
 	}
 
 	public void setCasePhare(Position p) {
@@ -333,14 +334,18 @@ public class Plateau implements Serializable {
 		Iterator<Phare> i = phares.iterator();
 		boolean stop = false;
 		Phare ph;
-		while (i.hasNext() && !stop) {
-			ph = i.next();
-			if (ph.getTakePosition() != null) {
-				if (!currentJ.getListNavires().contains(ph.getTakePosition())) {
+		if(phares.size()==0) {
+			return false;
+		}else {
+			while (i.hasNext() && !stop) {
+				ph = i.next();
+				if (ph.getTakePosition() != null) {
+					if (!currentJ.getListNavires().contains(ph.getTakePosition())) {
+						stop = true;
+					}
+				} else {
 					stop = true;
 				}
-			} else {
-				stop = true;
 			}
 		}
 		return (!stop);
