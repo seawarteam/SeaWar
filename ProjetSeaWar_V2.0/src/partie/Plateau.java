@@ -92,7 +92,7 @@ public class Plateau implements Serializable {
 		return null;
 	}
 
-	// cree un hexagone au coordonnÃ©es pixel x0,y0 (!!! pour l'insant, x0 et y0
+	// cree un hexagone au coordonnÃƒÂ©es pixel x0,y0 (!!! pour l'insant, x0 et y0
 	// sont les coordonnees en pixels)
 	public static Polygon hexagone(int x0, int y0) {
 		int x = x0;
@@ -119,7 +119,7 @@ public class Plateau implements Serializable {
 		ArrayList<Position> tabPosUtil = new ArrayList<Position>();
 
 		// Positions obstacles ou il y a les bateaux au debut
-		// TODO: a  Verifier !
+		// TODO: aÂ  Verifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		//caseN.add(Position.getPosition(1, 1));
 		tabPosUtil.add(Position.getPosition(2, 0));
@@ -333,25 +333,20 @@ public class Plateau implements Serializable {
 		return cases;
 	}
 
-	public boolean hasWinner(Joueur currentJ) {
-		Iterator<Phare> i = phares.iterator();
-		boolean stop = false;
-		Phare ph;
-		if(phares.size()==0) {
-			return false;
-		}else {
-			while (i.hasNext() && !stop) {
-				ph = i.next();
-				if (ph.getTakePosition() != null) {
-					if (!currentJ.getListNavires().contains(ph.getTakePosition())) {
-						stop = true;
-					}
-				} else {
-					stop = true;
+	public boolean hasWinner(Joueur j) {
+		boolean gagne = true;
+		for(Phare p:this.getPhares()){
+			if(p.occupeeDefinitivementPar == null){
+				gagne = false;
+			} else {
+				if(!p.occupeeDefinitivementPar.getNomJ().equals(j.getNom())){
+					gagne = false;
 				}
 			}
 		}
-		return (!stop);
+		
+		
+		return gagne;
 	}
 
 	public void surbrillanceO(Set<Position> s) {
