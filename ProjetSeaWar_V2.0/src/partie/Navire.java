@@ -454,6 +454,8 @@ public class Navire extends Observable implements Serializable {
     			Position cell = (Position) vect.elementAt(0);
     			Orientation ori = (Orientation) vect.elementAt(1);
     			List<Vector<Object>> voisinsRela;
+    			System.out.println(ori);
+    			System.out.println(Navire.caseVoisine.get(ori));
     			voisinsRela = Navire.caseVoisine.get(ori);
     			for(Vector<Object> vectVoisinRela : voisinsRela){
     				Position cellVoisinRela = (Position) vectVoisinRela.elementAt(0);
@@ -489,7 +491,7 @@ public class Navire extends Observable implements Serializable {
      * Remplit la Map des voisins avec pour clÃ© l'orientation du Navire pour les cases
      * Les case voisines sont initialisÃ©s pour une case de position (0,0). Pour trouver les case suivantes pour une position (x, y) il faut appliquer la translation.
      */
-    private static void initCaseVoisine(){
+    protected static void initCaseVoisine(){
 		Navire.caseVoisine = new HashMap<Orientation,List<Vector<Object>>>();
 		//A chaque orientation correspond un vecteur (Position, Orientation)
 		Vector<Object> vectN = new Vector<Object>(2);

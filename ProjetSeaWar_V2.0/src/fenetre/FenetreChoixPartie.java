@@ -42,7 +42,8 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	final String pathMap = getPath()+ "/Sauvegardes/Reglages/Cartes/";
 	final String pathCanon = getPath()+ "/Sauvegardes/Reglages/Canons/";
 	final String pathBateau = getPath()+ "/Sauvegardes/Reglages/Bateaux/";
-
+	
+	private JButton retour;
 	private JButton jouer;
 	private ChoixCarte choixCarte;
 	private ChoixJoueur choixJoueur;
@@ -53,7 +54,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	private Lanceur lanceur;
 	private ControleurChargerPartie controleur;
 
-	private String filePath = "bateau2.jpg";
+	private String filePath = "bateau.jpg";
 	
 	public FenetreChoixPartie() {
 		lanceur = new Lanceur(this);
@@ -65,7 +66,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		setTitle("Choix carte");
 		Point p = ImagePanel.getTailleImage(filePath);
 		setSize(p.x, p.y);
-		setResizable(false);
+		setResizable(true);
 		setLocationRelativeTo(null);	
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -78,6 +79,13 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		jouer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controleur.demandeLancerPartie();
+			}
+		});
+		
+		retour  = new JButton("Retour");
+		retour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controleur.demandeRetour();
 			}
 		});
 		
@@ -102,6 +110,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		
 		JPanel panJouer = new JPanel();
 		panJouer.add(jouer);
+		panJouer.add(retour);
 		pan.add(panJouer);
 		
 		

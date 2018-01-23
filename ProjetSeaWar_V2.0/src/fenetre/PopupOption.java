@@ -22,11 +22,11 @@ public class PopupOption extends JFrame {
 	private JButton sauvegarde;
 	private JButton quitter;
 	private JButton annuler;
-
+	private PopupOption popThis;
 	private static final long serialVersionUID = 1L;
 
 	public PopupOption(FenetrePrincipale f) {
-
+		popThis = this;
 		fP = f;
 		Point p = ImagePanel.getTailleImage(filePath);
 		setSize(p.x, p.y);
@@ -47,7 +47,7 @@ public class PopupOption extends JFrame {
 		sauvegarde = new JButton("Sauvegarder");
 		sauvegarde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO:
+				new PopupSave(fP, "Veuillez saisir un nom :");
 			}
 		});
 		
@@ -99,7 +99,6 @@ public class PopupOption extends JFrame {
 
 	}
 	
-	public static void main(String[] args) {
-		SeaWar.partieRapide("1", "2");
-	}
+	
+	
 }

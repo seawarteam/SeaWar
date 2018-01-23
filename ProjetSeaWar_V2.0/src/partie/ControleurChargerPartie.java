@@ -1,5 +1,6 @@
 package partie;
 
+import fenetre.FenetreMenuDepart;
 import fenetre.FenetrePrincipale;
 
 public class ControleurChargerPartie{
@@ -40,6 +41,11 @@ public class ControleurChargerPartie{
 		partie.currentJ.initTour();
 		lanceur.disposeFenetre();
 		
+	}
+
+	public void demandeRetour() {
+		FenetreMenuDepart f = new FenetreMenuDepart();
+		lanceur.disposeFenetre();
 	}
 
 	
