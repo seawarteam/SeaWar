@@ -119,7 +119,7 @@ public class Partie extends Observable implements Serializable {
 	}
 	public String toString() {
 		return "Partie de " + nbJoueurs
-				+ " joueurs et de caractÃ©ristiques :\n" + joueurs.toString();
+				+ " joueurs et de caractÃƒÂ©ristiques :\n" + joueurs.toString();
 	}
 
 	public int nbJoueursRestant() {
@@ -358,7 +358,7 @@ public class Partie extends Observable implements Serializable {
 				}
 			}
 		} else {
-			System.out.println("Fichier deja  existant !");
+			System.out.println("Partie : sauvegarder : Fichier dejaÂ  existant !");
 		}
 	}
 
@@ -387,7 +387,7 @@ public class Partie extends Observable implements Serializable {
 				}
 			}
 		} else {
-			System.out.println("Fichier non existant !");
+			System.out.println("Partie : charger : Fichier non existant !");
 		}
 		return partie;
 	}
@@ -416,7 +416,7 @@ public class Partie extends Observable implements Serializable {
 				}
 			}
 		} else {
-			System.out.println("Fichier non existant !");
+			System.out.println("Partie : chargerMap : Fichier non existant !");
 		}
 		return plateau;
 	}
@@ -445,7 +445,7 @@ public class Partie extends Observable implements Serializable {
 				}
 			}
 		} else {
-			System.out.println("Fichier non existant !");
+			System.out.println("Partie : chargerCanon: Fichier non existant !");
 		}
 		return canon;
 	}
@@ -474,7 +474,7 @@ public class Partie extends Observable implements Serializable {
 				}
 			}
 		} else {
-			System.out.println("Fichier non existant !");
+			System.out.println("Partie : chargerNavire: Fichier non existant !");
 		}
 		return navire;
 	}
