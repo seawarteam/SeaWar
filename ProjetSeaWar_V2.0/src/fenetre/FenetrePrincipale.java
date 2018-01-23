@@ -322,14 +322,13 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			public void mouseClicked(MouseEvent e) { 
 				Position pos = pxtoPosHex(e.getX(),e.getY());
 				if(pos != null) {
-					System.out.println(controleur);
 					controleur.hexClique(pos);
 				}
 			}		
 		}
 
 
-		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement ÃƒÆ’Ã†â€™  l'autre
+		public void paintComponent(Graphics g) { //Utile pour l'affichage en fonction des configurations d'un environnement ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢  l'autre
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //permet d'eviter des effets de bords moches
 			cg = g2;
