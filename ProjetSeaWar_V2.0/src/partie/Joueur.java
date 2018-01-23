@@ -18,7 +18,7 @@ public class Joueur implements Serializable {
 	private Color couleur;
 	private String nom;
 	private List<Navire> navires;
-	private Navire currentN;// Navire selectionnÃ© dans l'interface
+	private Navire currentN;// Navire selectionnÃƒÂ© dans l'interface
 
 	/**
 	 * Default constructor
@@ -121,12 +121,12 @@ public class Joueur implements Serializable {
 	/**
 	 * @param pos
 	 *            : la position de classe Position
-	 * @return le Navire situer sur la case pos
+	 * @return le Navire situer sur la case pos qui n'est pas detruit
 	 */
 	public Navire getNavOnPos(Position pos) {
 
 		for (Navire nav : this.navires) {
-			if (nav.getPos().equals(pos)) {
+			if (nav.getPos().equals(pos) && !(nav.getEtatCourant() instanceof Detruit)) {
 				return nav;
 			}
 		}
