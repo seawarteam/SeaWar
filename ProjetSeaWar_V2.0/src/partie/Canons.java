@@ -151,7 +151,7 @@ public class Canons implements Serializable {
 	}
 
 	/**
-	 * Cr��e une matrice contenant les positions relative par rapport au navire d'indicer par l'orientation du navire
+	 * Crï¿½ï¿½e une matrice contenant les positions relative par rapport au navire d'indicer par l'orientation du navire
 	 * ex: Mat[dir] => positions que l'on peut tirer avec l'orientation dir
 	 * @param zone == this.zoneTire : les positions que l'on peut tirer avec l'orientation du navire vers le Nord
 	 * @return la matrice
@@ -193,9 +193,6 @@ public class Canons implements Serializable {
 
 	public void setTpsRech(int tpsRech) {
 		this.tpsRech = tpsRech;
-	}
-	public void setNavire(Navire n) {
-		monNavire = n;
 	}
 }
   
