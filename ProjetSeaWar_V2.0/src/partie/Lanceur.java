@@ -35,10 +35,14 @@ public class Lanceur extends Observable {
 		return joueurs;
 	}
 	public void addJoueur(String s, Navire n, Canons canonP, Canons canonS, Navire n2, Canons canonP2, Canons canonS2) {
+		canonP.setNavire(n);
+		canonS.setNavire(n);
+		canonP2.setNavire(n2);
+		canonS2.setNavire(n2);
 		Joueur j = new Joueur(s, couleurJoueur(), n, canonP, canonS, n2, canonP2, canonS2);
 		joueurs.add(j);
 		nbJoueurs++;
-		//Vérifier que le nom de joueur est non présent
+		//VÃ©rifier que le nom de joueur est non prÃ©sent
 		setChanged();
 		notifyObservers(j);
 		clearChanged();
