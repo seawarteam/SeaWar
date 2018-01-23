@@ -41,7 +41,6 @@ public class EditCanonP implements EtatModif {
 				zoneTire.remove(posRelative);
 				c.getEditeur().getMap().getCase(pos).ResetCouleur();
 			}
-			System.out.println(zoneTire);
 		}
 	}
 
