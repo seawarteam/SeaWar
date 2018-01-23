@@ -81,7 +81,8 @@ public class FenetreChargerPartie extends JFrame{
 		retour  = new JButton("Retour");
 		retour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO
+				new FenetreMenuDepart();
+				dispose();
 			}
 		});
 		
