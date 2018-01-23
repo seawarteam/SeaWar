@@ -54,7 +54,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	private Lanceur lanceur;
 	private ControleurChargerPartie controleur;
 
-	private String filePath = "bateau.jpg";
+	private String filePath = "bateau2.jpg";
 	
 	public FenetreChoixPartie() {
 		lanceur = new Lanceur(this);
@@ -66,7 +66,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		setTitle("Choix carte");
 		Point p = ImagePanel.getTailleImage(filePath);
 		setSize(p.x, p.y);
-		setResizable(true);
+		setResizable(false);
 		setLocationRelativeTo(null);	
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
