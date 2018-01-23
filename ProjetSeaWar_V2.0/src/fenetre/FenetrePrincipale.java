@@ -107,6 +107,10 @@ public class FenetrePrincipale extends JFrame implements Observer{
 		
 
 	}	
+	
+	public Partie getPartie() {
+		return partie;
+	}
 
 	public void initFenetrePrincipale() {
 
@@ -318,6 +322,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			public void mouseClicked(MouseEvent e) { 
 				Position pos = pxtoPosHex(e.getX(),e.getY());
 				if(pos != null) {
+					System.out.println(controleur);
 					controleur.hexClique(pos);
 				}
 			}		

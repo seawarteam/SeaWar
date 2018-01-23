@@ -73,7 +73,6 @@ public class Partie extends Observable implements Serializable {
 		gagne = false;
 	}
 	
-	
 	public void initPartie(int nX, int nY, int nbPhares, int nbRochers, Observer observeur) {
 		this.addObserver(observeur);
 		plateau = new Plateau(nX, nY, nbPhares, nbRochers, observeur);
@@ -82,6 +81,11 @@ public class Partie extends Observable implements Serializable {
 	
 	public void initPartie(Plateau map, Observer observeur) {
 		plateau = map;
+		plateau.ResetCouleur();
+	}
+	
+	public void initPartie() {
+		Navire.initCaseVoisine();
 		plateau.ResetCouleur();
 	}
 	

@@ -138,7 +138,7 @@ public class FenetreMenuDepart extends JFrame {
 	
 	class BoutonCharger extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;
-		private final static String titre = "Charger une Partie (non disponible)"; 
+		private final static String titre = "Charger une Partie"; 
 		
 		public BoutonCharger() {
 			super(titre);
@@ -163,7 +163,8 @@ public class FenetreMenuDepart extends JFrame {
 
 		
 		public void mouseClicked(MouseEvent arg0) {
-			//TODO: 
+			new FenetreChargerPartie();
+			dispose();
 		}
 		
 		public void mouseEntered(MouseEvent arg0) {}		

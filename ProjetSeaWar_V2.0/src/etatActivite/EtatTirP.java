@@ -2,6 +2,7 @@ package etatActivite;
 
 import java.util.Set;
 
+import etat.Detruit;
 import partie.Controleur;
 import partie.Navire;
 import partie.Position;
