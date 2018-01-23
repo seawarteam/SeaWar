@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
+
+import erreur.FichierNonExistant;
 import partie.Canons;
 import partie.ControleurChargerPartie;
 import partie.Joueur;
@@ -37,12 +39,12 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 
 	public static void main(String [] args) {
 		FenetreChoixPartie f = new FenetreChoixPartie();
-		
+
 	}
 	final String pathMap = getPath()+ "/Sauvegardes/Reglages/Cartes/";
 	final String pathCanon = getPath()+ "/Sauvegardes/Reglages/Canons/";
 	final String pathBateau = getPath()+ "/Sauvegardes/Reglages/Bateaux/";
-	
+
 	private JButton retour;
 	private JButton jouer;
 	private ChoixCarte choixCarte;
@@ -50,25 +52,24 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 	private InfoCarte infoCarte;
 	private InfoJoueur infoJoueurs;
 	private JScrollPane jsp;
-	
+	private JLabel info;
+
 	private Lanceur lanceur;
 	private ControleurChargerPartie controleur;
 
-	private String filePath = "bateau2.jpg";
-	
 	public FenetreChoixPartie() {
 		lanceur = new Lanceur(this);
 		controleur = new ControleurChargerPartie(lanceur);
-		 initFenetre();
-	 }
-	
+		initFenetre();
+	}
+
 	private void initFenetre() {
 		setTitle("Choix carte");
-		Point p = ImagePanel.getTailleImage(filePath);
-		setSize(p.x, p.y);
-		setResizable(false);
+		setSize(500,650);
+		setResizable(true);
 		setLocationRelativeTo(null);	
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 
 		choixCarte = new ChoixCarte();
 		infoCarte = new InfoCarte();
@@ -81,44 +82,47 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 				controleur.demandeLancerPartie();
 			}
 		});
-		
+
 		retour  = new JButton("Retour");
 		retour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controleur.demandeRetour();
 			}
 		});
-		
-		ImagePanel imagePanel = new ImagePanel(filePath);
+
+		info = new JLabel("");
 		JPanel pan = new JPanel();
 		pan.setOpaque(false);
 		pan.setLayout(new GridLayout(4, 1));
-		
+
 		JPanel panCarte = new JPanel();
 		panCarte.setLayout(new GridLayout(2,1));
 		panCarte.setPreferredSize(new Dimension(300, 50));
 		panCarte.add(choixCarte);
 		panCarte.add(infoCarte);
 		pan.add(panCarte);
-		
+
 		JPanel panJoueur = new JPanel();
 		panJoueur.add(choixJoueur);
 		pan.add(panJoueur);
-		
-		
+
+
 		pan.add(jsp);
-		
+
 		JPanel panJouer = new JPanel();
-		panJouer.add(jouer);
-		panJouer.add(retour);
+		panJouer.setLayout(new GridLayout(2, 1));
+		JPanel panJouerRetour = new JPanel();
+		panJouerRetour.setLayout(new GridLayout(1, 2));
+		panJouerRetour.add(jouer);
+		panJouerRetour.add(retour);
+		panJouer.add(panJouerRetour);
+		panJouer.add(info);
 		pan.add(panJouer);
-		
-		
-		imagePanel.add(pan);
-		setContentPane(imagePanel);
+
+		setContentPane(pan);
 		setVisible(true);
 	}
-	
+
 	class ChoixCarte extends JPanel{
 		private static final long serialVersionUID = 1L;
 		JComboBox<String> listNomCarte;
@@ -126,14 +130,18 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		JScrollPane spane;
 		JPanel pan;
 		JLabel label;
-		
+
 		public ChoixCarte() {
 			label = new JLabel("Choisir carte :");
 			listmodel = new MyComboBoxModel<String>(pathMap);
 			listNomCarte = new JComboBox<String>(listmodel);
 			listNomCarte.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controleur.demandeChargerMap((Plateau)chargerObject((String)listNomCarte.getSelectedItem(), pathMap));
+					try {
+						controleur.demandeChargerMap((Plateau)chargerObject((String)listNomCarte.getSelectedItem(), pathMap));
+					} catch (FichierNonExistant e1) {
+						info.setText("Impossible de charger cette carte");
+					}
 				}
 			});
 			pan = new JPanel();
@@ -143,16 +151,16 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			add(pan);
 		}
 	}
-	
+
 	class InfoCarte extends JPanel{
 		private static final long serialVersionUID = 1L;
 		JLabel infosLabel;
-		
+
 		public InfoCarte() {
 			infosLabel = new JLabel();
 			add(infosLabel);
 		}
-		
+
 		public void setInfoCarte() {
 			Plateau map = lanceur.getMap();
 			String infos = ("<html>" + "");
@@ -163,8 +171,8 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			}
 			infosLabel.setText(infos);
 		}
-		
-		
+
+
 	}
 	class ChoixJoueur extends JPanel{
 		private static final long serialVersionUID = 1L;
@@ -193,7 +201,14 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		Canons selectedCanonS2 = null;
 		Canons selectedCanonP2 = null;
 		Navire selectedNavire2 = null;
-		String nom = null;
+		int nbJ = 1;
+		String nom ;
+		String nomCS;
+		String nomCP;
+		String nomN ;
+		String nomCS2;
+		String nomCP2;
+		String nomN2 ;
 		JScrollPane spane;
 		JPanel pan1;
 		JPanel pan2;
@@ -208,18 +223,25 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			valider.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String nom = nomJoueur.getText();
-					controleur.demandeChargerJoueur(nom, selectedNavire1, selectedCanonP1, selectedCanonS1, selectedNavire2, selectedCanonP2, selectedCanonS2);
-					selectedNavire1 = null;
-					selectedNavire2 = null;
-					selectedCanonP1 = null;
-					selectedCanonS1 = null;
-					selectedCanonP2 = null;
-					selectedCanonS2 = null;
+					try {
+						selectedCanonS1 = Canons.copy((Canons) chargerObject(nomCS, pathCanon));
+						selectedCanonP1 = Canons.copy((Canons) chargerObject(nomCP, pathCanon));
+						selectedNavire1 = Navire.copy((Navire) chargerObject(nomN, pathBateau));
+						selectedCanonS2 = Canons.copy((Canons) chargerObject(nomCS2, pathCanon));
+						selectedCanonP2 = Canons.copy((Canons) chargerObject(nomCP2, pathCanon));
+						selectedNavire2 = Navire.copy((Navire) chargerObject(nomN2, pathBateau));
+						controleur.demandeChargerJoueur(nom, selectedNavire1, selectedCanonP1, selectedCanonS1, selectedNavire2, selectedCanonP2, selectedCanonS2);
+						nbJ++;
+						nomJoueur.setText("Joueur"+nbJ);
+						info.setText("Nouveu joueur enregistre");
+					} catch (FichierNonExistant e1) {
+						info.setText("Impossible de charger certains attributs");
+					}
 					validate();
 				}
 			});
 			lNom = new JLabel("Nom joueur:");
-			nomJoueur = new JTextField("");
+			nomJoueur = new JTextField("Joueur"+nbJ);
 			listmodelCanonS = new MyComboBoxModel<String>(pathCanon);
 			listmodelCanonP = new MyComboBoxModel<String>(pathCanon);
 			listmodelBateaux = new MyComboBoxModel<String>(pathBateau);
@@ -229,43 +251,37 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			listNomCanonS = new JComboBox<String>(listmodelCanonS);
 			listNomCanonS.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String nom = (String)listNomCanonS.getSelectedItem();
-					selectedCanonS1 = Canons.copy((Canons) chargerObject(nom, pathCanon));
+					nomCS = (String)listNomCanonS.getSelectedItem();
 				}
 			});
 			listNomCanonP = new JComboBox<String>(listmodelCanonP);
 			listNomCanonP.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String nom = (String)listNomCanonP.getSelectedItem();
-					selectedCanonP1 = Canons.copy((Canons) chargerObject(nom, pathCanon));
+					nomCP = (String)listNomCanonP.getSelectedItem();
 				}
 			});  
 			listNomBateaux = new JComboBox<String>(listmodelBateaux);
 			listNomBateaux.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String nom = (String)listNomBateaux.getSelectedItem();
-					selectedNavire1 = Navire.copy((Navire) chargerObject(nom, pathBateau));
+					nomN = (String)listNomBateaux.getSelectedItem();
 				}
 			});
 			list2NomCanonS = new JComboBox<String>(listmodelCanonS2);
 			list2NomCanonS.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String nom = (String)list2NomCanonS.getSelectedItem();
-					selectedCanonS2 = Canons.copy((Canons) chargerObject(nom, pathCanon));
+					nomCS2 = (String)list2NomCanonS.getSelectedItem();
 				}
 			});
 			list2NomCanonP = new JComboBox<String>(listmodelCanonP2);
 			list2NomCanonP.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String nom = (String)list2NomCanonP.getSelectedItem();
-					selectedCanonP2 = Canons.copy((Canons) chargerObject(nom, pathCanon));
+					nomCP2 = (String)list2NomCanonP.getSelectedItem();
 				}
 			});
 			list2NomBateaux = new JComboBox<String>(listmodelBateaux2);
 			list2NomBateaux.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String nom = (String)list2NomBateaux.getSelectedItem();
-					selectedNavire2 = Navire.copy((Navire) chargerObject(nom, pathBateau));
+					nomN2 = (String)list2NomBateaux.getSelectedItem();
 				}
 			});
 			pan1 = new JPanel();
@@ -293,14 +309,14 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			add(pan4);
 		}
 	}
-	
+
 	class InfoJoueur extends JEditorPane{
 		private static final long serialVersionUID = 1L;
 		public InfoJoueur() {
 			super();
 			setEditable(false);
 		}
-		
+
 		public void setInfoJoueurs() {
 			ArrayList<Joueur> joueurs = lanceur.getJoueurs();
 			String infos = "";
@@ -319,15 +335,15 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 						infos += "Tps Rechargement : "+n.getCanonS().getTpsRech()+"\n\n\n";
 					}
 				}
-				
+
 			}
 			setText(infos);
 		}
-		
-		
+
+
 	}
-	
-	public Object chargerObject(String nomFichier, String path) {
+
+	public Object chargerObject(String nomFichier, String path) throws FichierNonExistant {
 		String name = path + nomFichier;
 		Object obj = null;
 		File pathF = new File(name);
@@ -351,12 +367,12 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 				}
 			}
 		} else {
-			System.out.println("Fichier non existant !");
+			throw new FichierNonExistant(nomFichier);
 		}
 		return obj;
 	}
 
-	
+
 	class MyComboBoxModel<E> extends AbstractListModel<E> implements ComboBoxModel<E> {
 		private static final long serialVersionUID = 1L;
 		ListDataListener listListener;
@@ -399,24 +415,24 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			}
 			return nomFiles;
 		} 
-		
+
 		public void initList(String path) {
 			nomFiles = (ArrayList<E>) findFiles(path);
 			fireIntervalAdded(this, 0, getSize()-1);
 			//System.out.println(nomFiles);
 		}
-		
+
 		public void setSelectedItem(Object anItem) {
-		    selection = (String) anItem; 
+			selection = (String) anItem; 
 		}
 
-		  // Methods implemented from the interface ComboBoxModel
-		  public Object getSelectedItem() {
-		    return selection; // to add the selection to the combo box
-		  }
+		// Methods implemented from the interface ComboBoxModel
+		public Object getSelectedItem() {
+			return selection; // to add the selection to the combo box
+		}
 	}
 
-	
+
 	public void update(Observable arg0, Object arg1) {
 		if(arg1 instanceof Plateau) {
 			updateMap(arg1);
@@ -427,7 +443,7 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		if(arg1 instanceof Lanceur) {
 			dispose();
 		}
-		
+
 	}
 
 	private void updateJoueur(Object arg1) {
@@ -443,5 +459,5 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		return System.getProperty("user.dir");		
 	}
 
-	
+
 }
