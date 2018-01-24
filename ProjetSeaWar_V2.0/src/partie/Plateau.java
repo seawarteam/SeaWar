@@ -6,11 +6,11 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Plateau implements Serializable {
-
+	private static final long serialVersionUID = 5910403800425670780L;
 	private Case cases[][];
 	private Set<Phare> phares;
 	private Set<Position> caseR;
-	private Set<Position> caseN;
+	public Set<Position> caseN;
 	private int nCasesX;
 	private int nCasesY;
 	private static int longueurCote;
@@ -20,7 +20,7 @@ public class Plateau implements Serializable {
 	private static Observer obs;
 	private Map<Joueur, List<Position>> bases;
 
-	public Plateau(int l, int L, int nbPhares, int nbRochers, Observer obs) {
+	public Plateau(int l, int L, int nbPhares, int nbRochers, Observer obse) {
 		cases = new Case[l][L];
 		nCasesX = l;
 		nCasesY = L;
@@ -29,7 +29,7 @@ public class Plateau implements Serializable {
 		phares = new HashSet<Phare>();
 		nbMaxJoueur = 0;
 		initTabHex(nbPhares, nbRochers, obs);
-		this.obs = obs;
+		obs = obse;
 		bases = new HashMap<Joueur, List<Position>>();
 		initJoueursBases();
    
@@ -55,7 +55,7 @@ public class Plateau implements Serializable {
 	public int getNCasesY() {
 		return nCasesY;
 	}
-	
+
 	public int getNbBasesValides() {
 		Set<Joueur> joueurs = bases.keySet();
 		int nb = 0;
@@ -105,7 +105,7 @@ public class Plateau implements Serializable {
 		return null;
 	}
 
-	// cree un hexagone au coordonnÃƒÂ©es pixel x0,y0 (!!! pour l'insant, x0 et y0
+	// cree un hexagone au coordonnÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©es pixel x0,y0 (!!! pour l'insant, x0 et y0
 	// sont les coordonnees en pixels)
 	public static Polygon hexagone(int x0, int y0) {
 		int x = x0;
@@ -122,9 +122,7 @@ public class Plateau implements Serializable {
 
 		return new Polygon(cx, cy, 6);
 	}
-	private void initTabHex(Observer obs){
-		
-	}
+
 	private void initTabHex(int nbPhares, int nbRochers, Observer obs) {
 		int x, y;
 
@@ -132,7 +130,7 @@ public class Plateau implements Serializable {
 		ArrayList<Position> tabPosUtil = new ArrayList<Position>();
 
 		// Positions obstacles ou il y a les bateaux au debut
-		// TODO: aÂ  Verifier !
+		// TODO: aÃƒâ€šÃ‚Â  Verifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		//caseN.add(Position.getPosition(1, 1));
 		tabPosUtil.add(Position.getPosition(2, 0));
@@ -191,7 +189,6 @@ public class Plateau implements Serializable {
 				p = Position.getPosition(nbx, nby - (int) nbx / 2);
 				if (!tabPosUtil.contains(p)) {
 					tabPosUtil.add(p);
-					tabPosUtil.add(p);
 					x = nbx * (longueurCote + resteX);
 					y = nby * apotheme * 2 + (i % 2) * apotheme;
 					Polygon poly = hexagone(x, y);
@@ -237,12 +234,10 @@ public class Plateau implements Serializable {
 		}
 		if(c instanceof Eau){
 			if(c.getEstOccupe()){
-				Position pos = c.getPosition();
 				caseN.remove(p);
 			}
 		}
 		if(c instanceof Rocher){
-			Position pos = c.getPosition();
 			caseR.remove(p);
 		}
 		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Eau(poly,
@@ -253,24 +248,22 @@ public class Plateau implements Serializable {
 	public void setCaseRocher(Position p) {
 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
 		Polygon poly = c.getPoly();
-		
 		if(c instanceof Phare){
 			phares.remove(c);
 		}
 		if(c instanceof Eau){
 			if(c.getEstOccupe()){
-				Position pos = c.getPosition();
 				caseN.remove(p);
 			}
 		}
 		if(c instanceof Rocher){
-			Position pos = c.getPosition();
 			caseR.remove(p);
 		}
 		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Rocher(poly,
 				p.getX(), p.getY() + p.getX() / 2, obs);
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
 		caseR.add(p);
+		
 	}
 
 	public void setCasePhare(Position p) {
@@ -281,12 +274,10 @@ public class Plateau implements Serializable {
 		}
 		if(c instanceof Eau){
 			if(c.getEstOccupe()){
-				Position pos = c.getPosition();
 				caseN.remove(p);
 			}
 		}
 		if(c instanceof Rocher){
-			Position pos = c.getPosition();
 			caseR.remove(p);
 		}
 		Phare ph = new Phare(poly,p.getX(), p.getY() + p.getX() / 2, obs);
@@ -334,7 +325,6 @@ public class Plateau implements Serializable {
 		Set<Position> caseO = new HashSet<Position>();
 		caseO.addAll(caseN);
 		caseO.addAll(caseR);
-		System.out.println(caseR);
 		return caseO;
 	}
 
@@ -345,7 +335,7 @@ public class Plateau implements Serializable {
 	public Case[][] getCases() {
 		return cases;
 	}
-	
+
 	public void updateCaseR() {
 		Set<Position> nouveau = new HashSet<Position>();
 		for(Position p : caseR) {
@@ -353,9 +343,17 @@ public class Plateau implements Serializable {
 		}
 		caseR = nouveau;
 	}
-
+	
+	public void updateCaseN() {
+		Set<Position> nouveau = new HashSet<Position>();
+		for(Position p : caseN) {
+			nouveau.add(Position.getPosition(p.getX(), p.getY()));
+		}
+		caseN = nouveau;
+	}
 	public boolean hasWinner(Joueur j) {
 		boolean gagne = true;
+		if(this.getPhares().length==0) {gagne=false;}
 		for(Phare p:this.getPhares()){
 			if(p.occupeeDefinitivementPar == null){
 				gagne = false;
@@ -365,6 +363,8 @@ public class Plateau implements Serializable {
 				}
 			}
 		}
+		
+		
 		return gagne;
 	}
 
@@ -404,7 +404,6 @@ public class Plateau implements Serializable {
 	}
 
 	public void ResetCouleurBaseJoueur(Joueur j) {
-		//System.out.println(bases.containsKey(j));
 		if (bases.containsKey(j)) {
 			ArrayList<Position> a = (ArrayList<Position>) bases.get(j);
 			if (a != null) {
