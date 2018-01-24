@@ -1,28 +1,17 @@
 package partie;
 
-import java.nio.file.*;
 import java.awt.Color;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-import java.util.Vector;
-
 import etat.Apte;
 import etat.Bloque;
-import fenetre.FenetrePrincipale;
-
 import List.*;
 
-/**
- * 
- */
 public class Partie extends Observable implements Serializable {
 	private static final long serialVersionUID = 5L;
 	public static void main(String[] args) {
@@ -119,7 +108,7 @@ public class Partie extends Observable implements Serializable {
 	}
 	public String toString() {
 		return "Partie de " + nbJoueurs
-				+ " joueurs et de caractÃƒÂ©ristiques :\n" + joueurs.toString();
+				+ " joueurs et de caracteristiques :\n" + joueurs.toString();
 	}
 
 	public int nbJoueursRestant() {
@@ -199,7 +188,7 @@ public class Partie extends Observable implements Serializable {
 	public void initBateau() {
 		Map<Joueur, List<Position>> bases = plateau.getBases();
 		Set<Joueur> keys = bases.keySet();
-		int nbJoueursPlaces = 0;
+		//int nbJoueursPlaces = 0;
 		Navire n1;
 		Position p1;
 		Position p2;
@@ -219,7 +208,7 @@ public class Partie extends Observable implements Serializable {
 				positions = (ArrayList<Position>) bases.get(currentKey);
 			}while((positions == null || keyUtilisee.contains(currentKey))&& i.hasNext());//Ajouter une garde pour sortir
 			//Mettre condition garde
-			nbJoueursPlaces++;
+			//nbJoueursPlaces++;
 			keyUtilisee.add(currentKey);
 			p = positions.iterator();
 			p1 = p.next();
@@ -231,12 +220,12 @@ public class Partie extends Observable implements Serializable {
 			n1.setColEnVie(j.getCol());
 			n1.setColAsColEnVie();
 			n1.setDir(Orientation.aleatoire());
-			n1.setPos(p1);
+			n1.setPos(Position.getPosition(p1.getX(), p1.getY()));
 			plateau.takeCase(p1, n1);
 			n2.setColEnVie(j.getCol());
 			n2.setColAsColEnVie();
 			n2.setDir(Orientation.aleatoire());
-			n2.setPos(p2);
+			n2.setPos(Position.getPosition(p2.getX(), p2.getY()));
 			plateau.takeCase(p2, n2);
 			setChanged();
 			notifyObservers(this);
@@ -302,7 +291,7 @@ public class Partie extends Observable implements Serializable {
 
 
 
-	private void initDefNavires(Joueur[] j, Observer obs) {
+	public void initDefNavires(Joueur[] j, Observer obs) {
 		for (Joueur jou : j) {
 			jou.ajoutDefaultNavire(obs);
 		}
@@ -358,7 +347,7 @@ public class Partie extends Observable implements Serializable {
 				}
 			}
 		} else {
-			System.out.println("Partie : sauvegarder : Fichier dejaÂ  existant !");
+			System.out.println("Partie : sauvegarder : Fichier dejaÃ‚Â  existant !");
 		}
 	}
 
