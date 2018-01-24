@@ -14,6 +14,7 @@ public class EditRocher implements EtatModif {
 	}
 	
 	public void clique(Position p, ControleurModif c) {
+		c.getEditeur().getMap().ResetCouleur();
 		c.getEditeur().getMap().setCaseRocher(p);
 	}
 	
