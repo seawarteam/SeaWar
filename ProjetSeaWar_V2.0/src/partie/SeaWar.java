@@ -2,14 +2,9 @@ package partie;
 
 import java.awt.Color;
 import java.util.*;
-
 import fenetre.FenetreMenuDepart;
 import fenetre.FenetrePrincipale;
-import son.JouerSon;
 
-/**
- * 
- */
 public class SeaWar {
 	
 	public static void main (String [] args) {
@@ -18,7 +13,7 @@ public class SeaWar {
 
     public SeaWar() {
     }
-    public Partie partie;// utile ???
+    public Partie partie;
     
     
     public static void partieRapide(String jou1, String jou2) {
