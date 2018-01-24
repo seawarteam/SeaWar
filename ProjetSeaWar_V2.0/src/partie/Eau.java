@@ -5,10 +5,8 @@ import java.awt.Polygon;
 import java.io.Serializable;
 import java.util.*;
 
-/**
- * 
- */
 public class Eau extends Case implements Serializable{
+	private static final long serialVersionUID = 2878145283582059222L;
 	public static final Color couleurVide = Color.CYAN;
     public static final Color couleurDep = new Color(0, 0, 255, 60);
     public static final Color couleurOri = new Color(150,200,0);
