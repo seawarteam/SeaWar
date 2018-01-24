@@ -3,6 +3,7 @@ package partie;
 import java.util.HashSet;
 import java.util.Set;
 
+import etat.InApte;
 import etatActivite.*;
 
 public class Controleur {
@@ -61,7 +62,7 @@ public class Controleur {
 
 	public void demandeTirP() {
 		Navire nav = partie.getCurrentJ().getCurrentN();
-		if (nav.getCanonP().getTpsRest() == 0 && nav.getADejaTire() == false) {
+		if (nav.getCanonP().getTpsRest() == 0 && nav.getADejaTire() == false && !(nav.getEtatCourant() instanceof InApte)) {
 			Set<Position> positions = new HashSet<Position>();
 			 Set<Position> rochers = partie.getPlateau().getRochers();
 
@@ -77,7 +78,7 @@ public class Controleur {
 		
 		Navire nav = partie.getCurrentJ().getCurrentN();
 
-		if (nav.getCanonS().getTpsRest() == 0 && nav.getADejaTire() == false) {
+		if (nav.getCanonS().getTpsRest() == 0 && nav.getADejaTire() == false && !(nav.getEtatCourant() instanceof InApte)) {
 			Set<Position> positions = new HashSet<Position>();
 			 Set<Position> rochers = partie.getPlateau().getRochers();
 			for (Position pos : (nav.getCanonS().posCanShoot(nav.getDir(), nav.getPos(), rochers))) {
