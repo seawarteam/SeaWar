@@ -8,17 +8,16 @@ import etat.Bloque;
 import etat.Courant;
 import etat.Detruit;
 
-/**
- * 
- */
 public class Joueur implements Serializable {
+	private static final long serialVersionUID = 5754584580014620245L;
+
 	public static void main(String[] args) {
 		Position.initTabPosition(10, 10);
 	}
 	private Color couleur;
 	private String nom;
 	private List<Navire> navires;
-	private Navire currentN;// Navire selectionnÃƒÂ© dans l'interface
+	private Navire currentN;// Navire selectionnÃƒÆ’Ã‚Â© dans l'interface
 
 	/**
 	 * Default constructor
