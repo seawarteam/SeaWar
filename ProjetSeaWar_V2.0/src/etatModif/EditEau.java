@@ -1,8 +1,14 @@
 package etatModif;
 
+import java.awt.Polygon;
+import java.util.HashSet;
+import java.util.Set;
+
 import partie.ControleurModif;
+import partie.Eau;
 //import partie.EditCanonS;
 import partie.Position;
+import partie.Rocher;
 
 public class EditEau implements EtatModif{
 	private static EditEau etat = new EditEau();
@@ -17,8 +23,22 @@ public class EditEau implements EtatModif{
 
 	public void clique(Position p, ControleurModif c) {
 		c.getEditeur().getMap().ResetCouleur();
-		c.getEditeur().getMap().setCaseEau(p);
 		
+		int nCasesX = c.getEditeur().nX;
+		int nCasesY = c.getEditeur().nY;
+		
+		Set<Position> posCote = new HashSet<Position>();
+		for (int i = 0; i < nCasesX; i++) {
+			for (int j = 0; j < nCasesY; j++) {
+				if (i == 0 || j == 0 || i == nCasesX - 1 || j == nCasesY - 1) {
+					Position pos = Position.getPosition(i, j - ((int) i / 2));
+					posCote.add(pos);
+				}
+			}
+		}
+		if(!posCote.contains(p)) {
+			c.getEditeur().getMap().setCaseEau(p);
+		}
 	}
 	
 
