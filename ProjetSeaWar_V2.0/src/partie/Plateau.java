@@ -28,7 +28,7 @@ public class Plateau implements Serializable {
 		caseN = new HashSet<Position>();
 		phares = new HashSet<Phare>();
 		nbMaxJoueur = 0;
-		initTabHex(nbPhares, nbRochers, obs);
+		initTabHex(nbPhares, nbRochers, obse);
 		obs = obse;
 		bases = new HashMap<Joueur, List<Position>>();
 		initJoueursBases();
