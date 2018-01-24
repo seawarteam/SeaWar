@@ -193,8 +193,8 @@ public class Navire extends Observable implements Serializable {
     /**
      * 
      * @param canon avec lequel on veut tirer
-     * @param pos : position de la case visÃ©e
-     * @return succÃ¨s/echec
+     * @param pos : position de la case visÃƒÂ©e
+     * @return succÃƒÂ¨s/echec
      */
     public boolean tir(Canons canon, Position pos, Navire current, Set<Position> rochers) {
     	
@@ -204,8 +204,8 @@ public class Navire extends Observable implements Serializable {
     
     
     /**
-     * Mets Ã  jour les variables d'instances lors d'un dÃ©placement
-     * @param pos : la case oÃ¹ on veut aller 
+     * Mets ÃƒÂ  jour les variables d'instances lors d'un dÃƒÂ©placement
+     * @param pos : la case oÃƒÂ¹ on veut aller 
      * @param dir : l'orientation que l'on veut avoir 
      */
     public boolean deplacement(Position pos, Orientation dir, int nbCase, Navire current) {
@@ -213,7 +213,7 @@ public class Navire extends Observable implements Serializable {
     }
 
     /**
-     * @param degats Ã  retirer aux pv du navire
+     * @param degats ÃƒÂ  retirer aux pv du navire
      */
     public void toucher(int degats) {
     	this.nb_coup_recu++;        
@@ -284,7 +284,7 @@ public class Navire extends Observable implements Serializable {
     			}
     		}
     	}
-    	//	Ajout des cases que l'on peux toucher sans se dÃ©placer
+    	//	Ajout des cases que l'on peux toucher sans se dÃƒÂ©placer
     	if(canonP==null) {System.out.println("null");}
     	List<Position> cellCible = this.canonP.posCanShoot(this.getDir(), this.getPos(), rochers);
 		for(Position cell : cellCible){
@@ -308,7 +308,7 @@ public class Navire extends Observable implements Serializable {
     			}
     		}
     	}
-//    	Ajout des cases que l'on peux toucher sans se dÃ©placer
+//    	Ajout des cases que l'on peux toucher sans se dÃƒÂ©placer
     	List<Position> cellCible = this.canonS.posCanShoot(getDir(), getPos(), rochers);
 		for(Position cell : cellCible){
 			resultat.add(cell);
@@ -380,7 +380,7 @@ public class Navire extends Observable implements Serializable {
      * @param pos : Position ou on veux aller
      * @param dir : Orientation souhaitee
      * @param obstacle 
-     * @return la longueur du chemin pour aller de la position du navire Ã  la position pos
+     * @return la longueur du chemin pour aller de la position du navire ÃƒÂ  la position pos
      */
     public int getPathLengh(Position pos, Orientation dir, Set<Position> obstacle) {
     	
@@ -425,8 +425,8 @@ public class Navire extends Observable implements Serializable {
     
     /**
      * 
-     * @param obstacle : Set des positions oÃ¹ le navire ne peux pas aller
-     * @return Map avec pour clÃ© une position accessible et valeur la liste des orientation possible pour cette position
+     * @param obstacle : Set des positions oÃƒÂ¹ le navire ne peux pas aller
+     * @return Map avec pour clÃƒÂ© une position accessible et valeur la liste des orientation possible pour cette position
      */
     public Map<Position,Set<Vector<Object>>> getCaseAccessible(Set<Position> obstacle){
     	List<Vector<Object>> fileDattente = new LinkedList<Vector<Object>>();
@@ -441,10 +441,10 @@ public class Navire extends Observable implements Serializable {
     }
     
     /**
-     * Construction par rÃ©cursion des cases Accessibles
+     * Construction par rÃƒÂ©cursion des cases Accessibles
      * @param map
      * @param deplace : nbre de deplacement encore possible
-     * @param fileDattente : derniÃ¨res cases atteintes
+     * @param fileDattente : derniÃƒÂ¨res cases atteintes
      */
     private void _getNextCaseAcc( Map<Position,Set<Vector<Object>>> map, int deplace, List<Vector<Object>> fileDattente, Set<Position> obstacle){
     	if(deplace <= this.dep){
@@ -454,8 +454,6 @@ public class Navire extends Observable implements Serializable {
     			Position cell = (Position) vect.elementAt(0);
     			Orientation ori = (Orientation) vect.elementAt(1);
     			List<Vector<Object>> voisinsRela;
-    			System.out.println(ori);
-    			System.out.println(Navire.caseVoisine.get(ori));
     			voisinsRela = Navire.caseVoisine.get(ori);
     			for(Vector<Object> vectVoisinRela : voisinsRela){
     				Position cellVoisinRela = (Position) vectVoisinRela.elementAt(0);
@@ -470,7 +468,7 @@ public class Navire extends Observable implements Serializable {
 							vectInfo.add(0, DirVoisinRela);
 							vectInfo.add(1, deplace);
 							vectInfo.add(2, vect);
-    					// Ajouter les coordonnÃ©es dans la map
+    					// Ajouter les coordonnÃƒÂ©es dans la map
     					if(map.containsKey(cellVoisinReel)){
     						Set<Vector<Object>> s = map.get(cellVoisinReel);
     						s.add(vectInfo);
@@ -488,8 +486,8 @@ public class Navire extends Observable implements Serializable {
     
         
     /**
-     * Remplit la Map des voisins avec pour clÃ© l'orientation du Navire pour les cases
-     * Les case voisines sont initialisÃ©s pour une case de position (0,0). Pour trouver les case suivantes pour une position (x, y) il faut appliquer la translation.
+     * Remplit la Map des voisins avec pour clÃƒÂ© l'orientation du Navire pour les cases
+     * Les case voisines sont initialisÃƒÂ©s pour une case de position (0,0). Pour trouver les case suivantes pour une position (x, y) il faut appliquer la translation.
      */
     protected static void initCaseVoisine(){
 		Navire.caseVoisine = new HashMap<Orientation,List<Vector<Object>>>();
