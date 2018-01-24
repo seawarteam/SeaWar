@@ -453,7 +453,7 @@ public class FenetrePrincipale extends JFrame implements Observer{
 			g.weighty = 5;
 			add(finTour,g);
 			
-			JButton option = new JButton("Options");
+			JButton option = new JButton("Option");
 			option.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					

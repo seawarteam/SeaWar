@@ -26,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
 
+import erreur.ChampsInvalides;
 import erreur.FichierNonExistant;
 import partie.Canons;
 import partie.ControleurChargerPartie;
@@ -79,7 +80,11 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		jouer = new JButton("Jouer");
 		jouer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				controleur.demandeLancerPartie();
+				try {
+					controleur.demandeLancerPartie();
+				} catch (ChampsInvalides e) {
+					info.setText(e.getMessage());
+				}
 			}
 		});
 
@@ -111,11 +116,13 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 
 		JPanel panJouer = new JPanel();
 		panJouer.setLayout(new GridLayout(2, 1));
+		JPanel panJouerRetourGlobal = new JPanel();
 		JPanel panJouerRetour = new JPanel();
 		panJouerRetour.setLayout(new GridLayout(1, 2));
 		panJouerRetour.add(jouer);
 		panJouerRetour.add(retour);
-		panJouer.add(panJouerRetour);
+		panJouerRetourGlobal.add(panJouerRetour);
+		panJouer.add(panJouerRetourGlobal);
 		panJouer.add(info);
 		pan.add(panJouer);
 
@@ -230,14 +237,25 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 						selectedCanonS2 = Canons.copy((Canons) chargerObject(nomCS2, pathCanon));
 						selectedCanonP2 = Canons.copy((Canons) chargerObject(nomCP2, pathCanon));
 						selectedNavire2 = Navire.copy((Navire) chargerObject(nomN2, pathBateau));
-						controleur.demandeChargerJoueur(nom, selectedNavire1, selectedCanonP1, selectedCanonS1, selectedNavire2, selectedCanonP2, selectedCanonS2);
-						nbJ++;
-						nomJoueur.setText("Joueur"+nbJ);
-						info.setText("Nouveu joueur enregistre");
+						try {
+							controleur.demandeChargerJoueur(nom, selectedNavire1, selectedCanonP1, selectedCanonS1, selectedNavire2, selectedCanonP2, selectedCanonS2);
+							nbJ++;
+							nomJoueur.setText("Joueur"+nbJ);
+							info.setText("Nouveu joueur enregistre");
+						} catch (ChampsInvalides e1) {
+							info.setText(e1.getMessage());
+							
+						}
+						finally {
+							validate();
+						}
+						
 					} catch (FichierNonExistant e1) {
-						info.setText("Impossible de charger certains attributs");
+						info.setText(e1.getMessage());
+					}finally {
+						validate();
 					}
-					validate();
+					
 				}
 			});
 			lNom = new JLabel("Nom joueur:");

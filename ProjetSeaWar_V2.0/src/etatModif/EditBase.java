@@ -49,18 +49,10 @@ public class EditBase implements EtatModif {
 
 	public void finalizeBases(ControleurModif c) {
 		c.getEditeur().getMap().addBases(currentJ, positions);
+		
 	}
 
-	/*
-	 * public void modifMap(ControleurModif c) { finalizeBases(c);
-	 * c.setEtat(Init.getEtat()); }
-	 * 
-	 * 
-	 * 
-	 * private Joueur getJoueur(String str) { Joueur j = null; int i = 0;
-	 * while(j == null) { if(((Joueur)(joueurs.get(i))).getNom().equals(str)){ j
-	 * = (Joueur)joueurs.get(i); }else { i++; } } return j; }
-	 */
+	
 
 	public void resetInvalidBase(ControleurModif c) {
 		if (nbPosition != 2) {
