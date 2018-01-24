@@ -37,6 +37,7 @@ public class ControleurChargerPartie{
 			int nX = map.getNCasesX();
 			int nY = map.getNCasesY();
 			Position.initTabPosition(nX, nY);
+			map.updateCaseR();
 			Partie partie = new Partie(lanceur.getJoueurs(), nX, nY);
 			Controleur controleur = new Controleur(partie);
 			FenetrePrincipale carte = new FenetrePrincipale(partie, controleur);
@@ -48,7 +49,7 @@ public class ControleurChargerPartie{
 			partie.currentJ.initTour();
 			lanceur.disposeFenetre();
 		}else {
-			throw new ChampsInvalides("Deux joueurs sont nécessaires");
+			throw new ChampsInvalides("Deux joueurs sont nÃ©cessaires");
 		}
 	}
 
