@@ -1,10 +1,8 @@
 package partie;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +21,7 @@ public class Editeur extends Observable {
 	Navire navire;
 	
 	private int nbJoueurs;
-	private int nX, nY;
+	public int nX, nY;
 	private Observer obs;
 
 	public Editeur(int nX, int nY, Observer obs) {
@@ -90,7 +88,7 @@ public class Editeur extends Observable {
 				oos.flush();
 			} catch (final java.io.IOException e) {
 				File path = new File(getPath() + pathMap);
-				boolean ok = path.mkdirs();
+				path.mkdirs();
 			} finally {
 				try {
 					final FileOutputStream fichier = new FileOutputStream(name);
@@ -121,8 +119,7 @@ public class Editeur extends Observable {
 				oos.flush();
 			} catch (final java.io.IOException e) {
 				File path = new File(getPath() + pathCanon);
-				boolean ok = path.mkdirs();
-				//System.err.println("erreur 1 corrigee : "+ok);
+				path.mkdirs();
 			} finally {
 				try {
 					final FileOutputStream fichier = new FileOutputStream(name);
