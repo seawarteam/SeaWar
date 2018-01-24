@@ -9,7 +9,6 @@ public class Lanceur extends Observable {
 	private Plateau map;
 	private ArrayList<Joueur> joueurs;
 	private int nbJoueurs = 0;
-	private Observer obs;
 	private Color[] tab = { Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE,Color.GRAY, Color.DARK_GRAY };
 	private int indexCouleur = 0;
 	
@@ -42,7 +41,7 @@ public class Lanceur extends Observable {
 		Joueur j = new Joueur(s, couleurJoueur(), n, canonP, canonS, n2, canonP2, canonS2);
 		joueurs.add(j);
 		nbJoueurs++;
-		//Vérifier que le nom de joueur est non présent
+		//VÃ©rifier que le nom de joueur est non prÃ©sent
 		setChanged();
 		notifyObservers(j);
 		clearChanged();
