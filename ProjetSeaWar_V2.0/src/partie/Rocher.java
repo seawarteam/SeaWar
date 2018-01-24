@@ -5,11 +5,9 @@ import java.awt.Polygon;
 import java.io.Serializable;
 import java.util.*;
 
-/**
- * 
- */
-public class Rocher extends Case implements Serializable {
 
+public class Rocher extends Case implements Serializable {
+	private static final long serialVersionUID = -9221752264262723430L;
 	public static final Color couleurVide = new Color(150, 100, 0);
 	public static final Color couleurTir = Color.GRAY;
 	public static final Color couleurOri = new Color(50, 100, 0);
@@ -35,12 +33,6 @@ public class Rocher extends Case implements Serializable {
 		notifyObservers(this);
 		clearChanged();
 
-		/*
-		 * if(col != couleurVide){ col = couleurVide; setChanged();
-		 * notifyObservers(this); clearChanged();
-		 * 
-		 * }
-		 */
 	}
 
 	public String toString() {
