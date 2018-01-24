@@ -1,9 +1,6 @@
 package partie;
 
 import java.awt.Color;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.swing.ListModel;
 
@@ -53,7 +50,7 @@ public class ControleurModif {
 	}
 	
 	public void demandeModifCarte() {
-		getEditeur().resetPlateau();//techniquement pas utile mais évite des pb d'affichage
+		getEditeur().resetPlateau();//techniquement pas utile mais Ã©vite des pb d'affichage
 		etat = EditRocher.getEtat();
 	}
 	
@@ -64,7 +61,7 @@ public class ControleurModif {
 	}
 	
 	public void demandeModifNavire() {
-		getEditeur().resetPlateau();//techniquement pas utile mais évite des pb d'affichage
+		getEditeur().resetPlateau();//techniquement pas utile mais Ã©vite des pb d'affichage
 		etat = EditNavire.getEtat();
 	}
 
@@ -81,7 +78,7 @@ public class ControleurModif {
 	}
 
 	public void demandeSauvegardeMap(String nom) throws FichierExistant, ChampsInvalides{
-		if (nom != null && (nom != "" || nom != " ")) {
+		if (nom != null && nom != "" && nom != " ") {
 			if(editeur.getMap().getNbBasesValides()>=2) {
 				editeur.sauvegarderMap(nom);
 			}else {
@@ -106,7 +103,7 @@ public class ControleurModif {
 				editeur.sauvegarderCanon(nom);
 			}
 		}else {
-			throw new ChampsInvalides("La zone de tire doit �tre cr��e");
+			throw new ChampsInvalides("La zone de tire doit être créée");
 		}
 		
 	}
