@@ -253,7 +253,7 @@ public class Plateau implements Serializable {
 	public void setCaseRocher(Position p) {
 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
 		Polygon poly = c.getPoly();
-		caseR.add(p);
+		
 		if(c instanceof Phare){
 			phares.remove(c);
 		}
@@ -270,7 +270,7 @@ public class Plateau implements Serializable {
 		cases[p.getX()][p.getY() + (int) p.getX() / 2] = new Rocher(poly,
 				p.getX(), p.getY() + p.getX() / 2, obs);
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
-		
+		caseR.add(p);
 	}
 
 	public void setCasePhare(Position p) {
@@ -344,6 +344,14 @@ public class Plateau implements Serializable {
 
 	public Case[][] getCases() {
 		return cases;
+	}
+	
+	public void updateCaseR() {
+		Set<Position> nouveau = new HashSet<Position>();
+		for(Position p : caseR) {
+			nouveau.add(Position.getPosition(p.getX(), p.getY()));
+		}
+		caseR = nouveau;
 	}
 
 	public boolean hasWinner(Joueur j) {

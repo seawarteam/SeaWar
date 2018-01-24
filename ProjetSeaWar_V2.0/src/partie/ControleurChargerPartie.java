@@ -37,6 +37,7 @@ public class ControleurChargerPartie{
 			int nX = map.getNCasesX();
 			int nY = map.getNCasesY();
 			Position.initTabPosition(nX, nY);
+			map.updateCaseR();
 			Partie partie = new Partie(lanceur.getJoueurs(), nX, nY);
 			Controleur controleur = new Controleur(partie);
 			FenetrePrincipale carte = new FenetrePrincipale(partie, controleur);
