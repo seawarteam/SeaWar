@@ -81,7 +81,7 @@ public class ControleurModif {
 	}
 
 	public void demandeSauvegardeMap(String nom) throws FichierExistant, ChampsInvalides{
-		if (nom != null && nom != "" && nom != " ") {
+		if (nom != null && (nom != "" || nom != " ")) {
 			if(editeur.getMap().getNbBasesValides()>=2) {
 				editeur.sauvegarderMap(nom);
 			}else {
@@ -98,11 +98,17 @@ public class ControleurModif {
 		}
 	}
 	
-	public void demandeSauvegardeCanon(String nom) throws FichierExistant {
-		if (nom != null && nom != "" && nom != " ") {
-			editeur.getCanonP().setNom(nom);
-			editeur.sauvegarderCanon(nom);
+	public void demandeSauvegardeCanon(String nom) throws FichierExistant, ChampsInvalides {
+		
+		if(editeur.getCanonP().getZoneTire().size() != 0) {
+			if (nom != null && nom != "" && nom != " ") {
+				editeur.getCanonP().setNom(nom);
+				editeur.sauvegarderCanon(nom);
+			}
+		}else {
+			throw new ChampsInvalides("La zone de tire doit être créée");
 		}
+		
 	}
 	
 

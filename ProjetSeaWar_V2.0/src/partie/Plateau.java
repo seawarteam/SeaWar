@@ -55,7 +55,7 @@ public class Plateau implements Serializable {
 	public int getNCasesY() {
 		return nCasesY;
 	}
-
+	
 	public int getNbBasesValides() {
 		Set<Joueur> joueurs = bases.keySet();
 		int nb = 0;
@@ -105,7 +105,7 @@ public class Plateau implements Serializable {
 		return null;
 	}
 
-	// cree un hexagone au coordonnÃƒÆ’Ã‚Â©es pixel x0,y0 (!!! pour l'insant, x0 et y0
+	// cree un hexagone au coordonnÃƒÂ©es pixel x0,y0 (!!! pour l'insant, x0 et y0
 	// sont les coordonnees en pixels)
 	public static Polygon hexagone(int x0, int y0) {
 		int x = x0;
@@ -122,7 +122,9 @@ public class Plateau implements Serializable {
 
 		return new Polygon(cx, cy, 6);
 	}
-
+	private void initTabHex(Observer obs){
+		
+	}
 	private void initTabHex(int nbPhares, int nbRochers, Observer obs) {
 		int x, y;
 
@@ -130,7 +132,7 @@ public class Plateau implements Serializable {
 		ArrayList<Position> tabPosUtil = new ArrayList<Position>();
 
 		// Positions obstacles ou il y a les bateaux au debut
-		// TODO: aÃ‚Â  Verifier !
+		// TODO: aÂ  Verifier !
 		tabPosUtil.add(Position.getPosition(1, 1));
 		//caseN.add(Position.getPosition(1, 1));
 		tabPosUtil.add(Position.getPosition(2, 0));
@@ -188,6 +190,7 @@ public class Plateau implements Serializable {
 				nby = 0 + (int) (Math.random() * ((nCasesY - 1) + 1));
 				p = Position.getPosition(nbx, nby - (int) nbx / 2);
 				if (!tabPosUtil.contains(p)) {
+					tabPosUtil.add(p);
 					tabPosUtil.add(p);
 					x = nbx * (longueurCote + resteX);
 					y = nby * apotheme * 2 + (i % 2) * apotheme;
@@ -250,6 +253,7 @@ public class Plateau implements Serializable {
 	public void setCaseRocher(Position p) {
 		Case c = cases[p.getX()][p.getY() + (int) p.getX() / 2];
 		Polygon poly = c.getPoly();
+		
 		if(c instanceof Phare){
 			phares.remove(c);
 		}
@@ -267,7 +271,6 @@ public class Plateau implements Serializable {
 				p.getX(), p.getY() + p.getX() / 2, obs);
 		cases[p.getX()][p.getY() + (int) p.getX() / 2].ResetCouleur();
 		caseR.add(p);
-		
 	}
 
 	public void setCasePhare(Position p) {
@@ -331,6 +334,7 @@ public class Plateau implements Serializable {
 		Set<Position> caseO = new HashSet<Position>();
 		caseO.addAll(caseN);
 		caseO.addAll(caseR);
+		System.out.println(caseR);
 		return caseO;
 	}
 
@@ -341,7 +345,7 @@ public class Plateau implements Serializable {
 	public Case[][] getCases() {
 		return cases;
 	}
-
+	
 	public void updateCaseR() {
 		Set<Position> nouveau = new HashSet<Position>();
 		for(Position p : caseR) {
@@ -349,6 +353,7 @@ public class Plateau implements Serializable {
 		}
 		caseR = nouveau;
 	}
+
 	public boolean hasWinner(Joueur j) {
 		boolean gagne = true;
 		for(Phare p:this.getPhares()){
@@ -360,8 +365,6 @@ public class Plateau implements Serializable {
 				}
 			}
 		}
-		
-		
 		return gagne;
 	}
 
@@ -401,6 +404,7 @@ public class Plateau implements Serializable {
 	}
 
 	public void ResetCouleurBaseJoueur(Joueur j) {
+		//System.out.println(bases.containsKey(j));
 		if (bases.containsKey(j)) {
 			ArrayList<Position> a = (ArrayList<Position>) bases.get(j);
 			if (a != null) {

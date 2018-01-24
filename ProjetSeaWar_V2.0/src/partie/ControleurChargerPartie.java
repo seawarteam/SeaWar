@@ -49,7 +49,7 @@ public class ControleurChargerPartie{
 			partie.currentJ.initTour();
 			lanceur.disposeFenetre();
 		}else {
-			throw new ChampsInvalides("Deux joueurs sont nÃ©cessaires");
+			throw new ChampsInvalides("Deux joueurs sont nécessaires");
 		}
 	}
 
