@@ -5,6 +5,8 @@ import java.util.Set;
 
 import partie.Canons;
 import partie.Navire;
+import partie.Orientation;
+import partie.Position;
 
 public class Apte implements EtatDeplacement, Serializable {
 	private static Apte a = new Apte();
