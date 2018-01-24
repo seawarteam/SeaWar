@@ -45,11 +45,12 @@ public class ControleurChargerPartie{
 			partie.initPartie(map, carte);
 			carte.initFenetrePrincipale();
 			partie.initBateau();
+			map.updateCaseN();
 			partie.initObserver(carte);
 			partie.currentJ.initTour();
 			lanceur.disposeFenetre();
 		}else {
-			throw new ChampsInvalides("Deux joueurs sont n�cessaires");
+			throw new ChampsInvalides("Deux joueurs sont nÃ©cessaires");
 		}
 	}
 
