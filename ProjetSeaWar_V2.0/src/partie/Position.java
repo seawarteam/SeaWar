@@ -1,13 +1,9 @@
 package partie;
 
 import java.io.Serializable;
-import java.util.*;
 
-/**
- * 
- */
 public class Position implements Serializable {
-	
+	private static final long serialVersionUID = 536614019925950560L;
 	private int x;
     private int y;
     
@@ -58,8 +54,8 @@ public class Position implements Serializable {
     }
 
     /**
-     * Méthode statique qui permet d'initialiser toutes les positions du plateau de dimension tailleX*tailleY
-     * A utiliser une seule fois au début de la partie !!!
+     * Methode statique qui permet d'initialiser toutes les positions du plateau de dimension tailleX*tailleY
+     * A utiliser une seule fois au debut de la partie !!!
      * @param tailleX
      * @param tailleY
      */
@@ -75,8 +71,8 @@ public class Position implements Serializable {
     }
     
     /**
-     * Méthode statique qui permet de réccupérer la Position à l'emplacement (x,y)
-     * => Permet éviter de créer à chaque de nouveau objet Position
+     * Methode statique qui permet de reccuperer la Position Ã  l'emplacement (x,y)
+     * => Permet eviter de creer a  chaque de nouveau objet Position
      * @param x
      * @param y
      * @return
