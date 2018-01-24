@@ -301,7 +301,7 @@ class EditCarte extends JPanel{
 			menu = m;
 			grid = new GridLayout(5, 1);
 			Lnom = new JLabel("Nom carte: ");
-			nom = new JTextField();
+			nom = new JTextField("");
 			listBase = new JList<String>(data);
 			listBase.addMouseListener(new MouseListener() {
 				public void mouseClicked(MouseEvent arg0) {
@@ -461,8 +461,15 @@ class EditCarte extends JPanel{
 								Tnom.setText("");
 								Trecharge.setText("");
 								Tdegat.setText("");
+								editeur.resetCanon();
+								editeur.resetPlateau();
+								editeur.getMap().setColor(
+										((EditCanonP) EditCanonP.getEtat()).getRefPos(), Color.blue);
 							} catch (FichierExistant e1) {
 								messageErr.setText("Nom invalide");
+							}
+							catch (ChampsInvalides e2){
+								messageErr.setText(e2.getMessage());
 							}
 						} else {
 							messageErr.setText("degat et recharge doivent etre >0 !");
@@ -683,9 +690,7 @@ class EditCarte extends JPanel{
 								Tnom.setText("");
 								Tdeplacement.setText("");
 								TpointsDeVie.setText("");
-								editeur.resetPlateau();
-								editeur.getMap().setColor(
-										((EditCanonP) EditCanonP.getEtat()).getRefPos(), Color.blue);
+								;
 							} catch (FichierExistant e1) {
 								messageErr.setText("Nom invalide");
 							}  
