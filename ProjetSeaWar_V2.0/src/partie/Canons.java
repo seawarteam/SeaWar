@@ -194,5 +194,10 @@ public class Canons implements Serializable {
 	public void setTpsRech(int tpsRech) {
 		this.tpsRech = tpsRech;
 	}
+
+
+	public void setNavire(Navire n) {
+		monNavire = n;
+	}
 }
   

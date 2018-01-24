@@ -7,7 +7,7 @@ import java.util.Set;
 
 import javax.swing.ListModel;
 
-import erreur.FichierExistant;
+import erreur.*;
 import etatModif.*;
 
 public class ControleurModif {
@@ -80,21 +80,26 @@ public class ControleurModif {
 
 	}
 
-	public void demandeSauvegardeMap(String nom) throws FichierExistant{
-		if (nom != null || nom != "" || nom != " ") {
-			editeur.sauvegarderMap(nom);
+	public void demandeSauvegardeMap(String nom) throws FichierExistant, ChampsInvalides{
+		if (nom != null && nom != "" && nom != " ") {
+			if(editeur.getMap().getNbBasesValides()>=2) {
+				editeur.sauvegarderMap(nom);
+			}else {
+				throw new ChampsInvalides("Deux base obligatoires");
+			}
+			
 		}
 	}
 
 	public void demandeSauvegardeNavire(String nom) throws FichierExistant {
-		if (nom != null || nom != "" || nom != " ") {
+		if (nom != null && nom != "" && nom != " ") {
 			editeur.getNavire().setNom(nom);
 			editeur.sauvegarderNavire(nom);
 		}
 	}
 	
 	public void demandeSauvegardeCanon(String nom) throws FichierExistant {
-		if (nom != null || nom != "" || nom != " ") {
+		if (nom != null && nom != "" && nom != " ") {
 			editeur.getCanonP().setNom(nom);
 			editeur.sauvegarderCanon(nom);
 		}

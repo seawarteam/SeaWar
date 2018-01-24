@@ -22,6 +22,7 @@ public class Editeur extends Observable {
 	Canons canonP;
 	Navire navire;
 	
+	private int nbJoueurs;
 	private int nX, nY;
 	private Observer obs;
 
@@ -35,7 +36,12 @@ public class Editeur extends Observable {
 		this.nX = nX;
 		this.nY = nY;
 		this.obs = obs;
+		nbJoueurs = 0;
 		
+	}
+	
+	public int getNbJoueurs() {
+		return nbJoueurs;
 	}
 
 	public Plateau getMap() {

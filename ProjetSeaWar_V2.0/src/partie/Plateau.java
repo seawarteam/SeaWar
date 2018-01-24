@@ -55,6 +55,19 @@ public class Plateau implements Serializable {
 	public int getNCasesY() {
 		return nCasesY;
 	}
+	
+	public int getNbBasesValides() {
+		Set<Joueur> joueurs = bases.keySet();
+		int nb = 0;
+		ArrayList<Position> positions;
+		for(Joueur j : joueurs) {
+			positions = (ArrayList<Position>) bases.get(j);
+			if(positions != null && positions.size() != 0) {
+				nb++;
+			}
+		}
+		return nb;
+	}
 	public int getNbMaxJoueurs() {
 		ArrayList<Position> positions = null;
 		if(nbMaxJoueur == 0) {
@@ -344,8 +357,6 @@ public class Plateau implements Serializable {
 				}
 			}
 		}
-		
-		
 		return gagne;
 	}
 

@@ -26,9 +26,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import erreur.ChampsInvalides;
 import erreur.FichierExistant;
+import etatModif.EditCanonP;
+import fenetre.FenetrePrincipale.SliderTaille;
 import partie.Case;
 import partie.ControleurModif;
 import partie.Editeur;
@@ -129,7 +135,36 @@ public class FenetreModif extends JFrame implements Observer{
 		controleur = new ControleurModif(editeur);
 	}
 	
-	
+	class SliderTaille extends JPanel{
+		private static final long serialVersionUID = 1L;
+		JSlider slider;
+		JLabel legende;
+		  
+					
+		public SliderTaille() {
+			super(new GridLayout(2,1));
+			slider = new JSlider();
+			slider.setMaximum(100);
+			slider.setMinimum(10);
+			slider.setValue(longueurCote);
+			slider.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent e) {
+					int valeur = ( (JSlider) e.getSource()).getValue();
+					setTailleHex(valeur);
+					scroll.repaint();
+					scroll.getVerticalScrollBar().setUnitIncrement(2*apotheme);
+					scroll.getHorizontalScrollBar().setUnitIncrement(resteX+longueurCote);
+					plateau.setPreferredSize(new Dimension(nCasesX*(resteX+longueurCote)+resteX,(2*apotheme)*nCasesY+apotheme));
+					scroll.revalidate();
+				}
+			});
+			
+			legende = new JLabel("Taille des hexagones : ");
+			add(legende);
+			add(slider);
+		}
+	}
+
 	
 	
 	public static void drawHex(int i, int j, Graphics2D g2) { //Cree un hexagone en (i,j)
@@ -243,6 +278,8 @@ public class FenetreModif extends JFrame implements Observer{
 	
 class EditCarte extends JPanel{
 		private static final long serialVersionUID = 448318553800706885L;
+		
+		
 		private MenuDroite menu;
 		private JButton ajoutRocher;
 		private JButton ajoutEau;
@@ -256,6 +293,11 @@ class EditCarte extends JPanel{
 		JList<String> listBase;
 		String[] data = {"Joueur1", "Joueur2", "Joueur3", "Joueur4", "Joueur5", "Joueur6"};
 		public EditCarte(MenuDroite m){
+			
+			//super(new GridBagLayout());
+			GridBagConstraints g = new GridBagConstraints();
+			
+			
 			menu = m;
 			grid = new GridLayout(5, 1);
 			Lnom = new JLabel("Nom carte: ");
@@ -336,11 +378,14 @@ class EditCarte extends JPanel{
 						nom.setText("");
 						
 					} catch (FichierExistant e1) {
-						messageErr.setText("Nom invalide");
+						messageErr.setText(e1.getMessage());
+					}catch (ChampsInvalides e2) {
+						messageErr.setText(e2.getMessage());
 					}
 				}
 			});
-			
+			JPanel pan3 = new JPanel();
+			pan3.add(new SliderTaille(), g);
 			JPanel pan = new JPanel();
 			JPanel pan2 = new JPanel();
 			JPanel j = new JPanel();
@@ -362,6 +407,7 @@ class EditCarte extends JPanel{
 			j.add(pan);
 			j.add(new JPanel());
 			j.add(pan2);
+			j.add(pan3);
 			add(j);
 		}
 		
@@ -384,11 +430,11 @@ class EditCarte extends JPanel{
 		private MenuDroite menu;
 		
 		private JLabel messageErr = new JLabel("");
-		
+		private GridBagConstraints g;
 		public EditCanon(MenuDroite m){
 			menu = m;
 			grid = new GridLayout(5, 1);
-			
+			g = new GridBagConstraints();
 			
 			retour = new JButton("Retour");
 			retour.addActionListener(new ActionListener() {
@@ -456,7 +502,7 @@ class EditCarte extends JPanel{
 			Trecharge = new JTextField();
 			
 			JPanel j = new JPanel();
-			j.setLayout(grid);
+			j.setLayout(new GridLayout(6, 1));
 			JPanel caracteristiques = new JPanel();
 			caracteristiques.setLayout(new GridLayout(3, 2));
 			caracteristiques.add(Lnom);
@@ -465,18 +511,21 @@ class EditCarte extends JPanel{
 			caracteristiques.add(Tdegat);
 			caracteristiques.add(Lrecharge);
 			caracteristiques.add(Trecharge);
-			
+			JPanel boutonGlobal = new JPanel();
 			JPanel bouton = new JPanel();
 			bouton.setLayout(new GridLayout(1, 2));
 			bouton.add(sauvegarde);
 			bouton.add(retour);
+			boutonGlobal.add(bouton);
 			
-			
+			JPanel pan3 = new JPanel();
+			pan3.add(new SliderTaille(), g);
 			j.add(Ptitre);
 			j.add(Pcommentaire);
 			j.add(caracteristiques);
-			j.add(bouton);
+			j.add(boutonGlobal);
 			j.add(messageErr);
+			j.add(pan3);
 			add(j);
 		}
 	}
@@ -634,6 +683,9 @@ class EditCarte extends JPanel{
 								Tnom.setText("");
 								Tdeplacement.setText("");
 								TpointsDeVie.setText("");
+								editeur.resetPlateau();
+								editeur.getMap().setColor(
+										((EditCanonP) EditCanonP.getEtat()).getRefPos(), Color.blue);
 							} catch (FichierExistant e1) {
 								messageErr.setText("Nom invalide");
 							}  
@@ -670,15 +722,15 @@ class EditCarte extends JPanel{
 			caracteristiques.add(Tdeplacement);
 			caracteristiques.add(LpointsDeVie);
 			caracteristiques.add(TpointsDeVie);
-			
+			JPanel boutonGlobal = new JPanel();
 			JPanel bouton = new JPanel();
 			bouton.setLayout(new GridLayout(0, 2));
 			bouton.add(sauvegarde);
 			bouton.add(retour);
-			
+			boutonGlobal.add(bouton);
 			j.add(Ptitre);
 			j.add(caracteristiques);
-			j.add(bouton);
+			j.add(boutonGlobal);
 			j.add(messageErr);
 			add(j);
 		}
@@ -751,6 +803,8 @@ class EditCarte extends JPanel{
 			editCanon = new EditCanon(this);
 			editNavire = new EditNavire(this);
 			editInit = new EditInit(this);
+			
+			
 			
 			//add(new EditInit(this),g);
 			add(editInit,g);
