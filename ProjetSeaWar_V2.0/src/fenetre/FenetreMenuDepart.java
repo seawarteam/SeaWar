@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import son.JouerSon;
+//import son.JouerSon;
 
 public class FenetreMenuDepart extends JFrame {
 	
@@ -21,7 +21,7 @@ public class FenetreMenuDepart extends JFrame {
 	private String filePath = "bateau.jpg";
 
 	public FenetreMenuDepart() {
-		JouerSon.SonEpique1();
+		//JouerSon.SonEpique1();
 		setTitle("Menu Principal");
 		Point p = ImagePanel.getTailleImage(filePath);
 		setSize(p.x, p.y);
