@@ -35,12 +35,11 @@ public class FenetreMenuDepart extends JFrame {
 			
 		
 		JPanel pan1 = new JPanel();
-		pan1.setLayout(new GridLayout(6, 1));
+		pan1.setLayout(new GridLayout(5, 1));
 		pan1.add(new BoutonPartieRapide());
 		pan1.add(new BoutonPartiePersonalisee());
 		pan1.add(new BoutonCharger());
 		pan1.add(new BoutonEditer());
-		pan1.add(new BoutonOptionSon());
 		pan1.add(new BoutonQuitter());
 		
 		
@@ -214,45 +213,8 @@ public class FenetreMenuDepart extends JFrame {
 		public void mouseReleased(MouseEvent arg0) {}
 		
 	}
-	class BoutonOptionSon extends JButton implements MouseListener{
-		private static final long serialVersionUID = 1L;
-		private static final String nom = "Options son";
-		
-		public BoutonOptionSon() {
-			super(nom);
-			addMouseListener(this);
-		}
-		
-		public void mouseClicked(MouseEvent arg0) {
-			PopupOptionSon f = new PopupOptionSon();
-		}
 
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
 
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		
-	}
 	class BoutonQuitter extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;
 		private static final String nom = "Quitter";
