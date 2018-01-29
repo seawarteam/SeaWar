@@ -34,6 +34,7 @@ import partie.Joueur;
 import partie.Lanceur;
 import partie.Navire;
 import partie.Plateau;
+import util.Save;
 
 public class FenetreChoixPartie extends JFrame implements Observer{
 	private static final long serialVersionUID = -133048637330577451L;
@@ -42,9 +43,6 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 		FenetreChoixPartie f = new FenetreChoixPartie();
 
 	}
-	final String pathMap = getPath()+ "/Sauvegardes/Reglages/Cartes/";
-	final String pathCanon = getPath()+ "/Sauvegardes/Reglages/Canons/";
-	final String pathBateau = getPath()+ "/Sauvegardes/Reglages/Bateaux/";
 
 	private JButton retour;
 	private JButton jouer;
@@ -140,12 +138,12 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 
 		public ChoixCarte() {
 			label = new JLabel("Choisir carte :");
-			listmodel = new MyComboBoxModel<String>(pathMap);
+			listmodel = new MyComboBoxModel<String>(Save.pathMap());
 			listNomCarte = new JComboBox<String>(listmodel);
 			listNomCarte.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						controleur.demandeChargerMap((Plateau)chargerObject((String)listNomCarte.getSelectedItem(), pathMap));
+						controleur.demandeChargerMap((Plateau)chargerObject((String)listNomCarte.getSelectedItem(), Save.pathMap()));
 					} catch (FichierNonExistant e1) {
 						info.setText("Impossible de charger cette carte");
 					}
@@ -231,12 +229,12 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 				public void actionPerformed(ActionEvent e) {
 					String nom = nomJoueur.getText();
 					try {
-						selectedCanonS1 = Canons.copy((Canons) chargerObject(nomCS, pathCanon));
-						selectedCanonP1 = Canons.copy((Canons) chargerObject(nomCP, pathCanon));
-						selectedNavire1 = Navire.copy((Navire) chargerObject(nomN, pathBateau));
-						selectedCanonS2 = Canons.copy((Canons) chargerObject(nomCS2, pathCanon));
-						selectedCanonP2 = Canons.copy((Canons) chargerObject(nomCP2, pathCanon));
-						selectedNavire2 = Navire.copy((Navire) chargerObject(nomN2, pathBateau));
+						selectedCanonS1 = Canons.copy((Canons) chargerObject(nomCS, Save.pathCanon()));
+						selectedCanonP1 = Canons.copy((Canons) chargerObject(nomCP, Save.pathCanon()));
+						selectedNavire1 = Navire.copy((Navire) chargerObject(nomN, Save.pathBateau()));
+						selectedCanonS2 = Canons.copy((Canons) chargerObject(nomCS2, Save.pathCanon()));
+						selectedCanonP2 = Canons.copy((Canons) chargerObject(nomCP2, Save.pathCanon()));
+						selectedNavire2 = Navire.copy((Navire) chargerObject(nomN2, Save.pathBateau()));
 						try {
 							controleur.demandeChargerJoueur(nom, selectedNavire1, selectedCanonP1, selectedCanonS1, selectedNavire2, selectedCanonP2, selectedCanonS2);
 							nbJ++;
@@ -260,12 +258,12 @@ public class FenetreChoixPartie extends JFrame implements Observer{
 			});
 			lNom = new JLabel("Nom joueur:");
 			nomJoueur = new JTextField("Joueur"+nbJ);
-			listmodelCanonS = new MyComboBoxModel<String>(pathCanon);
-			listmodelCanonP = new MyComboBoxModel<String>(pathCanon);
-			listmodelBateaux = new MyComboBoxModel<String>(pathBateau);
-			listmodelCanonS2 = new MyComboBoxModel<String>(pathCanon);
-			listmodelCanonP2 = new MyComboBoxModel<String>(pathCanon);
-			listmodelBateaux2 = new MyComboBoxModel<String>(pathBateau);
+			listmodelCanonS = new MyComboBoxModel<String>(Save.pathCanon());
+			listmodelCanonP = new MyComboBoxModel<String>(Save.pathCanon());
+			listmodelBateaux = new MyComboBoxModel<String>(Save.pathBateau());
+			listmodelCanonS2 = new MyComboBoxModel<String>(Save.pathCanon());
+			listmodelCanonP2 = new MyComboBoxModel<String>(Save.pathCanon());
+			listmodelBateaux2 = new MyComboBoxModel<String>(Save.pathBateau());
 			listNomCanonS = new JComboBox<String>(listmodelCanonS);
 			listNomCanonS.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

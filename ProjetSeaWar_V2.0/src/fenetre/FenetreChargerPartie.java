@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
+
+import erreur.FichierNonExistant;
 import partie.Canons;
 import partie.Controleur;
 import partie.ControleurChargerPartie;
@@ -34,6 +36,7 @@ import partie.Navire;
 import partie.Partie;
 import partie.Plateau;
 import partie.Position;
+import util.Save;
 
 public class FenetreChargerPartie extends JFrame{
 	private static final long serialVersionUID = -133048637330577451L;
@@ -42,7 +45,6 @@ public class FenetreChargerPartie extends JFrame{
 		FenetreChargerPartie f = new FenetreChargerPartie();
 		
 	}
-	final String pathPartie = getPath()+ "/Sauvegardes/Parties/";
 	
 	private JButton retour;
 	private JButton jouer;
@@ -119,11 +121,16 @@ public class FenetreChargerPartie extends JFrame{
 		
 		public ChoixPartie() {
 			label = new JLabel("Choisir partie :");
-			listmodel = new MyComboBoxModel<String>(pathPartie);
+			listmodel = new MyComboBoxModel<String>(Save.pathPartie());
 			listNomPartie = new JComboBox<String>(listmodel);
 			listNomPartie.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					partie = charger((String)listNomPartie.getSelectedItem());
+					try {
+						partie = Save.chargerPartie((String)listNomPartie.getSelectedItem());
+					} catch (FichierNonExistant e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 			pan = new JPanel();
@@ -134,35 +141,7 @@ public class FenetreChargerPartie extends JFrame{
 		}
 	}
 	
-	public Partie charger(String nomFichier) {
-		String name = pathPartie + nomFichier;
-		System.out.println(name);
-		Partie partie = null;
-		File pathF = new File(name);
-		if (pathF.exists()) {
-			ObjectInputStream ois = null;
-			try {
-				final FileInputStream fichier = new FileInputStream(name);
-				ois = new ObjectInputStream(fichier);
-				partie = (Partie) ois.readObject();
-			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (ois != null) {
-						ois.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else {
-			System.out.println("Fichier non existant !");
-		}
-		return partie;
-	}
+	
 	
 	class MyComboBoxModel<E> extends AbstractListModel<E> implements ComboBoxModel<E> {
 		private static final long serialVersionUID = 1L;
@@ -237,10 +216,7 @@ public class FenetreChargerPartie extends JFrame{
 		dispose();
 	}
 	
-	private String getPath() {		
-		return System.getProperty("user.dir");		
-	}
-
+	
 	
 
 	

@@ -2,12 +2,20 @@ package partie;
 
 import java.awt.Color;
 import java.util.*;
+
+import erreur.FichierExistant;
 import fenetre.FenetreMenuDepart;
 import fenetre.FenetrePrincipale;
+import util.Save;
 
 public class SeaWar {
 	
 	public static void main (String [] args) {
+		try {
+			Save.init();
+		} catch (FichierExistant e) {
+			e.printStackTrace();
+		}
 		 new FenetreMenuDepart();
 	}
 

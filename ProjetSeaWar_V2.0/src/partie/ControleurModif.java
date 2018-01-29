@@ -6,6 +6,7 @@ import javax.swing.ListModel;
 
 import erreur.*;
 import etatModif.*;
+import util.Save;
 
 public class ControleurModif {
 	private EtatModif etat = Init.getEtat();
@@ -80,7 +81,7 @@ public class ControleurModif {
 	public void demandeSauvegardeMap(String nom) throws FichierExistant, ChampsInvalides{
 		if (nom != null && nom != "" && nom != " ") {
 			if(editeur.getMap().getNbBasesValides()>=2) {
-				editeur.sauvegarderMap(nom);
+				Save.sauvegarderMap(nom, editeur.getMap());
 			}else {
 				throw new ChampsInvalides("Deux base obligatoires");
 			}
@@ -91,7 +92,7 @@ public class ControleurModif {
 	public void demandeSauvegardeNavire(String nom) throws FichierExistant {
 		if (nom != null && nom != "" && nom != " ") {
 			editeur.getNavire().setNom(nom);
-			editeur.sauvegarderNavire(nom);
+			Save.sauvegarderNavire(nom, editeur.getNavire());
 		}
 	}
 	
@@ -100,7 +101,7 @@ public class ControleurModif {
 		if(editeur.getCanonP().getZoneTire().size() != 0) {
 			if (nom != null && nom != "" && nom != " ") {
 				editeur.getCanonP().setNom(nom);
-				editeur.sauvegarderCanon(nom);
+				Save.sauvegarderCanon(nom, editeur.getCanonP());
 			}
 		}else {
 			throw new ChampsInvalides("La zone de tire doit être créée");

@@ -35,11 +35,12 @@ public class FenetreMenuDepart extends JFrame {
 			
 		
 		JPanel pan1 = new JPanel();
-		pan1.setLayout(new GridLayout(5, 1));
+		pan1.setLayout(new GridLayout(6, 1));
 		pan1.add(new BoutonPartieRapide());
 		pan1.add(new BoutonPartiePersonalisee());
 		pan1.add(new BoutonCharger());
 		pan1.add(new BoutonEditer());
+		pan1.add(new BoutonOptions());
 		pan1.add(new BoutonQuitter());
 		
 		
@@ -50,7 +51,46 @@ public class FenetreMenuDepart extends JFrame {
 		setVisible(true);
 	}
 	
+	class BoutonOptions extends JButton implements MouseListener{
+		private static final long serialVersionUID = 1L;
+		private final static String titre = "Options"; 
+		
+		public BoutonOptions() {
+			super(titre);
+			addMouseListener(this);
+			addKeyListener(new KeyListener() {
+				public void keyPressed(KeyEvent key) {
+					switch (key.getKeyCode()) {
+						case KeyEvent.VK_SPACE: {
+							new FenetreOptions();
+							dispose();
+							break;
+						}
+						case KeyEvent.VK_ENTER: {
+							new FenetreOptions();
+							dispose();
+							break;
+						}
+					}
+				}
+				public void keyTyped(KeyEvent arg0) {}
+				public void keyReleased(KeyEvent arg0) {}
+			});
+		}
 
+		
+		public void mouseClicked(MouseEvent arg0) {
+			new FenetreOptions();
+			dispose();
+			
+		}
+		
+		public void mouseEntered(MouseEvent arg0) {}		
+		public void mouseExited(MouseEvent arg0) {}		
+		public void mousePressed(MouseEvent arg0) {}		
+		public void mouseReleased(MouseEvent arg0) {}
+		
+	}
 
 	class BoutonPartieRapide extends JButton implements MouseListener{
 		private static final long serialVersionUID = 1L;

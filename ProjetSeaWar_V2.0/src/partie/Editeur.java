@@ -12,9 +12,7 @@ import java.util.Observer;
 import erreur.FichierExistant;
 
 public class Editeur extends Observable {
-	final String pathMap = "/Sauvegardes/Reglages/Cartes/";
-	final String pathCanon = "/Sauvegardes/Reglages/Canons/";
-	final String pathBateau = "/Sauvegardes/Reglages/Bateaux/";
+	
 	
 	Plateau map;
 	Canons canonP;
@@ -76,103 +74,10 @@ public class Editeur extends Observable {
 	}*/
 
 	
-	public void sauvegarderMap(String nomFichier) throws FichierExistant { // ex : partie.sauvegarder ( "Test01" );
-		String name = getPath() + pathMap + nomFichier;
-		ObjectOutputStream oos = null;
-		File pathF = new File(name);
-		if (!pathF.exists()) {
-			try {
-				final FileOutputStream fichier = new FileOutputStream(name);
-				oos = new ObjectOutputStream(fichier);
-				oos.writeObject(map);
-				oos.flush();
-			} catch (final java.io.IOException e) {
-				File path = new File(getPath() + pathMap);
-				path.mkdirs();
-			} finally {
-				try {
-					final FileOutputStream fichier = new FileOutputStream(name);
-					oos = new ObjectOutputStream(fichier);
-					if (oos != null) {
-						oos.writeObject(map);
-						oos.flush();
-						oos.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else {
-			throw new FichierExistant(nomFichier);
-		}
-	}
 	
-	public void sauvegarderCanon(String nomFichier) throws FichierExistant{ // ex : partie.sauvegarder ( "Test01" );
-		String name = getPath() + pathCanon + nomFichier;
-		ObjectOutputStream oos = null;
-		File pathF = new File(name);
-		if (!pathF.exists()) {
-			try {
-				final FileOutputStream fichier = new FileOutputStream(name);
-				oos = new ObjectOutputStream(fichier);
-				oos.writeObject(canonP);
-				oos.flush();
-			} catch (final java.io.IOException e) {
-				File path = new File(getPath() + pathCanon);
-				path.mkdirs();
-			} finally {
-				try {
-					final FileOutputStream fichier = new FileOutputStream(name);
-					oos = new ObjectOutputStream(fichier);
-					if (oos != null) {
-						oos.writeObject(canonP);
-						oos.flush();
-						oos.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else {
-			throw new FichierExistant(nomFichier);
-		}
-	}
-	
-	public void sauvegarderNavire(String nomFichier) throws FichierExistant{ // ex : partie.sauvegarder ( "Test01" );
-		String name = getPath() + pathBateau + nomFichier;
-		ObjectOutputStream oos = null;
-		File pathF = new File(name);
-		if (!pathF.exists()) {
-			try {
-				final FileOutputStream fichier = new FileOutputStream(name);
-				oos = new ObjectOutputStream(fichier);
-				oos.writeObject(navire);
-				oos.flush();
-			} catch (final java.io.IOException e) {
-				File path = new File(getPath() + pathBateau);
-				path.mkdirs();
-			} finally {
-				try {
-					final FileOutputStream fichier = new FileOutputStream(name);
-					oos = new ObjectOutputStream(fichier);
-					if (oos != null) {
-						oos.writeObject(navire);
-						oos.flush();
-						oos.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else {
-			throw new FichierExistant(nomFichier);
-		}
-	}
 	
 
-	private String getPath() {
-		return System.getProperty("user.dir");
-	}
+	
 	
 
 }  
