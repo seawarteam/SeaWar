@@ -22,7 +22,6 @@ public class EditEau implements EtatModif{
 
 
 	public void clique(Position p, ControleurModif c) {
-		c.getEditeur().getMap().ResetCouleur();
 		
 		int nCasesX = c.getEditeur().nX;
 		int nCasesY = c.getEditeur().nY;

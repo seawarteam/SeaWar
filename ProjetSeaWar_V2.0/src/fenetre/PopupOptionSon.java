@@ -16,7 +16,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import son.JouerSon;
+
 
 
 
@@ -53,26 +53,12 @@ public class PopupOptionSon extends JFrame{
 		lm.setVerticalAlignment(JLabel.CENTER);
 		lm.setBackground(new Color(255,255,255));
 		
-		musique = new JSlider(0,100,50);
-		musique.setBackground(new Color(0,200,255));
-		musique.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				JouerSon.volumeMusique(((double) ((JSlider)e.getSource()).getValue())/100);
-			}
-		});
 		
 		JLabel lb = new JLabel("<html><font color='black'>Volume bruitages</font></html>");
 		lb.setOpaque(true);
 		lb.setVerticalAlignment(JLabel.CENTER);
 		lb.setBackground(new Color(255,255,255));
 		
-		son = new JSlider(0,100,50);
-		son.setBackground(new Color(0,200,255));
-		son.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				JouerSon.volumeSon(((double)((JSlider)e.getSource()).getValue())/100);
-			}
-		});
 		
 		quitter = new JButton("Retour");
 		quitter.addActionListener(new ActionListener() {

@@ -20,13 +20,13 @@ import javax.swing.JTextField;
 
 import erreur.FichierExistant;
 import partie.SeaWar;
+import util.Save;
 
 public class PopupSave extends JFrame {
 
 	private ImagePanel imagePanel;
 	private FenetrePrincipale fP;
 	private String filePath = "Fight_of_the_Poursuivante.jpg";
-	final String pathPartie = "/Sauvegardes/Parties/";
 	private JButton sauvegarde;
 	private JButton annuler;
 	private JTextField title;
@@ -34,6 +34,7 @@ public class PopupSave extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public PopupSave(FenetrePrincipale f, String infoSave) {
 
+		
 		fP = f;
 		Point p = ImagePanel.getTailleImage(filePath);
 		setSize(p.x, p.y);
@@ -56,7 +57,7 @@ public class PopupSave extends JFrame {
 				String s = title.getText();
 				if(s != null || s != "" ) {
 					try {
-						sauvegarder(getPath()+pathPartie, s);
+						Save.sauvegarderPartie(s, fP.getPartie());
 					} catch (FichierExistant e1) {
 						new PopupSave(fP, "<html> <table><tr>Nom déjà utilisé,<tr>veuillez en saisir un autre :");
 						dispose();
@@ -88,42 +89,6 @@ public class PopupSave extends JFrame {
 		setContentPane(imagePanel);
 		setVisible(true);
 
-	}
-	
-	public void sauvegarder(String path, String nomFichier) throws FichierExistant {
-		String name = path + nomFichier;
-		ObjectOutputStream oos = null;
-		File pathF = new File(name);
-		if (!pathF.exists()) {
-			try {
-				final FileOutputStream fichier = new FileOutputStream(name);
-				oos = new ObjectOutputStream(fichier);
-				oos.writeObject(fP.getPartie());
-				oos.flush();
-			} catch (final java.io.IOException e) {
-				File pathbis = new File(path);
-				System.out.println(path);
-				pathbis.mkdirs();
-			} finally {
-				try {
-					final FileOutputStream fichier = new FileOutputStream(name);
-					oos = new ObjectOutputStream(fichier);
-					if (oos != null) {
-						oos.writeObject(fP.getPartie());
-						oos.flush();
-						oos.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		} else {
-			throw new FichierExistant(nomFichier);
-		}
-	}
-	
-	private String getPath() {
-		return System.getProperty("user.dir");
 	}
 	
 	
