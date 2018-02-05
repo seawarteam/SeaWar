@@ -56,7 +56,7 @@ public class Controleur {
 		if (nav == null)
 			System.err.println("Controleur : nav == null");
 		Set<Position> obstacle = partie.getObstacle();
-		partie.surbrillanceD(nav.afficherCasesAccessibles(obstacle));
+		partie.surbrillanceD(nav.getCasesAccessibles(obstacle));
 		etat = EtatDeplacement.getEtat();
 	}
 

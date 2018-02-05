@@ -136,7 +136,7 @@ public class Canons implements Serializable {
 		for(Position pos : posRela) {
 			Position reel = Position.getPosition(x+pos.getX(),y+pos.getY());
 			if(reel != null) {
-				Position[] tab = Position.peutTirer(posi, reel);
+				Position[] tab = Position.getPosOnLineOfSight(posi, reel);
 				boolean can = true;
 				for(Position p : tab) {
 					if (rochers.contains(p)) {
@@ -151,7 +151,7 @@ public class Canons implements Serializable {
 	}
 
 	/**
-	 * Crï¿½ï¿½e une matrice contenant les positions relative par rapport au navire d'indicer par l'orientation du navire
+	 * Creee une matrice contenant les positions relative par rapport au navire d'indicer par l'orientation du navire
 	 * ex: Mat[dir] => positions que l'on peut tirer avec l'orientation dir
 	 * @param zone == this.zoneTire : les positions que l'on peut tirer avec l'orientation du navire vers le Nord
 	 * @return la matrice

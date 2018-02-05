@@ -41,7 +41,7 @@ public class FenetreOptions extends JFrame {
 			pan2 = new JPanel();
 			pan3 = new JPanel();
 			pan = new JPanel();
-			lPath = new JLabel("Chemin d'accès :");
+			lPath = new JLabel("Chemin d'acces :");
 			newPath = new JTextField();
 			valider = new JButton("Valider");
 			valider.addActionListener(new ActionListener() {
