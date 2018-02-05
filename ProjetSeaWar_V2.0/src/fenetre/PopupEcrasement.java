@@ -31,7 +31,7 @@ public class PopupEcrasement extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private Object o;
 	
-	public PopupEcrasement(Object o, String path, String nom) {
+	public PopupEcrasement(final Object o, final String path, final String nom) {
 		
 		setSize(200, 300);
 		setLocationRelativeTo(null);
@@ -40,7 +40,7 @@ public class PopupEcrasement extends JFrame {
 		setUndecorated(true);
 		setAlwaysOnTop(true);
 		
-		info = new JLabel("Fichier déjà existant :"+nom+"\n Veuillez entrez un nouveau nom");
+		info = new JLabel("Fichier deja existant :"+nom+"\n Veuillez entrez un nouveau nom");
 		
 		newTitle = new JTextField();
 		

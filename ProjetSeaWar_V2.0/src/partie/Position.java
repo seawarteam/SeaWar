@@ -71,7 +71,7 @@ public class Position implements Serializable {
     }
     
     /**
-     * Methode statique qui permet de reccuperer la Position Ã  l'emplacement (x,y)
+     * Methode statique qui permet de reccuperer la Position a  l'emplacement (x,y)
      * => Permet eviter de creer a  chaque de nouveau objet Position
      * @param x
      * @param y
@@ -95,7 +95,7 @@ public class Position implements Serializable {
     	}
     }
 	
-	public static Position[] peutTirer(Position ori, Position dest) {
+	public static Position[] getPosOnLineOfSight(Position ori, Position dest) {
 		int ax, ay, az, bx, by, bz;
 		int N;
 		ax = ori.getX();

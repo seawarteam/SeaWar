@@ -256,8 +256,9 @@ public class Navire extends Observable implements Serializable {
     *	+ creer un booleen pour savoir si le resultat est a jour
     *	=> but : limiter l'appel de la fonction dans les 4 fonctions ci-dessous
     **/
-    public Set<Position> afficherCasesAccessibles(Set<Position> obstacle) {
-    	Map<Position,Set<Vector<Object>>> MapCases = getCaseAccessible(obstacle);
+    
+    public Set<Position> getCasesAccessibles(Set<Position> obstacle) {
+    	Map<Position,Set<Vector<Object>>> MapCases = rechercheCasesAccessible(obstacle);
     	Set<Position> setPos = MapCases.keySet();
     	if(dep == depMax && setPos.isEmpty()) {
     		bloque = true;
@@ -269,8 +270,8 @@ public class Navire extends Observable implements Serializable {
     	return setPos;
     }
     
-    public Set<Position> afficherCasesVisableCanonP(Set<Position> obstacle, Set<Position> rochers){
-    	Map<Position,Set<Vector<Object>>> mapCasesAcc = getCaseAccessible(obstacle);
+    public Set<Position> getCasesVisableCanonP(Set<Position> obstacle, Set<Position> rochers){
+    	Map<Position,Set<Vector<Object>>> mapCasesAcc = rechercheCasesAccessible(obstacle);
     	Set<Position> resultat = new HashSet<Position>();
     	
     	Set<Position> posKey = mapCasesAcc.keySet();
@@ -293,8 +294,8 @@ public class Navire extends Observable implements Serializable {
     	return resultat;
     }
     
-    public Set<Position> afficherCasesVisableCanonS(Set<Position> obstacle, Set<Position> rochers){
-    	Map<Position,Set<Vector<Object>>> mapCasesAcc = getCaseAccessible(obstacle);
+    public Set<Position> getCasesVisableCanonS(Set<Position> obstacle, Set<Position> rochers){
+    	Map<Position,Set<Vector<Object>>> mapCasesAcc = rechercheCasesAccessible(obstacle);
     	Set<Position> resultat = new HashSet<Position>();
     	
     	Set<Position> posKey = mapCasesAcc.keySet();
@@ -317,7 +318,7 @@ public class Navire extends Observable implements Serializable {
     }
     
     public Set<Position> findOrientationsPossibles(Position pos, Set<Position> obstacle) {
-    	Set<Vector<Object>> setVectPos = getCaseAccessible(obstacle).get(pos);
+    	Set<Vector<Object>> setVectPos = rechercheCasesAccessible(obstacle).get(pos);
     	Set<Position> resultat = new HashSet<Position>();
     	
     	if(bloque) {
@@ -391,7 +392,7 @@ public class Navire extends Observable implements Serializable {
     		
     	}
     	
-    	Map<Position, Set<Vector<Object>>> mapsCaseAcc = getCaseAccessible(obstacle);
+    	Map<Position, Set<Vector<Object>>> mapsCaseAcc = rechercheCasesAccessible(obstacle);
     	
     	Set<Vector<Object>> setCasesAcc = mapsCaseAcc.get(pos);
     	if(setCasesAcc != null) {
@@ -413,7 +414,7 @@ public class Navire extends Observable implements Serializable {
     		return false;
     	}
     		
-    	Set<Vector<Object>> setCasesAcc = getCaseAccessible(obstacle).get(pos);
+    	Set<Vector<Object>> setCasesAcc = rechercheCasesAccessible(obstacle).get(pos);
     	for(Vector<Object> vect : setCasesAcc) {
     		if(vect.get(0) == dir) {
     			return true;
@@ -425,10 +426,10 @@ public class Navire extends Observable implements Serializable {
     
     /**
      * 
-     * @param obstacle : Set des positions oÃƒÂ¹ le navire ne peux pas aller
-     * @return Map avec pour clÃƒÂ© une position accessible et valeur la liste des orientation possible pour cette position
+     * @param obstacle : Set des positions ou le navire ne peux pas aller
+     * @return Map avec pour cle une position accessible et valeur la liste des orientations possible pour cette position
      */
-    public Map<Position,Set<Vector<Object>>> getCaseAccessible(Set<Position> obstacle){
+    public Map<Position,Set<Vector<Object>>> rechercheCasesAccessible(Set<Position> obstacle){
     	List<Vector<Object>> fileDattente = new LinkedList<Vector<Object>>();
     			Vector<Object> v = new Vector<Object>(2);
     				v.add(0, this.pos);
@@ -436,7 +437,7 @@ public class Navire extends Observable implements Serializable {
     			fileDattente.add(v);
     	int deplace = 0;
     	Map<Position,Set<Vector<Object>>> map = new HashMap<Position,Set<Vector<Object>>>();
-    	_getNextCaseAcc(map, ++deplace, fileDattente, obstacle);
+    	_rechercheNextCaseAcc(map, ++deplace, fileDattente, obstacle);
     	return map;
     }
     
@@ -446,7 +447,7 @@ public class Navire extends Observable implements Serializable {
      * @param deplace : nbre de deplacement encore possible
      * @param fileDattente : derniÃƒÂ¨res cases atteintes
      */
-    private void _getNextCaseAcc( Map<Position,Set<Vector<Object>>> map, int deplace, List<Vector<Object>> fileDattente, Set<Position> obstacle){
+    private void _rechercheNextCaseAcc( Map<Position,Set<Vector<Object>>> map, int deplace, List<Vector<Object>> fileDattente, Set<Position> obstacle){
     	if(deplace <= this.dep){
     		List<Vector<Object>> prochaineFileDattente = new LinkedList<Vector<Object>>();
     		for(Vector<Object> vect : fileDattente){
@@ -480,7 +481,7 @@ public class Navire extends Observable implements Serializable {
     				}
     			}
     		}
-    		_getNextCaseAcc(map, ++deplace, prochaineFileDattente, obstacle);
+    		_rechercheNextCaseAcc(map, ++deplace, prochaineFileDattente, obstacle);
     	}
     }
     
